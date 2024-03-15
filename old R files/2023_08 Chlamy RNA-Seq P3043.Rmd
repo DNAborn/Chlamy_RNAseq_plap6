@@ -1,0 +1,923 @@
+---
+title: "2022_10 Chlamy RNA-Seq P3043"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+# Install System
+```{r Install System, eval=FALSE, include=FALSE}
+BiocManager::install()
+BiocManager::valid()
+
+install.packages("")
+BiocManager::install("")
+
+tinytex::install_tinytex()
+
+```
+
+## Load System
+```{r}
+library(stringr)
+library(R.utils)
+library(RColorBrewer)
+library(sessioninfo)
+library(data.table)
+library(plyr)
+library(tidyverse)
+library(tximeta)
+library(tximport)
+library(curl)
+library(AnnotationHub)
+library(DESeq2)
+library(EnhancedVolcano)
+library(pheatmap)
+library(writexl)
+library(biomaRt)
+library(ape)
+# library(wget)
+
+```
+# Download data
+Username: uFZjGr6t
+Password: nYGTAdUw
+Link https://filetransfer.mdc-berlin.de/?u=uFZjGr6t&p=nYGTAdUw
+
+You can find detailed instruction accessing the folder in different settings here: https://t1p.de/gdmhowtocrush 
+
+```{r}
+getwd()
+# setwd("S:/AG/AG-Scholz-NGS/Daten/Simon/P3043")
+# wget("https://filetransfer.mdc-berlin.de/?u=uFZjGr6t&p=nYGTAdUw")
+setwd("S:/AG/AG-Scholz-NGS/Daten/Simon/P3043")
+```
+setwd("S:/AG/AG-Scholz-NGS/Daten/Simon/P3043")
+
+
+# Mapping Rates
+https://stackoverflow.com/questions/14261776/extracting-data-from-text-files
+
+working dir:
+  "C:/Users/kelterbs/OneDrive - Charité - Universitätsmedizin Berlin/RNA-seq/Chlamy RNA-Seq P3043"
+
+data dir:
+  "S:/AG/AG-Scholz-NGS/Daten/Simon/P3043/quants"
+  
+
+```{r}
+library(stringr)
+library(R.utils)
+library(RColorBrewer)
+
+outdir <- "C:/Users/kelterbs/OneDrive - Charité - Universitätsmedizin Berlin/NGS (RNA-Seq & CRISPR)/Chlamy RNA-Seq P3043"
+datadir <- "S:/AG/AG-Scholz-NGS/Daten/Simon/P3043"
+quantdir <- paste(datadir,"quants",sep="/")
+
+list.files(path = outdir)
+list.files(path = datadir)
+list.files(path = quantdir)
+
+samplelist <- {}
+mappingrates <- {}
+for (i in list.files(path = quantdir)){
+print(i)
+si <- paste("",str_sub(i,11,-7),sep = "")
+si
+samplelist <- c(samplelist,si)
+f <- readLines(paste(quantdir,i,"logs/salmon_quant.log", sep="/"))
+line <- grep("Mapping rate = ",f,value=TRUE)
+sl <- str_length(line)
+sl
+notime <- substring(line,30,sl)
+notime
+manual <- substring(line,sl-7,sl-1)
+val <- as.numeric(str_extract(notime,"[0-9.]+"))
+val
+valr<-round(val, digits=2)
+print(paste("Mapping rate of ",si," is: ",valr," %"))
+mappingrates <- c(mappingrates,valr)
+}
+```
+
+# Sample names
+```{r}
+
+sample <- as.factor(samplelist)
+sample
+
+sampleid <- {}
+strain  <- {}
+lane  <- {}
+condition <- {}
+media  <- {}
+replicate <- {}
+trial <- {}
+
+for (i in list.files(path = quantdir)){
+print(i)
+si <- substring(i,14,18)
+sampleid <-c(sampleid,str_split(i, pattern = "_", simplify = TRUE)[,5])
+condition.i <- str_split(i, pattern = "_", simplify = TRUE)[,4]
+strain <-c(strain,str_split(condition.i, pattern = "-", simplify = TRUE)[,1])
+media <-c(media,str_split(condition.i, pattern = "-", simplify = TRUE)[,2])
+replicate <-c(replicate,str_split(condition.i, pattern = "-", simplify = TRUE)[,3])
+lane <-c(lane,str_split(i, pattern = "_", simplify = TRUE)[,6])
+}
+condition <- paste(strain,media,sep="_") %>% factor(levels = c("WT_TAP","fib_TAP","WT_HSM","fib_HSM"))
+strain  <- strain %>% factor() %>% relevel("WT")
+lane  <- lane %>% factor()
+media  <- media %>% factor()  %>% relevel("TAP")
+replicate <- replicate %>% factor()
+
+trial <- c(rep(1,6),rep(2,8),rep(1,2),rep(2,4),rep(1,8),rep(1,12),rep(2,12),rep(1,12)) %>% factor() %>% relevel("1")
+
+# Make table
+sample.table <- data.frame(sample,sampleid,strain,media,condition,replicate,trial,lane)
+sample.table
+sample.table$strain
+
+m.table <- data.frame(sample,mappingrates, stringsAsFactors = TRUE)
+m.table
+
+# Colours
+
+# Plot
+plot(m.table)
+# -> boring
+
+# increase margin for longer names
+par(mar=c(4,15,4,4)+.1)
+barplot(height=mappingrates, names=sample, horiz=T, las=1)
+mkdirs("graphs")
+
+pdf(file="graphs/Mapping_Rates.pdf", width=10, height=20)
+par(mar=c(4,12,4,4)+.1)
+xx <- barplot(height=mappingrates, names=sample, horiz=T, las=1, xlim=c(0,100)) #col=col
+text(x = mappingrates, y = xx, label = mappingrates, pos = 4, cex = 0.8, col = "red")
+dev.off()
+
+```
+
+# Tximeta
+
+```{r}
+library(sessioninfo)
+library(data.table)
+library(plyr)
+library(tidyverse)
+library(tximeta)
+library(tximport)
+library(curl)
+
+getwd()
+outdir <- "C:/Users/kelterbs/OneDrive - Charité - Universitätsmedizin Berlin/NGS (RNA-Seq & CRISPR)/Chlamy RNA-Seq P3043"
+datadir <- "S:/AG/AG-Scholz-NGS/Daten/Simon/P3043"
+quantdir <- paste(datadir,"quants",sep="/")
+example.quant <- paste(quantdir,list.files(quantdir)[1],"quant.sf",sep="/")
+
+list.files(quantdir)[1]
+file.exists(example.quant)
+
+# first file:
+example.table <- read.table(example.quant, header=T)
+head(example.table)
+basename(example.quant)
+dirname(example.quant)
+basename(dirname(example.quant))
+
+# generate file list & prepare variables
+files={}
+for (i in list.dirs(path = dirname(dirname(example.quant)), full.names = TRUE, recursive = FALSE)) {
+files <- c(files,paste(i,"/quant.sf",sep=""))
+print(basename(i))
+# print(head(read.table(files[length(files)], header=T)))
+print (files[length(files)])
+}
+head(files)
+
+dir <- dirname(files)
+head(dir)
+head(basename(dir))
+run <- basename(dir)
+dirdir <- dirname(dir)
+head(dirdir)
+
+tximeta_files <- file.path(dirdir, run, "quant.sf") 
+file.exists(tximeta_files)
+file.exists(files)
+
+# names as working sample names
+# see 'sample.table' at mapping rates
+coldata <- data.frame(files, names = run, stringsAsFactors=FALSE)
+coldata <- data.frame(coldata,sample.table)
+coldata
+head(coldata$strain)
+
+# load tximeta
+# with linked Transcriptome
+## Chlamy
+dir1 <- "S:/AG/AG-Scholz-NGS/Daten/Simon/linux-ngs/salmon/salmon_index_chlamy"
+
+indexDir <- file.path(dir1,"chlamy_index")
+fastaPath <- file.path(dir1,"Phytozome/Creinhardtii_281_v5.0.fa.gz")
+head(readLines(fastaPath,n=50))
+gtfPath <- file.path(dir1,"Phytozome/Creinhardtii_281_v5.6.gene.gff3.gz")
+head(readLines(gtfPath,n=50))
+
+file.exists(indexDir, fastaPath, gtfPath)
+
+makeLinkedTxome(indexDir=indexDir,
+                source="Phytozome",
+                organism="Chlamydomonas reinhardtii",
+                release="v5.6",
+                genome="Creinhardtii_281",
+                fasta=fastaPath,
+                gtf=gtfPath,
+                write=FALSE)
+
+gtfdata <- readLines(gtfPath)
+head(gtfdata, n=20)
+
+
+# gene_name info sind da...
+
+se <- tximeta(coldata, useHub=F)
+se
+
+library(SummarizedExperiment)
+
+colData(se)
+assayNames(se)
+rowRanges(se)
+seqinfo(se)
+
+names(metadata(se)[["quantInfo"]])
+metadata(se)[["quantInfo"]]$percent_mapped
+metadata(se)[["quantInfo"]]$num_processed
+metadata(se)[["quantInfo"]]$percent_mapped
+metadata(se)[["quantInfo"]]$num_processed
+
+par(mfrow=c(1,2))
+barplot(metadata(se)[["quantInfo"]]$percent_mapped, main="Mapping Rate")
+barplot(metadata(se)[["quantInfo"]]$num_processed/1000000, main="Mio. Reads")
+
+edb <- retrieveDb(se)
+class(edb)
+genes(edb)
+columns(edb)
+
+se.exons <- addExons(se)
+rowRanges(se.exons)[[1]]
+gse <- summarizeToGene(se)
+rowRanges(gse)
+
+head(assays(gse)[["counts"]])[1:5,1:5]
+head(assays(gse)[["abundance"]])[1:5,1:5]
+head(assays(gse)[["length"]])[1:5,1:5]
+
+#### add gene symbol
+columns(retrieveDb(se))
+edb
+metadata(se)$txomeInfo$source
+
+colnames(mcols(gse))
+head(rownames(gse))
+coln <- colnames(mcols(gse))
+coln
+colData(gse)
+gse
+
+getwd()
+save(gse,file="tximeta.txm")
+gse <- 1
+load(file="tximeta.txm")
+
+
+```
+
+## Get Gene Names from GFF3 file
+### a1) Prepare GFF data
+
+```{r}
+library(data.table)
+library(plyr)
+library(tidyverse)
+library(GenomicRanges)
+
+dir1 <- "S:/AG/AG-Scholz-NGS/Daten/Simon/linux-ngs/salmon/salmon_index_chlamy"
+gtfPath <- file.path(dir1,"Phytozome/Creinhardtii_281_v5.6.gene.gff3.gz")
+
+head(readLines(gtfPath,n=50))
+gff <- read.delim(gtfPath, header=F, comment.char="#")
+head(gff)
+
+getAttributeField <- function (x, field, attrsep = ";") {
+     s = strsplit(x, split = attrsep, fixed = TRUE)
+     sapply(s, function(atts) {
+         a = strsplit(atts, split = "=", fixed = TRUE)
+         m = match(field, sapply(a, "[", 1))
+         if (!is.na(m)) {
+             rv = a[[m]][2]
+         }
+         else {
+             rv = as.character(NA)
+         }
+         return(rv)
+     })
+}
+
+gffRead <- function(gffFile, nrows = -1) {
+     cat("Reading ", gffFile, ": ", sep="")
+     gff = read.table(gffFile, sep="\t", as.is=TRUE, quote="",
+     header=FALSE, comment.char="#", nrows = nrows,
+     colClasses=c("character", "character", "character", "integer",
+"integer",
+     "character", "character", "character", "character"))
+     colnames(gff) = c("seqname", "source", "feature", "start", "end","score", "strand", "frame", "attributes")
+     cat("found", nrow(gff), "rows with classes:",
+         paste(sapply(gff, class), collapse=", "), "\n")
+      stopifnot(!any(is.na(gff$start)), !any(is.na(gff$end)))
+     return(gff)
+}
+
+Chlamy_gff <- gffRead(gtfPath)
+Chlamy_gff
+Chlamy_gff$Name <- getAttributeField(Chlamy_gff$attributes, "Name")
+Chlamy_gff$ID <- getAttributeField(Chlamy_gff$attributes, "ID")
+Chlamy_gff$Parent <- getAttributeField(Chlamy_gff$attributes, "Parent")
+Chlamy_gff$pacid <- getAttributeField(Chlamy_gff$attributes, "pacid")
+Chlamy_gff$tID <- getAttributeField(Chlamy_gff$attributes, "tID")
+Chlamy_gff$geneName <- getAttributeField(Chlamy_gff$attributes, "geneName")
+Chlamy_gff$longest <- getAttributeField(Chlamy_gff$attributes, "longest")
+
+Chlamy_genes <- subset(Chlamy_gff, !geneName =="")
+Chlamy_genes$Name2 <- paste(str_split(Chlamy_genes$Name, pattern = "\\.", simplify = TRUE)[,1],str_split(Chlamy_genes$Name, pattern = "\\.", simplify = TRUE)[,2],sep=".")
+gene2symbol <- data.frame(gene_id=Chlamy_genes$Name2,
+                         Symbol=Chlamy_genes$geneName)
+dim(gene2symbol)
+gene2symbol[duplicated(gene2symbol$gene_id),]
+gene2symbol <- gene2symbol[!duplicated(gene2symbol$gene_id),]
+dim(gene2symbol)
+summary(mcols(gse)$gene_id %in% gene2symbol$gene_id)
+summary(gene2symbol$gene_id %in% mcols(gse)$gene_id)
+```
+
+
+### b1) add GFF data into gse
+```{r}
+dim(gene2symbol)
+summary(mcols(gse)$gene_id %in% gene2symbol$gene_id)
+summary(gene2symbol$gene_id %in% mcols(gse)$gene_id)
+
+mcols(gse)$gene_id2 <- mcols(gse)$gene_id
+gsetable <- as.data.frame(mcols(gse)[,c(1,3)])
+class(gsetable)
+class(gene2symbol)
+dim(gsetable)
+
+# new <- merge(gsetable,gene2symbol, by ="gene_id", all.x = all)
+new <- plyr::join(gsetable,gene2symbol)
+dim(new)
+new2 <- left_join(gsetable,gene2symbol,by = "gene_id")
+dim(new2)
+mcols(gse)$symbol <- new$Symbol
+mcols(gse)$gene_id2 <- {}
+
+mcols(gse)
+
+getwd()
+save(gse,file="tximeta.txm")
+
+```
+
+
+### a2) other v6.1 data
+```{r}
+library(data.table)
+library(plyr)
+library(tidyverse)
+library(ape)
+
+# master annotation v6.1
+dir1 <- "S:/AG/AG-Scholz-NGS/Daten/Simon/linux-ngs/salmon/salmon_index_chlamy"
+gtfPath <- file.path(dir1,"Phytozome/Creinhardtii_281_v5.6.gene.gff3.gz")
+list.files(dirname(gtfPath))
+
+annopath <- file.path(dir1,"Phytozone_v6.1/CreinhardtiiCC_4532_707_v6.1.master_annotation_table.tsv")
+
+# anno <- read.delim(annopath, header=T,comment.char="#")
+## content is missing
+# anno <- read.table(annopath, sep='\t', header = T)
+## problems()
+## error
+# anno <- read_tsv(annopath, )
+## error
+
+anno <- read.delim2(annopath, header = T, sep = "\t",)
+# ok
+# # instead of ,
+head(anno)
+
+anno[str_detect(anno[["locusName_4532"]],"Cre01.g000050"),]
+anno[str_detect(anno[["geneSymbol"]],"HKR"),]
+anno[str_detect(anno[["previousIdentifiers"]],"HKR"),]
+anno[str_detect(anno[["geneSymbol"]],"COP"),]
+anno[str_detect(anno[["previousIdentifiers"]],"COP1"),]
+anno[str_detect(anno[["geneSymbol"]],"cop"),]
+anno[str_detect(anno[["geneSymbol"]],"PLAP6"),]
+anno[str_detect(anno[["geneSymbol"]],"COQ3"),]
+
+
+dim(anno)
+
+# convert to list
+anno$previousIdentifiers_list <- strsplit(anno$previousIdentifiers, "#")
+head(anno)
+anno$previousIdentifiers_list[1]
+
+summary(anno$geneSymbol!="")
+summary(anno$previousIdentifiers!="")
+
+mcols(gse)[625:633,]
+dim(anno)
+
+# anno$gene_id <- str_split(anno$locusName_4532,pattern = )
+anno$gene_id <- str_remove(anno$locusName_4532,pattern = "_4532")
+summary(anno$gene_id %in% mcols(gse)$gene_id)
+summary(mcols(gse)$gene_id %in% anno$gene_id)
+# some differences
+rownames(anno) <- anno$gene_id
+
+
+Chlamy_genes <- subset(Chlamy_gff, !geneName =="")
+Chlamy_genes$Name2 <- paste(str_split(Chlamy_genes$Name, pattern = "\\.", simplify = TRUE)[,1],str_split(Chlamy_genes$Name, pattern = "\\.", simplify = TRUE)[,2],sep=".")
+gene2symbol <- data.frame(gene_id=Chlamy_genes$Name2,
+                         Symbol=Chlamy_genes$geneName)
+dim(gene2symbol)
+gene2symbol[duplicated(gene2symbol$gene_id),]
+gene2symbol <- gene2symbol[!duplicated(gene2symbol$gene_id),]
+dim(gene2symbol)
+summary(mcols(gse)$gene_id %in% gene2symbol$gene_id)
+summary(gene2symbol$gene_id %in% mcols(gse)$gene_id)
+
+
+
+
+```
+
+
+```{r}
+
+# old code
+
+
+
+# gff (same data as v5.6)
+dir1 <- "S:/AG/AG-Scholz-NGS/Daten/Simon/linux-ngs/salmon/salmon_index_chlamy"
+gtfPath <- file.path(dir1,"Phytozone_v6.1/CreinhardtiiCC_4532_707_v6.1.gene.gff3.gz")
+file.exists(gtfPath)
+head(readLines(gtfPath,n=50))
+gff <- read.delim(gtfPath, header=F, comment.char="#")
+head(gff)
+
+getAttributeField <- function (x, field, attrsep = ";") {
+     s = strsplit(x, split = attrsep, fixed = TRUE)
+     sapply(s, function(atts) {
+         a = strsplit(atts, split = "=", fixed = TRUE)
+         m = match(field, sapply(a, "[", 1))
+         if (!is.na(m)) {
+             rv = a[[m]][2]
+         }
+         else {
+             rv = as.character(NA)
+         }
+         return(rv)
+     })
+}
+
+gffRead <- function(gffFile, nrows = -1) {
+     cat("Reading ", gffFile, ": ", sep="")
+     gff = read.table(gffFile, sep="\t", as.is=TRUE, quote="",
+     header=FALSE, comment.char="#", nrows = nrows,
+     colClasses=c("character", "character", "character", "integer",
+"integer",
+     "character", "character", "character", "character"))
+     colnames(gff) = c("seqname", "source", "feature", "start", "end","score", "strand", "frame", "attributes")
+     cat("found", nrow(gff), "rows with classes:",
+         paste(sapply(gff, class), collapse=", "), "\n")
+      stopifnot(!any(is.na(gff$start)), !any(is.na(gff$end)))
+     return(gff)
+}
+
+Chlamy_gff <- gffRead(gtfPath)
+Chlamy_gff
+Chlamy_gff$Name <- getAttributeField(Chlamy_gff$attributes, "Name")
+Chlamy_gff$ID <- getAttributeField(Chlamy_gff$attributes, "ID")
+Chlamy_gff$Parent <- getAttributeField(Chlamy_gff$attributes, "Parent")
+Chlamy_gff$pacid <- getAttributeField(Chlamy_gff$attributes, "pacid")
+Chlamy_gff$tID <- getAttributeField(Chlamy_gff$attributes, "tID")
+Chlamy_gff$geneName <- getAttributeField(Chlamy_gff$attributes, "geneName")
+Chlamy_gff$longest <- getAttributeField(Chlamy_gff$attributes, "longest")
+
+
+Chlamy_genes <- subset(Chlamy_gff, !geneName =="")
+Chlamy_genes$Name2 <- paste(str_split(Chlamy_genes$Name, pattern = "\\.", simplify = TRUE)[,1],str_split(Chlamy_genes$Name, pattern = "\\.", simplify = TRUE)[,2],sep=".")
+gene2symbol6 <- data.frame(gene_id=Chlamy_genes$Name2,
+                         Symbol=Chlamy_genes$geneName)
+dim(gene2symbol6)
+gene2symbol6[duplicated(gene2symbol6$gene_id),]
+gene2symbol6 <- gene2symbol6[!duplicated(gene2symbol6$gene_id),]
+dim(gene2symbol6)
+summary(mcols(gse)$gene_id %in% gene2symbol6$gene_id)
+summary(gene2symbol6$gene_id %in% mcols(gse)$gene_id)
+
+# alternative v6.1 genes
+gff2 <- read.gff(gtfPath)
+head(gff2)
+
+Chlamy_gff <- gff2
+Chlamy_gff
+Chlamy_gff$Name <- getAttributeField(Chlamy_gff$attributes, "Name")
+Chlamy_gff$ID <- getAttributeField(Chlamy_gff$attributes, "ID")
+Chlamy_gff$Parent <- getAttributeField(Chlamy_gff$attributes, "Parent")
+Chlamy_gff$geneName <- getAttributeField(Chlamy_gff$attributes, "geneName")
+Chlamy_gff$pacid <- getAttributeField(Chlamy_gff$attributes, "pacid")
+Chlamy_gff$tID <- getAttributeField(Chlamy_gff$attributes, "tID")
+Chlamy_gff$longest <- getAttributeField(Chlamy_gff$attributes, "longest")
+head(Chlamy_gff)
+summary(Chlamy_gff$ID)
+summary(is.na(Chlamy_gff$geneName))
+summary(is.na(Chlamy_gff$ID))
+
+# transcript
+list.files(dirname(gtfPath))
+gtfPath <- file.path(dir1,"Phytozone_v6.1/CreinhardtiiCC_4532_707_v6.1.transcript.fa.gz")
+gff <- read.delim(gtfPath, header=F, comment.char="#")
+head(gff)
+# fasta file with sequnces
+
+# annotation_info
+list.files(dirname(gtfPath))
+gtfPath <- file.path(dir1,"Phytozone_v6.1/CreinhardtiiCC_4532_707_v6.1.annotation_info.txt")
+gff <- read.delim(gtfPath, header=T)
+head(gff)
+```
+
+
+
+
+
+### b2) add GFF data into gse ####
+```{r}
+summary(anno$gene_id %in% mcols(gse)$gene_id)
+summary(mcols(gse)$gene_id %in% anno$gene_id)
+
+gsetable <- as.data.frame(mcols(gse)[,c(1,3)])
+
+class(gsetable)
+class(anno)
+
+dim(gsetable)
+dim(anno)
+
+summary(duplicated(anno$gene_id))
+
+# choose info
+
+anno_join <- anno[,c("gene_id", "geneSymbol", "previousIdentifiers", "previousIdentifiers_list", "Description", "Comments", "TargetP", "Predalgo")]
+anno_join
+
+head(anno_join$previousIdentifiers)
+head()
+  
+prev.symbols <- str_replace_all(anno_join$previousIdentifiers,pattern="g[0-9].t[0-9]", replacement="#") %>%
+  str_remove_all(pattern="0#|0#|0|#") 
+head(prev.symbols)
+length(prev.symbols)
+anno_join$prev.symbols <- prev.symbols
+
+new <- plyr::join(gsetable,anno, by = "gene_id", type = "left")
+dim(new)
+new2 <- left_join(gsetable,anno,by = "gene_id")
+dim(new2)
+# mcols(gse)$symbol <- new$Symbol
+# mcols(gse)$gene_id2 <- {}
+
+mcols(gse)
+
+getwd()
+# save(gse,file="tximeta.txm")
+
+```
+
+
+
+# DESeq2 Analysis
+
+```{r}
+library(DESeq2)
+load(file="tximeta.txm")
+colData(gse)
+gse$condition
+
+# dds <- DESeqDataSet(gse, ~strain+media+strain:media)
+# dds <- DESeqDataSet(gse, ~strain+media)
+dds <- DESeqDataSet(gse, ~condition)
+colData(dds)$names
+
+
+# gse_tap <- gse[,gse$media == "TAP"]
+# gse_hsm <- gse[,gse$media == "HSM"]
+# dds_tap <- DESeqDataSet(gse_tap, ~strain)
+# dds_hsm <- DESeqDataSet(gse_hsm, ~strain)
+# dds_tap
+# dds_hsm
+
+##########################################\n
+## filter all rows with rowsum = 0 ####
+
+hist(log(counts(dds)), breaks=100, ylim = c(0,100000))
+hist(counts(dds), breaks=1000000, ylim = c(0,100000), xlim = c(0,100))
+# -> dip at log(counts(dds)=2)
+remove0 <- rowSums(counts(dds) == 0) == length(colData(dds)[, 1])
+head(remove0)
+summary(remove0)
+dds <- dds[!remove0,]
+
+keep.sn <- rowSums(counts(dds)) >= (sample.number <- nrow(colData(dds)))
+summary(keep.sn)
+dds <- dds[keep.sn,]
+
+dds <- estimateSizeFactors(dds)
+dds
+head(assays(dds)[["counts"]])[1:5,1:5]
+length(rownames(counts(dds)))
+# colData(dds)$strain <- factor(colData(dds)$strain)
+# colData(dds)$condition <- condition
+
+## combine replicates #####
+colData(dds)
+dds <- collapseReplicates(dds, dds$sampleid,dds$lane)
+colData(dds)
+dds$runsCollapsed
+colnames(dds)
+matchFirstLevel <- dds$sampleid == levels(factor(dds$sampleid))[1]
+all(rowSums(counts(dds[,matchFirstLevel])) == counts(dds[,1]))
+
+###########
+# run DESeq
+dds <- DESeq(dds)
+plotMA(dds)
+plotCounts(dds, gene = "Cre01.g000150", intgroup = "condition")
+
+###############
+# save dds #####
+
+saveRDS(dds, file = "S:/AG/AG-Scholz-NGS/Daten/Simon/P3043/dds.RDS", compress = FALSE)
+dds <- readRDS("S:/AG/AG-Scholz-NGS/Daten/Simon/P3043/dds.RDS")
+dds
+
+```
+
+# Quality
+
+## PCA
+```{r}
+outdir <- "C:/Users/kelterbs/OneDrive - Charité - Universitätsmedizin Berlin/NGS (RNA-Seq & CRISPR)/Chlamy RNA-Seq P3043"
+# setwd(outdir)
+# dds <- readRDS("dds.RDS")
+
+colData(dds)
+vsd <- vst(dds, blind=FALSE)
+z <- plotPCA(vsd, intgroup = c("trial"))
+z$data$name <- sampleid 
+z + geom_label(aes(label = name))
+
+mappingrates
+
+pcaData <- plotPCA(vsd, intgroup=c("condition", "trial", "sampleid"), returnData=TRUE)
+percentVar <- round(100 * attr(pcaData, "percentVar"))
+ggplot(pcaData, aes(PC1, PC2, color=condition, shape = trial)) +
+  geom_point(size=3) +
+  geom_text_repel(aes(label = sampleid), size = 3) +
+  xlab(paste0("PC1: ",percentVar[1],"% variance")) +
+  ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
+  coord_fixed()
+
+# run all lines together
+pdf(file="graphs/PCA.pdf", width=12, height=12)
+par(mar=c(4,4,4,4)+.1)
+xx <- ggplot(pcaData, aes(PC1, PC2, color=condition, shape = trial)) +
+  geom_point(size=3) +
+  geom_text_repel(aes(label = sampleid), size = 3) +
+  xlab(paste0("PC1: ",percentVar[1],"% variance")) +
+  ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
+  coord_fixed()
+plot(xx)
+dev.off()
+
+ntd <- normTransform(dds)
+library("vsn")
+meanSdPlot(assay(ntd))
+
+```
+# Make results 
+
+```{r}
+resultsNames(dds)
+
+# TAP = fib_TAP - WT_TAP
+# HSM = fib_HSM - WT_HSM
+# fib = fib_HSM - fib_TAP
+# WT = WT_HSM - WT_TAP
+
+res_TAP <- results(dds, contrast = c("condition","fib_TAP","WT_TAP"))
+res_HSM <- results(dds, contrast = c("condition","fib_HSM","WT_HSM"))
+res_fib <- results(dds, contrast = c("condition","fib_HSM","fib_TAP"))
+res_WT <- results(dds, contrast = c("condition","WT_HSM","WT_TAP"))
+
+resLFC_TAP <- lfcShrink(dds, contrast = c("condition","fib_TAP","WT_TAP"), type="ashr")
+resLFC_HSM <- lfcShrink(dds, contrast = c("condition","fib_HSM","WT_HSM"), type="ashr")
+resLFC_TAP <- lfcShrink(dds, contrast = c("condition","fib_HSM","fib_TAP"), type="ashr")
+resLFC_TAP <- lfcShrink(dds, contrast = c("condition","WT_HSM","WT_TAP"), type="ashr")
+
+
+res_TAP["Cre01.g000150",]
+resLFC_TAP <- lfcShrink(dds, coef="condition_fib_TAP_vs_WT_TAP", type="apeglm")
+plotMA(resLFC_TAP, main = "fib vs. WT in TAP", ylim=c(-4,4))
+summary(res_TAP)
+
+pdf(file="graphs/MA-fib.vs.WT.pdf", width=8, height=5)
+plotMA(resLFC_TAP, main = "fib vs. WT in TAP", ylim=c(-4,4))
+dev.off()
+
+
+
+res_HSM <- results(dds, contrast = c("condition","fib_HSM","WT_HSM"))
+res_HSM["Cre01.g000150",]
+
+
+
+```
+
+
+
+
+## Plot counts
+
+```{r}
+redPR <- "Cre13.g587550"
+
+plotCounts(dds, gene = redPR, intgroup = "condition")
+
+d <-  plotCounts(dds, gene=redPR, intgroup="condition", main= paste(redPR,"(redPR)",sep=" "),returnData=TRUE)
+
+g1 <- ggplot(d, aes(x = condition, y = count, color = trial)) + 
+  geom_point() +
+  ggtitle(paste(redPR,"(redPR)",sep=" ")) +
+  coord_cartesian(ylim = c(0, 15000))
+
+plot(g1)
+
+ggsave("Counts_redPR.pdf",
+       width = 5,
+       height = 5)
+
+dim(dds)
+
+COQ3 <- "Cre10.g423750"
+plotCounts(dds, gene = COQ3, intgroup = "condition")
+
+PHO1 <- "Cre08.g359300"
+plotCounts(dds, gene = PHO1, intgroup = "condition")
+
+
+d <-  plotCounts(dds, gene=PHO1, intgroup="condition", main= paste(PHO1,"(PHO1)",sep=" "),returnData=TRUE)
+g1 <- ggplot(d, aes(x = condition, y = count, colour = condition)) + 
+  geom_point() +
+  ggtitle(paste(PHO1,"(PHO1)",sep=" ")) +
+  coord_cartesian(ylim = c(0, 15000))
+
+plot(g1)
+
+g <- ggplot(d, aes(x = condition, y = count, color = condition, group = condition)) + 
+    geom_line() +
+    geom_boxplot(aes(group = condition, colour = condition)) +
+    geom_point() + #position=position_jitter(w = 0.1,h = 0)
+    # geom_text_repel(aes(label = rownames(d))) + 
+    theme_bw() +
+    ggtitle("PHO1") +
+    theme(plot.title = element_text(hjust = 0.5))
+plot(g)
+```
+
+
+## Volcano Plot
+
+```{r}
+library(EnhancedVolcano)
+
+ EnhancedVolcano(res_TAP,
+    lab = rownames(res_TAP),
+    x = 'log2FoldChange',
+    y = 'pvalue')
+
+plot(res$rLogFC.mut_roc,res$avgLogExpr.mut_roc)
+
+ggplot(res,aes(rLogFC.mut_roc,baseMean)) +
+  geom_point() +
+  geom_point(data = top[], colour = "blue") + 
+  geom_point(data = res[redPR,], colour = "red") +
+  geom_text_repel(data = res[redPR,], aes(label="redPR"),colour = "red",hjust=-0.5, vjust=-1)
+getwd()
+ggsave("Data_overview.pdf",
+       width = 10,
+       height = 6)
+
+```
+
+## Heatmap
+```{r}
+library("pheatmap")
+ntd <- normTransform(dds)
+select <- order(rowMeans(counts(dds,normalized=TRUE)),
+                decreasing=TRUE)[1:100]
+df <- as.data.frame(colData(dds)[,c("condition","trial")])
+pheatmap(assay(ntd)[select,], cluster_rows=TRUE, show_rownames=FALSE,
+         cluster_cols=TRUE, annotation_col=df)
+
+
+
+library("pheatmap")
+top[,4:6]
+df_heat <- rbind(top[order(top$rLogFC.mut_roc),4:6],res[redPR,4:6])
+ntd <- normTransform(dds)
+
+colnames(df_heat) <- paste(colData(dds)$sample)
+df <- as.data.frame(colData(dds)[,c("strain", "sample")])
+# rownames(df) <- df$sample
+xx <- pheatmap(assay(rld)[c(redPR,top$ID[order(top$rLogFC.mut_roc)]),2:3], cluster_rows=FALSE, show_rownames=TRUE,
+         cluster_cols=FALSE, annotation_col=df, show_colnames = FALSE)
+ggsave("Heatmap_top.pdf",plot=xx,
+       width = 10,
+       height = 20)
+
+
+
+   
+```
+
+
+# Export
+
+```{r}
+library(writexl)
+
+res_exp <- data.frame("gene_id" = rownames(res_TAP),
+                      "gene_name" = anno[rownames(res_TAP),"geneSymbol"],
+                      "previousIdentifiers" = anno[rownames(res_TAP),"previousIdentifiers"],
+                   "Description" = anno[rownames(res_TAP),"Description"],
+                   "Comments" = anno[rownames(res_TAP),"Comments"],
+                   "TargetP" = anno[rownames(res_TAP),"TargetP"],
+                   "Predalgo" = anno[rownames(res_TAP),"Predalgo"],
+                   "baseMean" = res_TAP$baseMean,
+                   "TAP.l2FC" = res_TAP$log2FoldChange,
+                   "TAP.pvalue" = res_TAP$pvalue,
+                   "TAP.padj" = res_TAP$padj,
+                   "HSM.l2FC" = res_HSM$log2FoldChange,
+                   "HSM.pvalue" = res_HSM$pvalue,
+                   "HSM.padj" = res_HSM$padj,
+                   "fib.l2FC" = res_fib$log2FoldChange,
+                   "fib.pvalue" = res_fib$pvalue,
+                   "fib.padj" = res_fib$padj,
+                   "WT.l2FC" = res_WT$log2FoldChange,
+                   "WT.pvalue" = res_WT$pvalue,
+                   "WT.padj" = res_WT$padj,
+                counts(dds)[rownames(res_TAP),])
+res_exp
+
+res_TAP
+res_HSM
+res_fib
+res_WT
+
+outdir <- "C:/Users/kelterbs/OneDrive - Charité - Universitätsmedizin Berlin/NGS (RNA-Seq & CRISPR)/Chlamy RNA-Seq P3043"
+
+write_xlsx(data.frame(res_exp),
+           paste(outdir,"2023_08 P3043 results.xlsx",sep="/"))
+
+
+
+
+```
+
+
+# End
+```{r}
+
+```
+
+
+
