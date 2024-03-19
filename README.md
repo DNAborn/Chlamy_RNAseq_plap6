@@ -1,4 +1,4 @@
 # Chlamy_RNAseq_plap6
 
-1. [Data processing](data_process)
-2. [Data dive](data_dive)
+1. [Data processing](1_data_processing)
+2. [Data dive](2_data_dive)
