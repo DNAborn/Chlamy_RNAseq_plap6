@@ -156,7 +156,7 @@ sample.table$samplename <- paste(condition,sampleid,sep="_")
 outlier <- c("S15", "S16", "S17", "S18", "S19", "S26")
 sample.table$outlier <- str_detect(sample.table$sampleid, paste(outlier, collapse = "|")) %>% factor() %>% relevel("FALSE")
 
-sample.table %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+sample.table %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 sample.table$strain %>% levels()
 
 ```
@@ -198,7 +198,7 @@ for (i in list.files(path = quantdir)){
 # Make table
 
 m.table <- data.frame(sample.table,mappingrates)
-m.table %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+m.table[1:10,c("sample","mappingrates")] %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 ```
 
 ### Plot mapping rates
@@ -214,8 +214,8 @@ m.table %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(
 # par(mar=c(4,15,4,4)+.1)
 # barplot(height=mappingrates, names=m.table$sample, horiz=T, las=1)
 
-par(mar=c(4,15,4,4)+.1)
-xx <- barplot(height=mappingrates, names=m.table$sample, horiz=T, las=1, xlim=c(0,100)) #col=col
+par(mar=c(4,8,4,4)+.1)
+xx <- barplot(height=mappingrates, names=m.table$sample, cex.names=0.5, horiz=T, las=1, xlim=c(0,100)) #col=col
 text(x = mappingrates, y = xx, label = mappingrates, pos = 4, cex = 0.8, col = "red")
 
 
@@ -440,7 +440,6 @@ gene2symbol[!gene2symbol$gene_id %in% mcols(gse)$gene_id,] %>% dim()
 
 ### a-II) add gene.gff3 data into gse
 ```{r add_gff3, eval=FALSE}
-gse <- readRDS(paste(datadir,"gse.RDS",sep="/"))
 
 # Remove "_4532"
 mcols(gse)$gene_id2 <- mcols(gse)[,"gene_id"]
@@ -576,7 +575,6 @@ anno <- readRDS(paste(datadir,"anno.RDS",sep="/"))
 
 ### b-II) add anno data into gse ####
 ```{r add_anno, eval=FALSE}
-gse <- readRDS(paste(datadir,"gse.RDS",sep="/"))
 anno <- readRDS(paste(datadir,"anno.RDS",sep="/"))
 
 summary(anno$gene_id %in% mcols(gse)$gene_id)
@@ -618,7 +616,7 @@ gse
 
 gse <- readRDS(paste(datadir,"gse.RDS",sep="/"))
 
-colData(gse) %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+colData(gse) %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 head(mcols(gse)) %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 gse$condition %>% levels()
 
@@ -649,8 +647,6 @@ head(assays(dds)[["counts"]])[1:5,1:5] %>% kable() %>% kable_styling("striped", 
 
 length(rownames(counts(dds)))
 
-colData(dds) %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
-
 ## combine technical replicates #####
 dds <- collapseReplicates(dds, dds$sampleid,dds$lane)
 colData(dds) %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
@@ -668,13 +664,13 @@ colData(dds)$genotype <- colData(dds)$strain
 dds <- DESeq(dds)
 plotMA(dds)
 
-plotCounts(dds, gene = "Cre01.g000150", intgroup = "condition", col=colData(dds)$outlier)
+plotCounts(dds, gene = "Cre10.g423750", intgroup = "condition", col=colData(dds)$outlier)
 
 ###############
 # save dds #####
 
-saveRDS(dds, file = paste(datadir,"dds.RDS",sep="/"), compress = FALSE)
-dds <- readRDS(paste(datadir,"dds.RDS",sep="/"))
+# saveRDS(dds, file = paste(datadir,"dds.RDS",sep="/"), compress = FALSE)
+# dds <- readRDS(paste(datadir,"dds.RDS",sep="/"))
 
 ```
 
@@ -682,7 +678,7 @@ dds <- readRDS(paste(datadir,"dds.RDS",sep="/"))
 ## -Quality I
 ### - Data transformations
 ```{r pre_trans}
-dds <- readRDS(paste(datadir,"dds.RDS",sep="/"))
+# dds <- readRDS(paste(datadir,"dds.RDS",sep="/"))
 vsd <- vst(dds, blind=FALSE) #Variance stabilized transformation
 ntd <- normTransform(dds)
 ```
@@ -694,7 +690,7 @@ meanSdPlot(assay(vsd))
 ```
 
 ### - Check sample distance
-```{r pre_sample_dist, fig.height=12, out.width="100%"}
+```{r pre_sample_dist, fig.height=8, out.width="100%"}
 sampleDists <- dist(t(assay(vsd)))
 
 sampleDistMatrix <- as.matrix(sampleDists)
@@ -725,7 +721,7 @@ pheatmap(sampleDistMatrix,
 ```
 
 ### - Advanced PCA
-```{r pca_advanced, warning = FALSE, fig.show="hold", out.width="80%", fig.height=6}
+```{r pca_advanced, warning = FALSE, fig.show="hold", out.width="80%", fig.width=8}
 vst_dat <- assay(vst(dds))
 p <- pca(vst_dat, metadata = colData(dds), removeVar = 0.2)
 
@@ -786,7 +782,7 @@ dds <- dds[,keep]
 dds <- DESeq(dds)
 plotMA(dds)
 
-plotCounts(dds, gene = "Cre01.g000150", intgroup = "condition")
+plotCounts(dds, gene = "Cre10.g423750", intgroup = "condition")
 
 # save dds #####
 
@@ -822,7 +818,7 @@ meanSdPlot(assay(rld))
 ```
 
 ### - Check sample distance
-```{r pre_sample_dist2, fig.height=12, out.width="100%"}
+```{r pre_sample_dist2, fig.width=8, out.width="100%"}
 sampleDists <- dist(t(assay(vsd)))
 
 sampleDistMatrix <- as.matrix(sampleDists)
@@ -853,7 +849,7 @@ pheatmap(sampleDistMatrix,
 ```
 
 ### - Advanced PCA
-```{r pca_advanced2, warning = FALSE, fig.show="hold", out.width="80%", fig.height=6}
+```{r pca_advanced2, warning = FALSE, fig.show="hold", out.width="80%", fig.width=6}
 vst_dat <- assay(vst(dds))
 p <- pca(vst_dat, metadata = colData(dds), removeVar = 0.9)
 
@@ -866,7 +862,7 @@ bi1 <- biplot(p,x="PC2",y="PC1",
     legendPosition = 'bottom')
 bi2 <- biplot(p,x="PC2",y="PC1",
     lab = p$metadata$experiment,
-    colby = 'outlier',colkey = c("grey30","red1"),
+    colby = 'trial',colkey = c("grey30","red1"),
     hline = 0, vline = 0,
     encircle = TRUE, encircleFill = TRUE,
     legendLabSize = 10, legendIconSize = 4.0,
@@ -880,7 +876,7 @@ p1 <- pairsplot(p,colby = 'media', colkey = viridis(2),title = 'media',titleLabS
 p2 <- pairsplot(p,colby = 'genotype', colkey = viridis(2),title = 'genotype',titleLabSize = 15,trianglelabSize = 12,
                 hline = 0, vline = 0,gridlines.major = FALSE, gridlines.minor = FALSE,
                 plotaxes = FALSE,margingaps = unit(c(-0.01, -0.01, -0.01, -0.01), 'cm')) # -> PC1&3 = genotype
-p3 <- pairsplot(p,colby = 'trial', colkey = c("grey30","red1"),title = 'outlier',titleLabSize = 15,trianglelabSize = 12,
+p3 <- pairsplot(p,colby = 'trial', colkey = c("grey30","red1"),title = 'trial',titleLabSize = 15,trianglelabSize = 12,
                 hline = 0, vline = 0,gridlines.major = FALSE, gridlines.minor = FALSE,
                 plotaxes = FALSE,margingaps = unit(c(-0.01, -0.01, -0.01, -0.01), 'cm')) # -> PC4 = experiment
 p4 <- pairsplot(p,colby = 'condition', colkey = viridis(4),title = 'condition',titleLabSize = 15,trianglelabSize = 12,
