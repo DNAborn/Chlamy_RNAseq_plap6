@@ -163,14 +163,6 @@ sample.table$strain %>% levels()
 
 
 ## Mapping Rates
-https://stackoverflow.com/questions/14261776/extracting-data-from-text-files
-
-working dir:
-  "C:/Users/kelterbs/OneDrive - Charité - Universitätsmedizin Berlin/RNA-seq/Chlamy RNA-Seq P3043"
-
-data dir:
-  "S:/AG/AG-Scholz-NGS/Daten/Simon/P3043/quants2"
-
 
 ```{r mapping_rates}
 
@@ -202,7 +194,7 @@ m.table[1:10,c("sample","mappingrates")] %>% kable() %>% kable_styling("striped"
 ```
 
 ### Plot mapping rates
-```{r plot mappingrates, fig.height=6, out.width="100%"}
+```{r plot mappingrates, fig.height=10}
 
 # Colours
 
@@ -216,7 +208,7 @@ m.table[1:10,c("sample","mappingrates")] %>% kable() %>% kable_styling("striped"
 
 par(mar=c(4,8,4,4)+.1)
 xx <- barplot(height=mappingrates, names=m.table$sample, cex.names=0.5, horiz=T, las=1, xlim=c(0,100)) #col=col
-text(x = mappingrates, y = xx, label = mappingrates, pos = 4, cex = 0.8, col = "red")
+text(x = mappingrates, y = xx, label = mappingrates, pos = 4, cex = 0.5, col = "red")
 
 
 ```
@@ -612,7 +604,7 @@ gse
 
 
 ## DESeq2 Analysis
-```{r desq2,fig.show="hold"}
+```{r desq2, fig.show="hold", out.width="50%"}
 
 gse <- readRDS(paste(datadir,"gse.RDS",sep="/"))
 
@@ -664,7 +656,7 @@ colData(dds)$genotype <- colData(dds)$strain
 dds <- DESeq(dds)
 plotMA(dds)
 
-plotCounts(dds, gene = "Cre10.g423750", intgroup = "condition", col=colData(dds)$outlier)
+plotCounts(dds, gene = "Cre10.g423750", intgroup = "condition", col=colData(dds)$outlier, main = "Cre10.g423750 (COQ3)")
 
 ###############
 # save dds #####
@@ -683,14 +675,14 @@ vsd <- vst(dds, blind=FALSE) #Variance stabilized transformation
 ntd <- normTransform(dds)
 ```
 
-```{r pre_trans_fig, figures-side, fig.show="hold", out.width="33%"}
+```{r pre_trans_fig, fig.show="hold", out.width="33%"}
 meanSdPlot(assay(ntd))
 meanSdPlot(assay(vsd))
 
 ```
 
 ### - Check sample distance
-```{r pre_sample_dist, fig.height=8, out.width="100%"}
+```{r pre_sample_dist, fig.height=9, out.width="100%"}
 sampleDists <- dist(t(assay(vsd)))
 
 sampleDistMatrix <- as.matrix(sampleDists)
@@ -768,7 +760,7 @@ p <- pca(vst_dat, metadata = colData(dds), removeVar = 0.2)
 ## Remove outlier
 # outliner: S15, S16, S17, S18, S19, S26
 
-```{r remove_outlier}
+```{r remove_outlier, fig.show="hold", out.width="50%"}
 
 outliner <- c("S15", "S16", "S17", "S18", "S19", "S26")
 rmo <- colnames(dds)[str_detect(colnames(dds), paste(outliner, collapse = "|"))]
@@ -782,7 +774,7 @@ dds <- dds[,keep]
 dds <- DESeq(dds)
 plotMA(dds)
 
-plotCounts(dds, gene = "Cre10.g423750", intgroup = "condition")
+plotCounts(dds, gene = "Cre10.g423750", intgroup = "condition",col=colData(dds)$trial)
 
 # save dds #####
 
@@ -809,7 +801,7 @@ load(file=paste(datadir,"rlog.rld", sep="/"))
 rld
 ```
 
-```{r pre_trans_fig2, figures-side, fig.show="hold", out.width="33%"}
+```{r pre_trans_fig2, fig.show="hold", out.width="33%"}
 load(file=paste(datadir,"rlog.rld", sep="/"))
 meanSdPlot(assay(ntd))
 meanSdPlot(assay(vsd))
@@ -818,7 +810,7 @@ meanSdPlot(assay(rld))
 ```
 
 ### - Check sample distance
-```{r pre_sample_dist2, fig.width=8, out.width="100%"}
+```{r pre_sample_dist2, fig.width=9, out.width="100%"}
 sampleDists <- dist(t(assay(vsd)))
 
 sampleDistMatrix <- as.matrix(sampleDists)
@@ -849,7 +841,7 @@ pheatmap(sampleDistMatrix,
 ```
 
 ### - Advanced PCA
-```{r pca_advanced2, warning = FALSE, fig.show="hold", out.width="80%", fig.width=6}
+```{r pca_advanced2, warning = FALSE, fig.show="hold", out.width="80%", fig.width=8}
 vst_dat <- assay(vst(dds))
 p <- pca(vst_dat, metadata = colData(dds), removeVar = 0.9)
 

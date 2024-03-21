@@ -420,13 +420,6 @@ FALSE
 
 ## Mapping Rates
 
-<https://stackoverflow.com/questions/14261776/extracting-data-from-text-files>
-
-working dir: “C:/Users/kelterbs/OneDrive - Charité - Universitätsmedizin
-Berlin/RNA-seq/Chlamy RNA-Seq P3043”
-
-data dir: “S:/AG/AG-Scholz-NGS/Daten/Simon/P3043/quants2”
-
     # list.files(path = outdir)
     # list.files(path = datadir)
     # list.files(path = quantdir)
@@ -562,9 +555,9 @@ RNA\_05\_WT-TAP-2\_S15\_L008
 
     par(mar=c(4,8,4,4)+.1)
     xx <- barplot(height=mappingrates, names=m.table$sample, cex.names=0.5, horiz=T, las=1, xlim=c(0,100)) #col=col
-    text(x = mappingrates, y = xx, label = mappingrates, pos = 4, cex = 0.8, col = "red")
+    text(x = mappingrates, y = xx, label = mappingrates, pos = 4, cex = 0.5, col = "red")
 
-<img src="Readme_files/figure-markdown_strict/plot mappingrates-1.png" width="100%" />
+![](Readme_files/figure-markdown_strict/plot%20mappingrates-1.png)
 
 ## Tximeta
 
@@ -3231,7 +3224,7 @@ L007,L008
     dds <- DESeq(dds)
     plotMA(dds)
 
-    plotCounts(dds, gene = "Cre10.g423750", intgroup = "condition", col=colData(dds)$outlier)
+    plotCounts(dds, gene = "Cre10.g423750", intgroup = "condition", col=colData(dds)$outlier, main = "Cre10.g423750 (COQ3)")
 
     ###############
     # save dds #####
@@ -3239,7 +3232,7 @@ L007,L008
     # saveRDS(dds, file = paste(datadir,"dds.RDS",sep="/"), compress = FALSE)
     # dds <- readRDS(paste(datadir,"dds.RDS",sep="/"))
 
-![](Readme_files/figure-markdown_strict/desq2-1.png)![](Readme_files/figure-markdown_strict/desq2-2.png)![](Readme_files/figure-markdown_strict/desq2-3.png)![](Readme_files/figure-markdown_strict/desq2-4.png)
+<img src="Readme_files/figure-markdown_strict/desq2-1.png" width="50%" /><img src="Readme_files/figure-markdown_strict/desq2-2.png" width="50%" /><img src="Readme_files/figure-markdown_strict/desq2-3.png" width="50%" /><img src="Readme_files/figure-markdown_strict/desq2-4.png" width="50%" />
 
 ## -Quality I
 
@@ -3252,7 +3245,7 @@ L007,L008
     meanSdPlot(assay(ntd))
     meanSdPlot(assay(vsd))
 
-<img src="Readme_files/figure-markdown_strict/pre_trans_fig, figures-side-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/pre_trans_fig, figures-side-2.png" width="33%" />
+<img src="Readme_files/figure-markdown_strict/pre_trans_fig-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/pre_trans_fig-2.png" width="33%" />
 
 ### - Check sample distance
 
@@ -3357,11 +3350,7 @@ colData(dds), removeVar = 0.2)
     dds <- DESeq(dds)
     plotMA(dds)
 
-![](Readme_files/figure-markdown_strict/remove_outlier-1.png)
-
-    plotCounts(dds, gene = "Cre10.g423750", intgroup = "condition")
-
-![](Readme_files/figure-markdown_strict/remove_outlier-2.png)
+    plotCounts(dds, gene = "Cre10.g423750", intgroup = "condition",col=colData(dds)$trial)
 
     # save dds #####
 
@@ -3378,6 +3367,8 @@ colData(dds), removeVar = 0.2)
     ## rowData names(45): gene_id tx_ids ... maxCooks replace
     ## colnames(26): S1 S10 ... S8 S9
     ## colData names(16): names sample ... sizeFactor replaceable
+
+<img src="Readme_files/figure-markdown_strict/remove_outlier-1.png" width="50%" /><img src="Readme_files/figure-markdown_strict/remove_outlier-2.png" width="50%" />
 
 ## -Quality II
 
@@ -3408,7 +3399,7 @@ colData(dds), removeVar = 0.2)
     meanSdPlot(assay(vsd))
     meanSdPlot(assay(rld))
 
-<img src="Readme_files/figure-markdown_strict/pre_trans_fig2, figures-side-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/pre_trans_fig2, figures-side-2.png" width="33%" /><img src="Readme_files/figure-markdown_strict/pre_trans_fig2, figures-side-3.png" width="33%" />
+<img src="Readme_files/figure-markdown_strict/pre_trans_fig2-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/pre_trans_fig2-2.png" width="33%" /><img src="Readme_files/figure-markdown_strict/pre_trans_fig2-3.png" width="33%" />
 
 ### - Check sample distance
 
