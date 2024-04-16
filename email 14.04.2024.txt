@@ -1,0 +1,13 @@
+Hi Simon,
+
+for the first Fibrillin paper, as we talked would be great if I have these four plot separately as follow:
+  1. In WT/cia5 mutant cells; gene expression of :
+  -Rubisco large sub unit (rbcL)
+-PLAP6 (Fibrillin)
+2. In WT/plap6 mutant cells gene;
+- gene expression of Cia5 in TAP and HSM (Supplementary Fig. 2)
+- gene expression of rbcL in TAP (Supplementary Fig. 4).
+
+Thanks a lot.
+Best,
+Yousef
