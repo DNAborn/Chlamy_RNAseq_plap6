@@ -82,6 +82,7 @@ dir <- paste(s,"AG/AG-Scholz-NGS/Daten/Simon/P3043",sep="/")
 gitdir <- paste(dir,"git_Chlamy_RNAseq_plap6",sep="/")
 datadir <- paste(dir,"data",sep="/")
 outdir <- gitdir
+pubdir <- paste(gitdir,"pub_figures",sep="/")
 quantdir <- paste(dirname(datadir),"quants2",sep="/")
 
 dir1 <- paste(dirname(dir),"linux-ngs/salmon/salmon_index_chlamy",sep="/")
@@ -105,6 +106,9 @@ file.exists(indexDir, fastaPath, gtfPath)
 ```{r load_dds}
 dds <- readRDS(paste(datadir,"dds.RDS",sep="/"))
 anno <- readRDS(paste(datadir,"anno.RDS",sep="/"))
+
+# load(paste(datadir,"dds.RDS",sep="/"))
+
 ```
 
 ## Make results 
@@ -189,34 +193,34 @@ COQ3 <- "Cre10.g423750"
 PHO1 <- "Cre08.g359300"
 
 # search genes
-anno[str_detect(anno[["geneSymbol"]],"COQ3"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+anno[str_detect(anno[["geneSymbol"]],"COQ3"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 # get only gene IDs
 anno[str_detect(anno[["geneSymbol"]],"CRY"),"gene_id"] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 # gene ID
 # g245450
-anno[str_detect(anno[["gene_id"]],"g245450"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+anno[str_detect(anno[["gene_id"]],"g245450"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 
 # More searches:
-anno[str_detect(anno[["geneSymbol"]],"ROC"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
-anno[str_detect(anno[["prev.symbols"]],"CRY"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
-anno[str_detect(anno[["Description"]],paste(c('Opsin', 'opsin','photoreceptor'), collapse="|")),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
-anno[str_detect(anno[["Comments"]],paste(c('phototaxis'), collapse="|")),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+anno[str_detect(anno[["geneSymbol"]],"ROC"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+anno[str_detect(anno[["prev.symbols"]],"CRY"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+anno[str_detect(anno[["Description"]],paste(c('Opsin', 'opsin','photoreceptor'), collapse="|")),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+anno[str_detect(anno[["Comments"]],paste(c('phototaxis'), collapse="|")),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 # all Chloroplast
 anno %>% filter_at(.vars = vars(Predalgo, TargetP),
                    .vars_predicate = any_vars(str_detect
                                               (. , paste0("^(", paste("Chloroplast", collapse = "|"), ")")))) %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 # all Flagellar
-anno[str_detect(anno[["Flagellar_Proteome"]],"Total Peptides:"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+anno[str_detect(anno[["Flagellar_Proteome"]],"Total Peptides:"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 # all transmembrane with 7 helices
-anno[str_detect(anno[["TMHMM_transmembrane"]],"TMHMM: 7 helices"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+anno[str_detect(anno[["TMHMM_transmembrane"]],"TMHMM: 7 helices"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 # fibrillin related
 coqs <- anno[str_detect(anno[["geneSymbol"]],"COQ"),]
-anno[str_detect(anno[["Comments"]],paste(c('Coenzyme Q'), collapse="|")),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+anno[str_detect(anno[["Comments"]],paste(c('Coenzyme Q'), collapse="|")),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 goi <- anno[c(PHO1,coqs[,"gene_id"]),]
 
 ```
@@ -253,9 +257,9 @@ plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, mai
 
 
 # search genes
-anno[str_detect(anno[["geneSymbol"]],"CRY"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
-anno[str_detect(anno[["geneSymbol"]],"ROC"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
-anno[str_detect(anno[["previousIdentifiers"]],"CRY"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+anno[str_detect(anno[["geneSymbol"]],"CRY"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+anno[str_detect(anno[["geneSymbol"]],"ROC"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+anno[str_detect(anno[["previousIdentifiers"]],"CRY"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 gene <- COQ3
 plotCounts(dds, gene = gene, intgroup = "condition", col=colData(dds)$genotype, main =anno[gene,"geneSymbol"])
@@ -301,8 +305,8 @@ for (i in goi$gene_id){
     geom_point(position=position_dodge(width=0.75)) +
     scale_y_continuous(trans = "log2",limits = c(250,2100)) +
     # coord_cartesian(ylim = c(0,2500)) +
-    scale_color_manual(values=c("grey30","mediumpurple1")) +
-    scale_fill_manual(values=c("grey30","mediumpurple1")) +
+    scale_color_manual(values=c("grey30","orchid1")) +
+    scale_fill_manual(values=c("grey30","orchid1")) +
     theme_bw() +
     ggtitle(s) +
     theme(plot.title = element_text(hjust = 0.5))
@@ -313,51 +317,67 @@ for (i in goi$gene_id){
 length(goi)
 
 p <- g9+g2+g11+g6+g8+g12+ plot_layout(guides = "collect", axis_titles="collect", axes = 'collect') & theme(legend.position = 'right')
-ggexport(p, filename = "pub_figures/Counts_COQs.pdf",width = 8.2, height = 4.7)
-ggsave(p, filename = "pub_figures/Counts_COQs.png",width = 8.2, height = 4.7)
+p
+
 
 # ga <- ggarrange(g1,g2,g3,g4,g5,g6,g7,g8,g9,g10,g11,g12,ncol = 3, nrow = 4)
-ga1 <- ggarrange(g2+rremove("xlab"),
-                g8+rremove("xlab")+rremove("ylab"),
-                g6+rremove("xlab")+rremove("ylab"),
-                g12+rremove("xlab"),
-                g11+rremove("xlab")+rremove("ylab"),
-                g9+rremove("xlab")+rremove("ylab"),
-                common.legend = TRUE, legend = "right",
-                widths = c(1.05,1,1), heights = c(1,1),
-                ncol = 3, nrow = 2)
-ga1
-ggexport(ga1, filename = "pub_figures/Counts_COQs.pdf",width = 8.2, height = 4.7)
-ggsave(ga1, filename = "pub_figures/Counts_COQs.png",width = 8.2, height = 4.7)
+# ga1 <- ggarrange(g2+rremove("xlab"),
+#                 g8+rremove("xlab")+rremove("ylab"),
+#                 g6+rremove("xlab")+rremove("ylab"),
+#                 g12+rremove("xlab"),
+#                 g11+rremove("xlab")+rremove("ylab"),
+#                 g9+rremove("xlab")+rremove("ylab"),
+#                 common.legend = TRUE, legend = "right",
+#                 widths = c(1.05,1,1), heights = c(1,1),
+#                 ncol = 3, nrow = 2)
+# ga1
+# ggexport(ga1, filename = "pub_figures/Counts_COQs.pdf",width = 8.2, height = 4.7)
+# ggsave(ga1, filename = "pub_figures/Counts_COQs.png",width = 8.2, height = 4.7)
 
 # ((g2+g8+g6)/(g12+g11+g9)) + plot_layout(guides = "collect", axes = "collect", axis_titles="collect")
 
 
 ```
 
+#### -export COQs
+```{r export coqs, eval=FALSE}
+ggexport(p, filename = paste(pubdir,"Counts_plap6_COQs.pdf",sep="/"),width = 8.2, height = 4.7)
+ggsave(p, filename = paste(pubdir,"Counts_plap6_COQs.png",sep="/"),width = 8.2, height = 4.7)
+
+```
+
+
+
+
 ### CIA5 & rbcl
 ```{r counts_cia5_rbcl, fig.show="hold",out.width="33%"}
+anno[str_detect(anno[["geneSymbol"]],"CCM1"),1:9]
+anno[str_detect(anno[["previousIdentifiers"]],"CIA5"),1:9]
+
+
 PLAP6 <- "Cre03.g188700"
+CIA5 <- "Cre02.g096300"
 rbcl <- "CreCp.g802313"
 
 ## multiple genes
 # all COQ genes
-goi <- anno[c(PLAP6,rbcl),]
+goi <- anno[c(CIA5,rbcl),]
+goi$geneSymbol[1] <- "CIA5"
 
 n <- {0}
 for (i in goi$gene_id){
   n <- n+1
   print(n)
   print(i)
-  s <- print(anno[i,"geneSymbol"])
+  s <- print(goi[i,"geneSymbol"])
   d <-  plotCounts(dds, gene=i, intgroup=c("condition","media","genotype"),main=s,returnData=TRUE)
   g <- ggplot(d, aes(x = media, y = count, color = genotype)) + 
     geom_boxplot(aes(fill=genotype), alpha=0.5) +
     geom_point(position=position_dodge(width=0.75)) +
     scale_y_continuous(trans = "log2") +
     # coord_cartesian(ylim = c(0,2500)) +
-    scale_color_manual(values=c("grey30","salmon2")) +
-    scale_fill_manual(values=c("grey30","salmon2")) +
+    scale_color_manual(values=c("grey30","orchid1")) +
+    scale_fill_manual(values=c("grey30","orchid1")) +
     theme_bw() +
     ggtitle(s) +
     theme(plot.title = element_text(hjust = 0.5))
@@ -365,11 +385,23 @@ for (i in goi$gene_id){
   plot(g)
 }
 length(goi)
-p <- g1 + g2 + plot_layout(guides = "collect", axis_titles="collect", axes='collect')
-ggexport(p, filename = "pub_figures/Counts_cia+rbcl.pdf",width = 8.2, height = 4.7)
-ggsave(p, filename = "pub_figures/Counts_cia+rbcl.png",width = 8.2, height = 4.7)
 
+p <- g1 + g2 + plot_layout(guides = "collect", axis_titles="collect", axes='collect')
+p
 ```
+
+#### -export CIA5
+```{r export cia5, eval=FALSE}
+ggexport(g1, filename = paste(pubdir,"Counts_plap6_CIA5.pdf",sep="/"),width = 8.2, height = 4.7)
+ggsave(g1, filename = paste(pubdir,"Counts_plap6_CIA5.png",sep="/"),width = 8.2, height = 4.7)
+
+ggexport(g2, filename = paste(pubdir,"Counts_plap6_rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
+ggsave(g2, filename = paste(pubdir,"Counts_plap6_rbcl.png",sep="/"),width = 8.2, height = 4.7)
+
+ggexport(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
+ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.png",sep="/"),width = 8.2, height = 4.7)
+```
+
 
 
 ### PQs

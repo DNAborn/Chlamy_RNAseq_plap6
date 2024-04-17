@@ -60,6 +60,7 @@
     gitdir <- paste(dir,"git_Chlamy_RNAseq_plap6",sep="/")
     datadir <- paste(dir,"data",sep="/")
     outdir <- gitdir
+    pubdir <- paste(gitdir,"pub_figures",sep="/")
     quantdir <- paste(dirname(datadir),"quants2",sep="/")
 
     dir1 <- paste(dirname(dir),"linux-ngs/salmon/salmon_index_chlamy",sep="/")
@@ -244,7 +245,7 @@
     PHO1 <- "Cre08.g359300"
 
     # search genes
-    anno[str_detect(anno[["geneSymbol"]],"COQ3"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+    anno[str_detect(anno[["geneSymbol"]],"COQ3"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -278,60 +279,6 @@ previousIdentifiers
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Description
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Comments
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Polycistronic
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TMHMM\_transmembrane
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TargetP
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Predalgo
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-interactions
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-experimental\_localization
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-CLiP\_library
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-mutant\_phenotypes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Plastid.ribosome\_pulldown
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TF\_database..PMID.27067009.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Flagellar\_Proteome
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Co.expression.cluster..PMID.28710131.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-GEnome.scale.Metabolic.Model
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-gene\_id
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-previousIdentifiers\_list
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-prev.symbols
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-id.symbol
-</th>
 </tr>
 </thead>
 <tbody>
@@ -362,54 +309,6 @@ COQ3#g10480.t1#
 </td>
 <td style="text-align:left;">
 Hexaprenyldihydroxybenzoate methyltransferase
-</td>
-<td style="text-align:left;">
-Similar to yeast hexaprenyldihydroxybenzoate methyltransferase
-(GI:92090588), involved in Coenzyme Q biosynthesis
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 5 score: 0.771 TPlen: 30 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 1.139 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g423750>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 7
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre10.g423750
-</td>
-<td style="text-align:left;">
-COQ3, g1….
-</td>
-<td style="text-align:left;">
-COQ3
-</td>
-<td style="text-align:left;">
-COQ3
 </td>
 </tr>
 </tbody>
@@ -452,7 +351,7 @@ Cre06.g295200
 
     # gene ID
     # g245450
-    anno[str_detect(anno[["gene_id"]],"g245450"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+    anno[str_detect(anno[["gene_id"]],"g245450"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -485,60 +384,6 @@ previousIdentifiers
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Description
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Comments
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Polycistronic
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TMHMM\_transmembrane
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TargetP
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Predalgo
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-interactions
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-experimental\_localization
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-CLiP\_library
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-mutant\_phenotypes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Plastid.ribosome\_pulldown
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TF\_database..PMID.27067009.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Flagellar\_Proteome
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Co.expression.cluster..PMID.28710131.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-GEnome.scale.Metabolic.Model
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-gene\_id
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-previousIdentifiers\_list
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-prev.symbols
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-id.symbol
 </th>
 </tr>
 </thead>
@@ -571,57 +416,12 @@ UMM4#COQ5A#g5224.t1#
 <td style="text-align:left;">
 Ubiquinone/menaquinone biosynthesis methyltransferase
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 2 score: 0.817 TPlen: 52 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Mitochondrion (score 1.744 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-no mutant mapped
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 40
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre05.g245450
-</td>
-<td style="text-align:left;">
-UMM4, CO….
-</td>
-<td style="text-align:left;">
-UMM4#COQ5A
-</td>
-<td style="text-align:left;">
-COQ5A
-</td>
 </tr>
 </tbody>
 </table>
 
     # More searches:
-    anno[str_detect(anno[["geneSymbol"]],"ROC"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+    anno[str_detect(anno[["geneSymbol"]],"ROC"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -654,60 +454,6 @@ previousIdentifiers
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Description
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Comments
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Polycistronic
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TMHMM\_transmembrane
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TargetP
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Predalgo
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-interactions
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-experimental\_localization
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-CLiP\_library
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-mutant\_phenotypes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Plastid.ribosome\_pulldown
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TF\_database..PMID.27067009.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Flagellar\_Proteome
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Co.expression.cluster..PMID.28710131.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-GEnome.scale.Metabolic.Model
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-gene\_id
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-previousIdentifiers\_list
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-prev.symbols
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-id.symbol
 </th>
 </tr>
 </thead>
@@ -741,57 +487,6 @@ ROC75#g1542.t2
 <td style="text-align:left;">
 Rhythm Of Chloroplast 75
 </td>
-<td style="text-align:left;">
-LUX(PCL1)/BOA(NOX)-like GARP protein, transcription factor involved in
-the circadian clock# day/subjective day-phase-expressed
-nuclear-localized protein# associates with some night-phased clock genes
-and represses their expression
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 3 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g083750>
-</td>
-<td style="text-align:left;">
-growth defect under LAT042C03
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-mTERF transcription factor (PMID 27067009)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 12
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre02.g083750
-</td>
-<td style="text-align:left;">
-ROC75, g….
-</td>
-<td style="text-align:left;">
-ROC75
-</td>
-<td style="text-align:left;">
-ROC75
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -821,54 +516,6 @@ ROC108#ROC114#g1947.t1
 </td>
 <td style="text-align:left;">
 Rhythm Of Chloroplast 114
-</td>
-<td style="text-align:left;">
-F-box protein involved in the circadian clock and the light-induced
-degradation of ROC15 protein# contains a thiolase motif
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 5 score: 0.588 TPlen: 116 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 1.562 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g095900>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 22 (Mating activation-induced in plus gametes)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre02.g095900
-</td>
-<td style="text-align:left;">
-ROC108, ….
-</td>
-<td style="text-align:left;">
-ROC108#ROC114
-</td>
-<td style="text-align:left;">
-ROC114
 </td>
 </tr>
 <tr>
@@ -900,56 +547,6 @@ ROC40#g6174.t1
 <td style="text-align:left;">
 Rhythm Of Chloroplast 40
 </td>
-<td style="text-align:left;">
-CCA1/LHY-like MYB protein, circadian clock associated transcription
-factor# Goncalves et al (2016) show that the mutant is impaired in lipid
-accumulation during N starvation
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Chloroplast (RC 5 score: 0.574 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Mitochondrion (score 1.412 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g275350>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-SBP transcription factor (PMID 27067009)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 31
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre06.g275350
-</td>
-<td style="text-align:left;">
-ROC40, g….
-</td>
-<td style="text-align:left;">
-ROC40
-</td>
-<td style="text-align:left;">
-ROC40
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -979,57 +576,6 @@ ROC66#g6470.t1
 </td>
 <td style="text-align:left;">
 Rhythm Of Chloroplast 66
-</td>
-<td style="text-align:left;">
-CONSTANS-like (COL) protein, circadian clock protein containing an
-internal CCT domain and two amino-terminal zinc-finger domains, of which
-only the first one is a consensus B-box# genetically linked to CONSTANT
-gene
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 2 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g278200>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-C3H transcription factor (PMID 27067009)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 40
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre06.g278200
-</td>
-<td style="text-align:left;">
-ROC66, g….
-</td>
-<td style="text-align:left;">
-ROC66
-</td>
-<td style="text-align:left;">
-ROC66
 </td>
 </tr>
 <tr>
@@ -1061,54 +607,6 @@ ROC74#g10169.t1
 <td style="text-align:left;">
 Rhythm Of Chloroplast 15
 </td>
-<td style="text-align:left;">
-LUX(PCL1)/BOA(NOX)-like GARP protein, transcription factor involved in
-the circadian clock and its resetting by light
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 2 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Secretory\_pathway (score 0.748 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre09.g410450>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-NF-X1 transcription factor (PMID 27067009)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre09.g410450
-</td>
-<td style="text-align:left;">
-ROC74, g….
-</td>
-<td style="text-align:left;">
-ROC74
-</td>
-<td style="text-align:left;">
-ROC15
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1139,62 +637,11 @@ ROC28#g10507.t1#ROC59
 <td style="text-align:left;">
 Rhythm Of Chloroplast 59
 </td>
-<td style="text-align:left;">
-WD40- and tetratricopeptide-repeats protein involved in circadian
-rhythms with possible histone acetyltransferase activity# one of the
-target genes of the circadian transcription factor ROC75# Matsuo et
-al.’s (2008) roc28 (rhythm of chloroplast 28) and roc59 circadian
-bioluminescence rhythm mutant loci map here
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 4 score: 0.540 TPlen: 31 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Mitochondrion (score 0.632 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g425050>
-</td>
-<td style="text-align:left;">
-growth defect under Paromomycin
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 5
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre10.g425050
-</td>
-<td style="text-align:left;">
-ROC28, g….
-</td>
-<td style="text-align:left;">
-ROC28#ROC59
-</td>
-<td style="text-align:left;">
-ROC59
-</td>
 </tr>
 </tbody>
 </table>
 
-    anno[str_detect(anno[["prev.symbols"]],"CRY"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+    anno[str_detect(anno[["prev.symbols"]],"CRY"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -1227,60 +674,6 @@ previousIdentifiers
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Description
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Comments
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Polycistronic
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TMHMM\_transmembrane
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TargetP
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Predalgo
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-interactions
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-experimental\_localization
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-CLiP\_library
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-mutant\_phenotypes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Plastid.ribosome\_pulldown
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TF\_database..PMID.27067009.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Flagellar\_Proteome
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Co.expression.cluster..PMID.28710131.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-GEnome.scale.Metabolic.Model
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-gene\_id
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-previousIdentifiers\_list
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-prev.symbols
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-id.symbol
 </th>
 </tr>
 </thead>
@@ -1314,55 +707,6 @@ PHR5#CRY-DASH2#g694.t1
 <td style="text-align:left;">
 DASH-type Cryptochrome 2
 </td>
-<td style="text-align:left;">
-Drosophila, Arabidopsis, Synechocystis, Human-type Cryptochrome 2#
-Deoxyribodipyrimidine photolyase# contains 6-4 DNA-photolyase and FAD
-binding domains# involved in light-dependent DNA repair#
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 5 score: 0.519 TPlen: 113 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 1.408 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g030650>
-</td>
-<td style="text-align:left;">
-improved growth under Latrunculin B
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 9
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g030650
-</td>
-<td style="text-align:left;">
-PHR5, CR….
-</td>
-<td style="text-align:left;">
-PHR5#CRY-DASH2
-</td>
-<td style="text-align:left;">
-DCRY2
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1392,52 +736,6 @@ CRY-DASH1#Cre64.g793000.t1.2#Cre64.g793000.t1.1#g1436.t1
 <td style="text-align:left;">
 DASH-type Cryptochrome 1
 </td>
-<td style="text-align:left;">
-Drosophila, Arabidopsis, Synechocystis, Human-type Cryptochrome 1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Chloroplast (RC 5 score: 0.687 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 2.695 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g078939>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre02.g078939
-</td>
-<td style="text-align:left;">
-CRY-DASH….
-</td>
-<td style="text-align:left;">
-CRY-DASH1
-</td>
-<td style="text-align:left;">
-DCRY1
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1466,51 +764,6 @@ aCRY#Cre13.g600850.t1.1#g6392.t1
 </td>
 <td style="text-align:left;">
 Animal-like Cryptochrome
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 4 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g278251>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre06.g278251
-</td>
-<td style="text-align:left;">
-aCRY, Cr….
-</td>
-<td style="text-align:left;">
-aCRY
-</td>
-<td style="text-align:left;">
-ACRY1
 </td>
 </tr>
 <tr>
@@ -1542,62 +795,11 @@ CPH1#pCRY#g6833.t1#
 <td style="text-align:left;">
 Plant-like Cryptochrome photoreceptor
 </td>
-<td style="text-align:left;">
-Most similar to plant cryptochromes# (CRY1) (PMID: 7632915)# contains
-6-4 photolyase and FAD-binding domains# C-terminal extension shows no
-similarity to that in other cryptochromes (except Volvox) and is
-important for stability in the dark and degradation in the light,
-possibly via post-translational modifications (PMID: 15064387)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 4 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g295200>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 21
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre06.g295200
-</td>
-<td style="text-align:left;">
-CPH1, pC….
-</td>
-<td style="text-align:left;">
-CPH1#pCRY
-</td>
-<td style="text-align:left;">
-PCRY1
-</td>
 </tr>
 </tbody>
 </table>
 
-    anno[str_detect(anno[["Description"]],paste(c('Opsin', 'opsin','photoreceptor'), collapse="|")),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+    anno[str_detect(anno[["Description"]],paste(c('Opsin', 'opsin','photoreceptor'), collapse="|")),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -1630,60 +832,6 @@ previousIdentifiers
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Description
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Comments
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Polycistronic
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TMHMM\_transmembrane
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TargetP
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Predalgo
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-interactions
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-experimental\_localization
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-CLiP\_library
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-mutant\_phenotypes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Plastid.ribosome\_pulldown
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TF\_database..PMID.27067009.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Flagellar\_Proteome
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Co.expression.cluster..PMID.28710131.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-GEnome.scale.Metabolic.Model
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-gene\_id
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-previousIdentifiers\_list
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-prev.symbols
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-id.symbol
 </th>
 </tr>
 </thead>
@@ -1717,64 +865,6 @@ COP2#COP1#g60.t1
 <td style="text-align:left;">
 Chlamyopsin 2/1
 </td>
-<td style="text-align:left;">
-Opsin-related, retinal binding protein# Genbank entry AF295371# shows
-evidence for alternative splicing, giving COP2 and COP1# present in
-thylakoid-enriched fraction based on mass spectrometric peptide
-identification# This is unrelated to constitutive photomorphogenesis
-protein 1 (COP1) in Arabidopsis thaliana#
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 1 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g002500>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 6
-</td>
-<td style="text-align:left;">
-Name= bathorhodopsin isomerase (spontaneous);lumirhodopsin isomerase
-(spontaneous);metarhodopsin hydrolase (spontaneous);rhodopsin
-photoisomerase (spontaneous, light-requiring);rhodopsin
-retinyltransferase (spontaneous)# KEGG=
-R05041;R06194;R02127;R02905;R02904# E.C.= \# \[Grossman
-2004\];\[Hegemann 1988, Grossman 2004, Sineshchekov 2002\];\[Beckmann
-1991, Sineshchekov 2002, Grossman 2004\] \# (<PMID:30202653>)
-</td>
-<td style="text-align:left;">
-Cre01.g002500
-</td>
-<td style="text-align:left;">
-COP2, CO….
-</td>
-<td style="text-align:left;">
-COP2#COP1
-</td>
-<td style="text-align:left;">
-COP21
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1804,54 +894,6 @@ COP7#COP#g852.t1
 </td>
 <td style="text-align:left;">
 Histidine kinase rhodopsin 3
-</td>
-<td style="text-align:left;">
-Also known as Chlamoypsin 7# contains bacteriorhodopsin, Histine kinase
-and response regulator receiver domains
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 5 helices Topology: i34-56o71-93i106-123o192-224i250-269o
-</td>
-<td style="text-align:left;">
-Other (RC 4 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Secretory\_pathway (score 0.251 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g038050>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 14
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g038050
-</td>
-<td style="text-align:left;">
-COP7, CO….
-</td>
-<td style="text-align:left;">
-COP7#COP
-</td>
-<td style="text-align:left;">
-HKR3
 </td>
 </tr>
 <tr>
@@ -1883,63 +925,6 @@ COP5#g1315.t2
 <td style="text-align:left;">
 Histidine kinase rhodopsin 1
 </td>
-<td style="text-align:left;">
-Also known as Chlamyopsin 5# is bimodally switched by ultraviolet and
-blue light# contains bacteriorhodopsin, Histine kinase, response
-regulator receiver and Guanylate/adenylate cyclase catalytic domains
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 7 helices (SP) Topology:
-i40-62o82-104i113-132o147-169i176-198o203-222i243-262o
-</td>
-<td style="text-align:left;">
-Other (RC 2 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g074150>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 40
-</td>
-<td style="text-align:left;">
-Name= bathorhodopsin isomerase (spontaneous);lumirhodopsin isomerase
-(spontaneous);metarhodopsin hydrolase (spontaneous);rhodopsin
-photoisomerase (spontaneous, light-requiring);rhodopsin
-retinyltransferase (spontaneous)# KEGG=
-R05041;R06194;R02127;R02905;R02904# E.C.= \# \[Grossman
-2004\];\[Hegemann 1988, Grossman 2004, Sineshchekov 2002\];\[Beckmann
-1991, Sineshchekov 2002, Grossman 2004\] \# (<PMID:30202653>)
-</td>
-<td style="text-align:left;">
-Cre02.g074150
-</td>
-<td style="text-align:left;">
-COP5, g1….
-</td>
-<td style="text-align:left;">
-COP5
-</td>
-<td style="text-align:left;">
-HKR1
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1969,63 +954,6 @@ COP4#CSOB#g1575.t1
 </td>
 <td style="text-align:left;">
 Channelrhodopsin 2
-</td>
-<td style="text-align:left;">
-Also described as Chlamydomonas Sensory Opsin B and Chlamyopsin 4#
-light-switched cation channel# contains N-terminal rhodopsin domain and
-C-terminal membrane-associated domain# involved in phototaxis#
-trafficking into the eyespot and flagella is IFT-mediated
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 3 helices Topology: i53-75o183-205i226-248o
-</td>
-<td style="text-align:left;">
-Other (RC 3 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g085257>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 17
-</td>
-<td style="text-align:left;">
-Name= bathorhodopsin isomerase (spontaneous);lumirhodopsin isomerase
-(spontaneous);metarhodopsin hydrolase (spontaneous);rhodopsin
-photoisomerase (spontaneous, light-requiring);rhodopsin
-retinyltransferase (spontaneous)# KEGG=
-R05041;R06194;R02127;R02905;R02904# E.C.= \# \[Grossman
-2004\];\[Hegemann 1988, Grossman 2004, Sineshchekov 2002\];\[Beckmann
-1991, Sineshchekov 2002, Grossman 2004\] \# (<PMID:30202653>)
-</td>
-<td style="text-align:left;">
-Cre02.g085257
-</td>
-<td style="text-align:left;">
-COP4, CS….
-</td>
-<td style="text-align:left;">
-COP4#CSOB
-</td>
-<td style="text-align:left;">
-CHR2
 </td>
 </tr>
 <tr>
@@ -2057,57 +985,6 @@ CPH1#pCRY#g6833.t1#
 <td style="text-align:left;">
 Plant-like Cryptochrome photoreceptor
 </td>
-<td style="text-align:left;">
-Most similar to plant cryptochromes# (CRY1) (PMID: 7632915)# contains
-6-4 photolyase and FAD-binding domains# C-terminal extension shows no
-similarity to that in other cryptochromes (except Volvox) and is
-important for stability in the dark and degradation in the light,
-possibly via post-translational modifications (PMID: 15064387)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 4 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g295200>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 21
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre06.g295200
-</td>
-<td style="text-align:left;">
-CPH1, pC….
-</td>
-<td style="text-align:left;">
-CPH1#pCRY
-</td>
-<td style="text-align:left;">
-PCRY1
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -2138,61 +1015,11 @@ COP8#g7678.t1#COP
 <td style="text-align:left;">
 Histidine kinase rhodopsin 4
 </td>
-<td style="text-align:left;">
-Also known as Chlamoypsin 8# contains bacteriorhodopsin, Histine kinase,
-response regulator receiver, Guanylate/adenylate cyclase catalytic and
-SAM domains
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 7 helices Topology:
-i79-101o116-138i151-173o188-210i217-239o243-260i280-302o
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 3 score: 0.675 TPlen: 17 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 1.826 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre07.g329900>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 6
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre07.g329900
-</td>
-<td style="text-align:left;">
-COP8, g7….
-</td>
-<td style="text-align:left;">
-COP8#COP
-</td>
-<td style="text-align:left;">
-HKR4
-</td>
 </tr>
 </tbody>
 </table>
 
-    anno[str_detect(anno[["Comments"]],paste(c('phototaxis'), collapse="|")),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+    anno[str_detect(anno[["Comments"]],paste(c('phototaxis'), collapse="|")),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -2226,60 +1053,6 @@ previousIdentifiers
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Description
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Comments
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Polycistronic
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TMHMM\_transmembrane
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TargetP
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Predalgo
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-interactions
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-experimental\_localization
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-CLiP\_library
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-mutant\_phenotypes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Plastid.ribosome\_pulldown
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TF\_database..PMID.27067009.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Flagellar\_Proteome
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Co.expression.cluster..PMID.28710131.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-GEnome.scale.Metabolic.Model
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-gene\_id
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-previousIdentifiers\_list
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-prev.symbols
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-id.symbol
-</th>
 </tr>
 </thead>
 <tbody>
@@ -2311,52 +1084,6 @@ g1541.t1#LSP1
 <td style="text-align:left;">
 Signal transducer for phototaxis
 </td>
-<td style="text-align:left;">
-Putative signal transducer for phototaxis# essential for normal
-phototaxis behavior \[PMID: 15657081, independent sequence: AB194902\]
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 5 score: 0.316 TPlen: 18 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 0.737 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-no mutant mapped
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre02.g083700
-</td>
-<td style="text-align:left;">
-g1541.t1….
-</td>
-<td style="text-align:left;">
-LSP1
-</td>
-<td style="text-align:left;">
-LSP1
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -2387,63 +1114,6 @@ COP4#CSOB#g1575.t1
 <td style="text-align:left;">
 Channelrhodopsin 2
 </td>
-<td style="text-align:left;">
-Also described as Chlamydomonas Sensory Opsin B and Chlamyopsin 4#
-light-switched cation channel# contains N-terminal rhodopsin domain and
-C-terminal membrane-associated domain# involved in phototaxis#
-trafficking into the eyespot and flagella is IFT-mediated
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 3 helices Topology: i53-75o183-205i226-248o
-</td>
-<td style="text-align:left;">
-Other (RC 3 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g085257>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 17
-</td>
-<td style="text-align:left;">
-Name= bathorhodopsin isomerase (spontaneous);lumirhodopsin isomerase
-(spontaneous);metarhodopsin hydrolase (spontaneous);rhodopsin
-photoisomerase (spontaneous, light-requiring);rhodopsin
-retinyltransferase (spontaneous)# KEGG=
-R05041;R06194;R02127;R02905;R02904# E.C.= \# \[Grossman
-2004\];\[Hegemann 1988, Grossman 2004, Sineshchekov 2002\];\[Beckmann
-1991, Sineshchekov 2002, Grossman 2004\] \# (<PMID:30202653>)
-</td>
-<td style="text-align:left;">
-Cre02.g085257
-</td>
-<td style="text-align:left;">
-COP4, CS….
-</td>
-<td style="text-align:left;">
-COP4#CSOB
-</td>
-<td style="text-align:left;">
-CHR2
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -2472,56 +1142,6 @@ PTX2#g3903.t1
 </td>
 <td style="text-align:left;">
 Phototaxis regulator
-</td>
-<td style="text-align:left;">
-Identified by Pazour et al. 1995 \[PMID: 7593169\] as the locus for an
-insertional mutant, ptx2, with impaired phototaxis# the mutant shows a
-normal light-induced photoreceptor current but lacks the flagellar
-current# similar to echinacaean XP\_800286 and D. rerio XP\_706476
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 2 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre03.g188450>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 11
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre03.g188450
-</td>
-<td style="text-align:left;">
-PTX2, g3….
-</td>
-<td style="text-align:left;">
-PTX2
-</td>
-<td style="text-align:left;">
-PTX2
 </td>
 </tr>
 <tr>
@@ -2552,58 +1172,6 @@ POC21#FAP142#AGG3#g11191.t1
 </td>
 <td style="text-align:left;">
 Aggregation 3
-</td>
-<td style="text-align:left;">
-One of four highly similar, tandemly-repeated flavodoxins. Other
-proteins in cluster include the flagellar associated proteins FAP191,
-and AGG4# Found in the basal body proteome as POC21# Found in the
-flagellar proteome as FAP142# Associated with detergent-resistant
-membranes and involved in phototaxis#
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 5 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g456100>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Total Peptides:10 (Axoneme:0; M+M:10; KCl extract:0; Tergitol:0)
-</td>
-<td style="text-align:left;">
-cluster 18 (Mating activation-specific in minus gametes)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre10.g456100
-</td>
-<td style="text-align:left;">
-POC21, F….
-</td>
-<td style="text-align:left;">
-POC21#FAP142#AGG3
-</td>
-<td style="text-align:left;">
-AGG3
 </td>
 </tr>
 </tbody>
@@ -3167,7 +1735,7 @@ Cre01.g001100
 </table>
 
     # all Flagellar
-    anno[str_detect(anno[["Flagellar_Proteome"]],"Total Peptides:"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+    anno[str_detect(anno[["Flagellar_Proteome"]],"Total Peptides:"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -3200,60 +1768,6 @@ previousIdentifiers
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Description
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Comments
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Polycistronic
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TMHMM\_transmembrane
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TargetP
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Predalgo
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-interactions
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-experimental\_localization
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-CLiP\_library
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-mutant\_phenotypes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Plastid.ribosome\_pulldown
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TF\_database..PMID.27067009.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Flagellar\_Proteome
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Co.expression.cluster..PMID.28710131.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-GEnome.scale.Metabolic.Model
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-gene\_id
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-previousIdentifiers\_list
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-prev.symbols
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-id.symbol
 </th>
 </tr>
 </thead>
@@ -3285,58 +1799,6 @@ g10.t1#OXR1
 <td style="text-align:left;">
 possible oxidoreductase
 </td>
-<td style="text-align:left;">
-Predicted oxidoreductase# Oxidoreductase FAD/NAD(P)-binding# Ferredoxin
-reductase-type FAD-binding domain# Riboflavin synthase-like beta-barrel
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 5 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g000350>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Total Peptides:1 (Axoneme:0; M+M:1; KCl extract:0; Tergitol:0)
-</td>
-<td style="text-align:left;">
-cluster 6
-</td>
-<td style="text-align:left;">
-Name= nitric oxide, NADH2:oxygen oxidoreductase;nitric oxide,
-NADPH2:oxygen oxidoreductase# KEGG= R05724;R05725# E.C.= 1.14.12.17 \#
-\# (<PMID:30202653>)
-</td>
-<td style="text-align:left;">
-Cre01.g000350
-</td>
-<td style="text-align:left;">
-g10.t1, OXR1
-</td>
-<td style="text-align:left;">
-OXR1
-</td>
-<td style="text-align:left;">
-OXR1
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -3363,52 +1825,6 @@ Cr\_01\_00098\_EX
 g26.t1
 </td>
 <td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 2 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g001150>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Total Peptides:1 (Axoneme:1; M+M:0; KCl extract:0; Tergitol:0)
-</td>
-<td style="text-align:left;">
-cluster 42
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g001150
-</td>
-<td style="text-align:left;">
-g26.t1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g001150
 </td>
 </tr>
 <tr>
@@ -3438,54 +1854,6 @@ g44.t1#MLCK1
 </td>
 <td style="text-align:left;">
 Flagellar Associated Protein 403
-</td>
-<td style="text-align:left;">
-NimA-related Serine/Threonine protein kinase
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 3 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g001800>
-</td>
-<td style="text-align:left;">
-growth defect under Paromomycin
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Total Peptides:2 (Axoneme:0; M+M:0; KCl extract:2; Tergitol:0)
-</td>
-<td style="text-align:left;">
-cluster 14
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g001800
-</td>
-<td style="text-align:left;">
-g44.t1, ….
-</td>
-<td style="text-align:left;">
-MLCK1
-</td>
-<td style="text-align:left;">
-FAP403
 </td>
 </tr>
 <tr>
@@ -3517,57 +1885,6 @@ CYN19-2#ROC1#CYN4#g56.t1#
 <td style="text-align:left;">
 Cyclophilin 19-2
 </td>
-<td style="text-align:left;">
-Peptidyl-prolyl cis-trans isomerase (rotamase), cyclophilin type#
-identical to AF5226 CYP1# cytosolic# similar to At4g38740 (ROC1,
-AtCYP18-3) and At2g21130+ (AtCYP19-2)# found in the flagellar proteome#
-Similar to Radial Spoke Protein RSP12
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 2 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g002300>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Total Peptides:9 (Axoneme:0; M+M:9; KCl extract:0; Tergitol:0)
-</td>
-<td style="text-align:left;">
-cluster 9
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g002300
-</td>
-<td style="text-align:left;">
-CYN19-2,….
-</td>
-<td style="text-align:left;">
-CYN19-2#ROC1#CYN4
-</td>
-<td style="text-align:left;">
-CYN19B
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -3596,52 +1913,6 @@ g61.t1
 </td>
 <td style="text-align:left;">
 Kinase-like Flagellar Associated Protein 335
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 4 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Mitochondrion (score 0.643 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g002550>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Total Peptides:4 (Axoneme:0; M+M:4; KCl extract:0; Tergitol:0)
-</td>
-<td style="text-align:left;">
-cluster 13 (Mating activation-induced in minus gametes)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g002550
-</td>
-<td style="text-align:left;">
-g61.t1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-FAP335
 </td>
 </tr>
 <tr>
@@ -3672,59 +1943,12 @@ SEC8
 <td style="text-align:left;">
 Component of the Exocyst Complex
 </td>
-<td style="text-align:left;">
-Hypothetical Conserved Protein. Similar to SEC8, a subunit of the
-Exocyst.
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 2 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g003050>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Total Peptides:1 (Axoneme:0; M+M:0; KCl extract:1; Tergitol:0)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g003050
-</td>
-<td style="text-align:left;">
-, g72.t1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-SEC8
-</td>
 </tr>
 </tbody>
 </table>
 
     # all transmembrane with 7 helices
-    anno[str_detect(anno[["TMHMM_transmembrane"]],"TMHMM: 7 helices"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+    anno[str_detect(anno[["TMHMM_transmembrane"]],"TMHMM: 7 helices"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -3757,60 +1981,6 @@ previousIdentifiers
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Description
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Comments
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Polycistronic
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TMHMM\_transmembrane
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TargetP
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Predalgo
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-interactions
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-experimental\_localization
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-CLiP\_library
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-mutant\_phenotypes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Plastid.ribosome\_pulldown
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TF\_database..PMID.27067009.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Flagellar\_Proteome
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Co.expression.cluster..PMID.28710131.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-GEnome.scale.Metabolic.Model
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-gene\_id
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-previousIdentifiers\_list
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-prev.symbols
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-id.symbol
 </th>
 </tr>
 </thead>
@@ -3842,53 +2012,6 @@ SNR1#g8.t1#
 <td style="text-align:left;">
 Predicted SNARE-associated Golgi protein
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 7 helices Topology:
-i86-108o123-145i147-169o174-196i217-239o254-276i297-314o
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 1 score: 0.923 TPlen: 35 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Mitochondrion (score 1.771 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g000250>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 9
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g000250
-</td>
-<td style="text-align:left;">
-SNR1, g8.t1
-</td>
-<td style="text-align:left;">
-SNR1
-</td>
-<td style="text-align:left;">
-SNR1
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -3917,52 +2040,6 @@ g612.t1
 </td>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
-null-allele mutant was isolated (PMID 29743196)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 7 helices Topology:
-o167-186i193-212o243-265i298-317o1416-1435i1447-1469o1510-1532i
-</td>
-<td style="text-align:left;">
-Chloroplast (RC 3 score: 0.825 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 1.125 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g026700>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g026700
-</td>
-<td style="text-align:left;">
-g612.t1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g026700
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -3989,51 +2066,6 @@ Cr\_01\_02878
 g613.t1
 </td>
 <td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 7 helices Topology:
-o185-204i211-230o261-283i316-335o1536-1558i1565-1587o1625-1647i
-</td>
-<td style="text-align:left;">
-Other (RC 5 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Mitochondrion (score 1.971 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g026750>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g026750
-</td>
-<td style="text-align:left;">
-g613.t1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g026750
 </td>
 </tr>
 <tr>
@@ -4062,52 +2094,6 @@ Cr\_01\_03191
 </td>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 7 helices (SP) Topology:
-i16-38o1262-1281i1294-1316o1346-1365i1372-1394o1404-1423i1492-1514o
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 5 score: 0.541 TPlen: 43 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Secretory\_pathway (score 1.971 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g029900>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 7
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g029900
-</td>
-<td style="text-align:left;">
-, g679.t1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g029900
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -4134,51 +2120,6 @@ Cr\_01\_03379
 g719.t1
 </td>
 <td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 7 helices (SP) Topology:
-i7-29o127-146i398-420o425-447i605-627o632-654i695-717o
-</td>
-<td style="text-align:left;">
-Secretory\_pathway (RC 3 score: 0.939 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Secretory\_pathway (score 0.447 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g031800>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g031800
-</td>
-<td style="text-align:left;">
-g719.t1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g031800
 </td>
 </tr>
 <tr>
@@ -4207,59 +2148,13 @@ Cr\_01\_03765
 </td>
 <td style="text-align:left;">
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 7 helices (SP) Topology:
-o36-58i63-85o95-117i124-146o151-173i178-200o215-237i
-</td>
-<td style="text-align:left;">
-Other (RC 1 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g035450>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 20
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g035450
-</td>
-<td style="text-align:left;">
-, g799.t1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g035450
-</td>
 </tr>
 </tbody>
 </table>
 
     # fibrillin related
     coqs <- anno[str_detect(anno[["geneSymbol"]],"COQ"),]
-    anno[str_detect(anno[["Comments"]],paste(c('Coenzyme Q'), collapse="|")),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+    anno[str_detect(anno[["Comments"]],paste(c('Coenzyme Q'), collapse="|")),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -4292,60 +2187,6 @@ previousIdentifiers
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Description
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Comments
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Polycistronic
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TMHMM\_transmembrane
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TargetP
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Predalgo
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-interactions
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-experimental\_localization
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-CLiP\_library
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-mutant\_phenotypes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Plastid.ribosome\_pulldown
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TF\_database..PMID.27067009.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Flagellar\_Proteome
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Co.expression.cluster..PMID.28710131.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-GEnome.scale.Metabolic.Model
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-gene\_id
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-previousIdentifiers\_list
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-prev.symbols
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-id.symbol
 </th>
 </tr>
 </thead>
@@ -4378,55 +2219,6 @@ COQ10
 <td style="text-align:left;">
 Coenzyme Q-binding protein
 </td>
-<td style="text-align:left;">
-Putative coenzyme Q-binding protein COQ10, mitochondrial precursor#
-similiar to COQ10\_YEAST Coenzyme Q-binding protein COQ10, mitochondrial
-precursor (gi 74676458)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 3 score: 0.598 TPlen: 71 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 1.100 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre07.g345700>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre07.g345700
-</td>
-<td style="text-align:left;">
-, COQ10,….
-</td>
-<td style="text-align:left;">
-COQ10
-</td>
-<td style="text-align:left;">
-COQ10
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -4456,54 +2248,6 @@ COQ3#g10480.t1#
 <td style="text-align:left;">
 Hexaprenyldihydroxybenzoate methyltransferase
 </td>
-<td style="text-align:left;">
-Similar to yeast hexaprenyldihydroxybenzoate methyltransferase
-(GI:92090588), involved in Coenzyme Q biosynthesis
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 5 score: 0.771 TPlen: 30 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 1.139 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g423750>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 7
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre10.g423750
-</td>
-<td style="text-align:left;">
-COQ3, g1….
-</td>
-<td style="text-align:left;">
-COQ3
-</td>
-<td style="text-align:left;">
-COQ3
-</td>
 </tr>
 </tbody>
 </table>
@@ -4525,7 +2269,7 @@ COQ3
 
 ## Plot Counts
 
-### COQs
+### Examples
 
     head(mcols(dds)$symbol)
 
@@ -4556,18 +2300,31 @@ COQ3
     ## [1] "Cre02.g078939"
 
     plotCounts(dds, gene = g, intgroup = "condition")
+
+![](Readme_files/figure-markdown_strict/countsexamples-1.png)
+
     g <- anno[str_detect(anno[["geneSymbol"]],"PCRY"),"gene_id"]
     plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, main =anno[g,"geneSymbol"])
+
+![](Readme_files/figure-markdown_strict/countsexamples-2.png)
+
     g <- anno[str_detect(anno[["geneSymbol"]],"ACRY"),"gene_id"]
     plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, main =anno[g,"geneSymbol"])
+
+![](Readme_files/figure-markdown_strict/countsexamples-3.png)
+
     g <- anno[str_detect(anno[["geneSymbol"]],"ROC15"),"gene_id"]
     plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, main =anno[g,"geneSymbol"])
+
+![](Readme_files/figure-markdown_strict/countsexamples-4.png)
+
     g <- anno[str_detect(anno[["geneSymbol"]],"ROC40"),"gene_id"]
     plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, main =anno[g,"geneSymbol"])
 
+![](Readme_files/figure-markdown_strict/countsexamples-5.png)
 
     # search genes
-    anno[str_detect(anno[["geneSymbol"]],"CRY"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+    anno[str_detect(anno[["geneSymbol"]],"CRY"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -4600,60 +2357,6 @@ previousIdentifiers
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Description
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Comments
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Polycistronic
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TMHMM\_transmembrane
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TargetP
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Predalgo
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-interactions
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-experimental\_localization
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-CLiP\_library
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-mutant\_phenotypes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Plastid.ribosome\_pulldown
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TF\_database..PMID.27067009.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Flagellar\_Proteome
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Co.expression.cluster..PMID.28710131.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-GEnome.scale.Metabolic.Model
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-gene\_id
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-previousIdentifiers\_list
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-prev.symbols
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-id.symbol
 </th>
 </tr>
 </thead>
@@ -4687,55 +2390,6 @@ PHR5#CRY-DASH2#g694.t1
 <td style="text-align:left;">
 DASH-type Cryptochrome 2
 </td>
-<td style="text-align:left;">
-Drosophila, Arabidopsis, Synechocystis, Human-type Cryptochrome 2#
-Deoxyribodipyrimidine photolyase# contains 6-4 DNA-photolyase and FAD
-binding domains# involved in light-dependent DNA repair#
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 5 score: 0.519 TPlen: 113 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 1.408 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g030650>
-</td>
-<td style="text-align:left;">
-improved growth under Latrunculin B
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 9
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g030650
-</td>
-<td style="text-align:left;">
-PHR5, CR….
-</td>
-<td style="text-align:left;">
-PHR5#CRY-DASH2
-</td>
-<td style="text-align:left;">
-DCRY2
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -4765,52 +2419,6 @@ CRY-DASH1#Cre64.g793000.t1.2#Cre64.g793000.t1.1#g1436.t1
 <td style="text-align:left;">
 DASH-type Cryptochrome 1
 </td>
-<td style="text-align:left;">
-Drosophila, Arabidopsis, Synechocystis, Human-type Cryptochrome 1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Chloroplast (RC 5 score: 0.687 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 2.695 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g078939>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre02.g078939
-</td>
-<td style="text-align:left;">
-CRY-DASH….
-</td>
-<td style="text-align:left;">
-CRY-DASH1
-</td>
-<td style="text-align:left;">
-DCRY1
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -4839,51 +2447,6 @@ aCRY#Cre13.g600850.t1.1#g6392.t1
 </td>
 <td style="text-align:left;">
 Animal-like Cryptochrome
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 4 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g278251>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre06.g278251
-</td>
-<td style="text-align:left;">
-aCRY, Cr….
-</td>
-<td style="text-align:left;">
-aCRY
-</td>
-<td style="text-align:left;">
-ACRY1
 </td>
 </tr>
 <tr>
@@ -4915,62 +2478,11 @@ CPH1#pCRY#g6833.t1#
 <td style="text-align:left;">
 Plant-like Cryptochrome photoreceptor
 </td>
-<td style="text-align:left;">
-Most similar to plant cryptochromes# (CRY1) (PMID: 7632915)# contains
-6-4 photolyase and FAD-binding domains# C-terminal extension shows no
-similarity to that in other cryptochromes (except Volvox) and is
-important for stability in the dark and degradation in the light,
-possibly via post-translational modifications (PMID: 15064387)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 4 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g295200>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 21
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre06.g295200
-</td>
-<td style="text-align:left;">
-CPH1, pC….
-</td>
-<td style="text-align:left;">
-CPH1#pCRY
-</td>
-<td style="text-align:left;">
-PCRY1
-</td>
 </tr>
 </tbody>
 </table>
 
-    anno[str_detect(anno[["geneSymbol"]],"ROC"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+    anno[str_detect(anno[["geneSymbol"]],"ROC"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -5003,60 +2515,6 @@ previousIdentifiers
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Description
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Comments
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Polycistronic
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TMHMM\_transmembrane
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TargetP
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Predalgo
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-interactions
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-experimental\_localization
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-CLiP\_library
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-mutant\_phenotypes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Plastid.ribosome\_pulldown
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TF\_database..PMID.27067009.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Flagellar\_Proteome
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Co.expression.cluster..PMID.28710131.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-GEnome.scale.Metabolic.Model
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-gene\_id
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-previousIdentifiers\_list
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-prev.symbols
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-id.symbol
 </th>
 </tr>
 </thead>
@@ -5090,57 +2548,6 @@ ROC75#g1542.t2
 <td style="text-align:left;">
 Rhythm Of Chloroplast 75
 </td>
-<td style="text-align:left;">
-LUX(PCL1)/BOA(NOX)-like GARP protein, transcription factor involved in
-the circadian clock# day/subjective day-phase-expressed
-nuclear-localized protein# associates with some night-phased clock genes
-and represses their expression
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 3 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g083750>
-</td>
-<td style="text-align:left;">
-growth defect under LAT042C03
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-mTERF transcription factor (PMID 27067009)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 12
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre02.g083750
-</td>
-<td style="text-align:left;">
-ROC75, g….
-</td>
-<td style="text-align:left;">
-ROC75
-</td>
-<td style="text-align:left;">
-ROC75
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -5170,54 +2577,6 @@ ROC108#ROC114#g1947.t1
 </td>
 <td style="text-align:left;">
 Rhythm Of Chloroplast 114
-</td>
-<td style="text-align:left;">
-F-box protein involved in the circadian clock and the light-induced
-degradation of ROC15 protein# contains a thiolase motif
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 5 score: 0.588 TPlen: 116 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 1.562 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g095900>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 22 (Mating activation-induced in plus gametes)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre02.g095900
-</td>
-<td style="text-align:left;">
-ROC108, ….
-</td>
-<td style="text-align:left;">
-ROC108#ROC114
-</td>
-<td style="text-align:left;">
-ROC114
 </td>
 </tr>
 <tr>
@@ -5249,56 +2608,6 @@ ROC40#g6174.t1
 <td style="text-align:left;">
 Rhythm Of Chloroplast 40
 </td>
-<td style="text-align:left;">
-CCA1/LHY-like MYB protein, circadian clock associated transcription
-factor# Goncalves et al (2016) show that the mutant is impaired in lipid
-accumulation during N starvation
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Chloroplast (RC 5 score: 0.574 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Mitochondrion (score 1.412 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g275350>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-SBP transcription factor (PMID 27067009)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 31
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre06.g275350
-</td>
-<td style="text-align:left;">
-ROC40, g….
-</td>
-<td style="text-align:left;">
-ROC40
-</td>
-<td style="text-align:left;">
-ROC40
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -5328,57 +2637,6 @@ ROC66#g6470.t1
 </td>
 <td style="text-align:left;">
 Rhythm Of Chloroplast 66
-</td>
-<td style="text-align:left;">
-CONSTANS-like (COL) protein, circadian clock protein containing an
-internal CCT domain and two amino-terminal zinc-finger domains, of which
-only the first one is a consensus B-box# genetically linked to CONSTANT
-gene
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 2 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g278200>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-C3H transcription factor (PMID 27067009)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 40
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre06.g278200
-</td>
-<td style="text-align:left;">
-ROC66, g….
-</td>
-<td style="text-align:left;">
-ROC66
-</td>
-<td style="text-align:left;">
-ROC66
 </td>
 </tr>
 <tr>
@@ -5410,54 +2668,6 @@ ROC74#g10169.t1
 <td style="text-align:left;">
 Rhythm Of Chloroplast 15
 </td>
-<td style="text-align:left;">
-LUX(PCL1)/BOA(NOX)-like GARP protein, transcription factor involved in
-the circadian clock and its resetting by light
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 2 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Secretory\_pathway (score 0.748 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre09.g410450>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-NF-X1 transcription factor (PMID 27067009)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre09.g410450
-</td>
-<td style="text-align:left;">
-ROC74, g….
-</td>
-<td style="text-align:left;">
-ROC74
-</td>
-<td style="text-align:left;">
-ROC15
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -5488,62 +2698,11 @@ ROC28#g10507.t1#ROC59
 <td style="text-align:left;">
 Rhythm Of Chloroplast 59
 </td>
-<td style="text-align:left;">
-WD40- and tetratricopeptide-repeats protein involved in circadian
-rhythms with possible histone acetyltransferase activity# one of the
-target genes of the circadian transcription factor ROC75# Matsuo et
-al.’s (2008) roc28 (rhythm of chloroplast 28) and roc59 circadian
-bioluminescence rhythm mutant loci map here
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 4 score: 0.540 TPlen: 31 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Mitochondrion (score 0.632 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g425050>
-</td>
-<td style="text-align:left;">
-growth defect under Paromomycin
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 5
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre10.g425050
-</td>
-<td style="text-align:left;">
-ROC28, g….
-</td>
-<td style="text-align:left;">
-ROC28#ROC59
-</td>
-<td style="text-align:left;">
-ROC59
-</td>
 </tr>
 </tbody>
 </table>
 
-    anno[str_detect(anno[["previousIdentifiers"]],"CRY"),] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+    anno[str_detect(anno[["previousIdentifiers"]],"CRY"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -5577,60 +2736,6 @@ previousIdentifiers
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Description
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Comments
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Polycistronic
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TMHMM\_transmembrane
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TargetP
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Predalgo
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-interactions
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-experimental\_localization
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-CLiP\_library
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-mutant\_phenotypes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Plastid.ribosome\_pulldown
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-TF\_database..PMID.27067009.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Flagellar\_Proteome
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Co.expression.cluster..PMID.28710131.
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-GEnome.scale.Metabolic.Model
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-gene\_id
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-previousIdentifiers\_list
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-prev.symbols
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-id.symbol
-</th>
 </tr>
 </thead>
 <tbody>
@@ -5663,55 +2768,6 @@ PHR5#CRY-DASH2#g694.t1
 <td style="text-align:left;">
 DASH-type Cryptochrome 2
 </td>
-<td style="text-align:left;">
-Drosophila, Arabidopsis, Synechocystis, Human-type Cryptochrome 2#
-Deoxyribodipyrimidine photolyase# contains 6-4 DNA-photolyase and FAD
-binding domains# involved in light-dependent DNA repair#
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Mitochondrion (RC 5 score: 0.519 TPlen: 113 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 1.408 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g030650>
-</td>
-<td style="text-align:left;">
-improved growth under Latrunculin B
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 9
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre01.g030650
-</td>
-<td style="text-align:left;">
-PHR5, CR….
-</td>
-<td style="text-align:left;">
-PHR5#CRY-DASH2
-</td>
-<td style="text-align:left;">
-DCRY2
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -5741,52 +2797,6 @@ CRY-DASH1#Cre64.g793000.t1.2#Cre64.g793000.t1.1#g1436.t1
 <td style="text-align:left;">
 DASH-type Cryptochrome 1
 </td>
-<td style="text-align:left;">
-Drosophila, Arabidopsis, Synechocystis, Human-type Cryptochrome 1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Chloroplast (RC 5 score: 0.687 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Chloroplast (score 2.695 on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g078939>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre02.g078939
-</td>
-<td style="text-align:left;">
-CRY-DASH….
-</td>
-<td style="text-align:left;">
-CRY-DASH1
-</td>
-<td style="text-align:left;">
-DCRY1
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -5815,51 +2825,6 @@ aCRY#Cre13.g600850.t1.1#g6392.t1
 </td>
 <td style="text-align:left;">
 Animal-like Cryptochrome
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 4 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g278251>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre06.g278251
-</td>
-<td style="text-align:left;">
-aCRY, Cr….
-</td>
-<td style="text-align:left;">
-aCRY
-</td>
-<td style="text-align:left;">
-ACRY1
 </td>
 </tr>
 <tr>
@@ -5891,63 +2856,14 @@ CPH1#pCRY#g6833.t1#
 <td style="text-align:left;">
 Plant-like Cryptochrome photoreceptor
 </td>
-<td style="text-align:left;">
-Most similar to plant cryptochromes# (CRY1) (PMID: 7632915)# contains
-6-4 photolyase and FAD-binding domains# C-terminal extension shows no
-similarity to that in other cryptochromes (except Volvox) and is
-important for stability in the dark and degradation in the light,
-possibly via post-translational modifications (PMID: 15064387)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-TMHMM: 0 helices
-</td>
-<td style="text-align:left;">
-Other (RC 4 on \#1 protein)
-</td>
-<td style="text-align:left;">
-Other (score - on \#1 protein)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-<https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g295200>
-</td>
-<td style="text-align:left;">
-no phenotype detected
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-cluster 21
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-Cre06.g295200
-</td>
-<td style="text-align:left;">
-CPH1, pC….
-</td>
-<td style="text-align:left;">
-CPH1#pCRY
-</td>
-<td style="text-align:left;">
-PCRY1
-</td>
 </tr>
 </tbody>
 </table>
 
     gene <- COQ3
     plotCounts(dds, gene = gene, intgroup = "condition", col=colData(dds)$genotype, main =anno[gene,"geneSymbol"])
+
+![](Readme_files/figure-markdown_strict/countsexamples-6.png)
 
     # with ggplot
     d <- plotCounts(dds, gene = gene, intgroup = c("condition","media","genotype"), col=colData(dds)$genotype, main =anno[gene,"geneSymbol"], returnData=TRUE)
@@ -6085,18 +3001,25 @@ TAP
       ggtitle(anno[gene,"geneSymbol"])
     plot(g1)
 
+![](Readme_files/figure-markdown_strict/countsexamples-7.png)
+
     # more advanced:
     g1 <- ggplot(d, aes(x = media, y = count, color = genotype)) + 
       geom_boxplot(aes(group = condition, colour = genotype)) +
       geom_point(position=position_jitter(w = 0.1,h = 0)) +
-      # geom_text_repel(aes(label = rownames(d))) + 
+      # geom_text_repel(aes(label = rownames(d))) +
+      scale_y_continuous(trans = "log2") +
       theme_bw() +
       ggtitle(anno[gene,"geneSymbol"]) +
       theme(plot.title = element_text(hjust = 0.5))
     plot(g1)
 
-    ## multiple genes
+![](Readme_files/figure-markdown_strict/countsexamples-8.png)
+
+### COQs
+
     # all COQ genes
+    goi <- anno[c(PHO1,coqs[,"gene_id"]),]
     goi
 
     ##                   locusName_4532 initial_v6_locus_ID action
@@ -6318,9 +3241,10 @@ TAP
       g <- ggplot(d, aes(x = media, y = count, color = genotype)) + 
         geom_boxplot(aes(fill=genotype), alpha=0.5) +
         geom_point(position=position_dodge(width=0.75)) +
+        scale_y_continuous(trans = "log2",limits = c(250,2100)) +
         # coord_cartesian(ylim = c(0,2500)) +
-        scale_color_manual(values=c("grey30","orchid2")) +
-        scale_fill_manual(values=c("grey30","orchid2")) +
+        scale_color_manual(values=c("grey30","orchid1")) +
+        scale_fill_manual(values=c("grey30","orchid1")) +
         theme_bw() +
         ggtitle(s) +
         theme(plot.title = element_text(hjust = 0.5))
@@ -6380,22 +3304,114 @@ TAP
 
     ## [1] 27
 
+    p <- g9+g2+g11+g6+g8+g12+ plot_layout(guides = "collect", axis_titles="collect", axes = 'collect') & theme(legend.position = 'right')
+    p
+
+
     # ga <- ggarrange(g1,g2,g3,g4,g5,g6,g7,g8,g9,g10,g11,g12,ncol = 3, nrow = 4)
-    ga <- ggarrange(g2+rremove("xlab"),
-                    g8+rremove("xlab")+rremove("ylab"),
-                    g6+rremove("xlab")+rremove("ylab"),
-                    g12+rremove("xlab"),
-                    g11+rremove("xlab")+rremove("ylab"),
-                    g9+rremove("xlab")+rremove("ylab"),
-                    common.legend = TRUE, legend = "right",
-                    widths = c(1.25,1,1), heights = c(1,1),
-                    ncol = 3, nrow = 2)
-    ga
-    # ggexport(ga, filename = "pub_figures/Counts_COQs.pdf",width = 5, height = 5)
+    # ga1 <- ggarrange(g2+rremove("xlab"),
+    #                 g8+rremove("xlab")+rremove("ylab"),
+    #                 g6+rremove("xlab")+rremove("ylab"),
+    #                 g12+rremove("xlab"),
+    #                 g11+rremove("xlab")+rremove("ylab"),
+    #                 g9+rremove("xlab")+rremove("ylab"),
+    #                 common.legend = TRUE, legend = "right",
+    #                 widths = c(1.05,1,1), heights = c(1,1),
+    #                 ncol = 3, nrow = 2)
+    # ga1
+    # ggexport(ga1, filename = "pub_figures/Counts_COQs.pdf",width = 8.2, height = 4.7)
+    # ggsave(ga1, filename = "pub_figures/Counts_COQs.png",width = 8.2, height = 4.7)
 
     # ((g2+g8+g6)/(g12+g11+g9)) + plot_layout(guides = "collect", axes = "collect", axis_titles="collect")
 
-<img src="Readme_files/figure-markdown_strict/plot_counts-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-2.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-3.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-4.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-5.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-6.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-7.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-8.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-9.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-10.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-11.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-12.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-13.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-14.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-15.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-16.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-17.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-18.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-19.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-20.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plot_counts-21.png" width="33%" />
+<img src="Readme_files/figure-markdown_strict/counts_coqs-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_coqs-2.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_coqs-3.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_coqs-4.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_coqs-5.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_coqs-6.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_coqs-7.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_coqs-8.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_coqs-9.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_coqs-10.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_coqs-11.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_coqs-12.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_coqs-13.png" width="33%" />
+
+#### -export COQs
+
+    ggexport(p, filename = paste(pubdir,"Counts_plap6_COQs.pdf",sep="/"),width = 8.2, height = 4.7)
+    ggsave(p, filename = paste(pubdir,"Counts_plap6_COQs.png",sep="/"),width = 8.2, height = 4.7)
+
+### CIA5 & rbcl
+
+    anno[str_detect(anno[["geneSymbol"]],"CCM1"),1:9]
+
+    ##                   locusName_4532 initial_v6_locus_ID action
+    ## Cre02.g096300 Cre02.g096300_4532         Cr_02_08521       
+    ##               Replacement_v5.v6._model geneSymbol strainLocusId
+    ## Cre02.g096300                                CCM1 4532_02_09410
+    ##                                                       PMID previousIdentifiers
+    ## Cre02.g096300 11287669#15235119#11309511#18202004#21253860  CIA5#CCM1#g1955.t1
+    ##                                     Description
+    ## Cre02.g096300 Regulator of CO2-responsive genes
+
+    anno[str_detect(anno[["previousIdentifiers"]],"CIA5"),1:9]
+
+    ##                   locusName_4532 initial_v6_locus_ID action
+    ## Cre02.g096300 Cre02.g096300_4532         Cr_02_08521       
+    ##               Replacement_v5.v6._model geneSymbol strainLocusId
+    ## Cre02.g096300                                CCM1 4532_02_09410
+    ##                                                       PMID previousIdentifiers
+    ## Cre02.g096300 11287669#15235119#11309511#18202004#21253860  CIA5#CCM1#g1955.t1
+    ##                                     Description
+    ## Cre02.g096300 Regulator of CO2-responsive genes
+
+    PLAP6 <- "Cre03.g188700"
+    CIA5 <- "Cre02.g096300"
+    rbcl <- "CreCp.g802313"
+
+    ## multiple genes
+    # all COQ genes
+    goi <- anno[c(CIA5,rbcl),]
+    goi$geneSymbol[1] <- "CIA5"
+
+    n <- {0}
+    for (i in goi$gene_id){
+      n <- n+1
+      print(n)
+      print(i)
+      s <- print(goi[i,"geneSymbol"])
+      d <-  plotCounts(dds, gene=i, intgroup=c("condition","media","genotype"),main=s,returnData=TRUE)
+      g <- ggplot(d, aes(x = media, y = count, color = genotype)) + 
+        geom_boxplot(aes(fill=genotype), alpha=0.5) +
+        geom_point(position=position_dodge(width=0.75)) +
+        scale_y_continuous(trans = "log2") +
+        # coord_cartesian(ylim = c(0,2500)) +
+        scale_color_manual(values=c("grey30","orchid1")) +
+        scale_fill_manual(values=c("grey30","orchid1")) +
+        theme_bw() +
+        ggtitle(s) +
+        theme(plot.title = element_text(hjust = 0.5))
+      assign(x = paste("g",n, sep=""),g)
+      plot(g)
+    }
+
+    ## [1] 1
+    ## [1] "Cre02.g096300"
+    ## [1] "CIA5"
+
+    ## [1] 2
+    ## [1] "CreCp.g802313"
+    ## [1] "rbcL"
+
+    length(goi)
+
+    ## [1] 27
+
+    p <- g1 + g2 + plot_layout(guides = "collect", axis_titles="collect", axes='collect')
+    p
+
+<img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-2.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-3.png" width="33%" />
+
+#### -export CIA5
+
+    ggexport(g1, filename = paste(pubdir,"Counts_plap6_CIA5.pdf",sep="/"),width = 8.2, height = 4.7)
+    ggsave(g1, filename = paste(pubdir,"Counts_plap6_CIA5.png",sep="/"),width = 8.2, height = 4.7)
+
+    ggexport(g2, filename = paste(pubdir,"Counts_plap6_rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
+    ggsave(g2, filename = paste(pubdir,"Counts_plap6_rbcl.png",sep="/"),width = 8.2, height = 4.7)
+
+    ggexport(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
+    ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.png",sep="/"),width = 8.2, height = 4.7)
 
 ### PQs
 
@@ -6502,9 +3518,8 @@ TAP
 
     ## [1] 27
 
-    ga <- cowplot::plot_grid(g1,g2,g3,g4,g5,g6,g7,g8,g9,g10,g11,g12, byrow = FALSE, nrow = 4, ncol = 3)
-
-    ga
+    ga2 <- cowplot::plot_grid(g1,g2,g3,g4,g5,g6,g7,g8,g9,g10,g11,g12, byrow = FALSE, nrow = 4, ncol = 3)
+    ga2
 
 ![](Readme_files/figure-markdown_strict/plotcounts2-13.png)
 
