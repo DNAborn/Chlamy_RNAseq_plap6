@@ -342,7 +342,7 @@ p
 #### -export COQs
 ```{r export coqs, eval=FALSE}
 ggexport(p, filename = paste(pubdir,"Counts_plap6_COQs.pdf",sep="/"),width = 8.2, height = 4.7)
-ggsave(p, filename = paste(pubdir,"Counts_plap6_COQs.png",sep="/"),width = 8.2, height = 4.7)
+ggsave(p, filename = paste(pubdir,"Counts_plap6_COQs.tiff",sep="/"),width = 8.2, height = 4.7)
 
 ```
 
@@ -388,18 +388,38 @@ length(goi)
 
 p <- g1 + g2 + plot_layout(guides = "collect", axis_titles="collect", axes='collect')
 p
+
+
+# only rbcl in TAP
+i <- goi$gene_id[2]
+d <-  plotCounts(dds, gene=i, intgroup=c("condition","media","genotype"),main=s,returnData=TRUE)
+
+gt <- ggplot(d[d$media == "TAP",], aes(x = media, y = count, color = genotype)) + 
+    geom_boxplot(aes(fill=genotype), alpha=0.5) +
+    geom_point(position=position_dodge(width=0.75)) +
+    scale_y_continuous(trans = "log2") +
+    # coord_cartesian(ylim = c(0,2500)) +
+    scale_color_manual(values=c("grey30","orchid1")) +
+    scale_fill_manual(values=c("grey30","orchid1")) +
+    theme_bw() +
+    ggtitle(s) +
+    theme(plot.title = element_text(hjust = 0.5))
+plot(gt)
+
+
 ```
 
 #### -export CIA5
 ```{r export cia5, eval=FALSE}
 ggexport(g1, filename = paste(pubdir,"Counts_plap6_CIA5.pdf",sep="/"),width = 8.2, height = 4.7)
-ggsave(g1, filename = paste(pubdir,"Counts_plap6_CIA5.png",sep="/"),width = 8.2, height = 4.7)
+ggsave(g1, filename = paste(pubdir,"Counts_plap6_CIA5.tiff",sep="/"),width = 8.2, height = 4.7)
 
-ggexport(g2, filename = paste(pubdir,"Counts_plap6_rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
-ggsave(g2, filename = paste(pubdir,"Counts_plap6_rbcl.png",sep="/"),width = 8.2, height = 4.7)
+ggexport(gt, filename = paste(pubdir,"Counts_plap6_rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
+ggsave(gt, filename = paste(pubdir,"Counts_plap6_rbcl.tiff",sep="/"),width = 8.2, height = 4.7)
 
 ggexport(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
-ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.png",sep="/"),width = 8.2, height = 4.7)
+ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.tiff",sep="/"),width = 8.2, height = 4.7)
+
 ```
 
 
