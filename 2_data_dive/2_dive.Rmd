@@ -361,13 +361,13 @@ anno[str_detect(anno[["geneSymbol"]],"PSBS"),1:9]
 PLAP6 <- "Cre03.g188700"
 CIA5 <- "Cre02.g096300"
 rbcl <- "CreCp.g802313"
-LHCSR3 <- c("Cre08.g367400","Cre08.g367500")
+LHCSR3 <- c("Cre08.g367500","Cre08.g367400")
 LHCSR1 <- "Cre08.g365900"
 PSBS <- c("Cre01.g016600","Cre01.g016750")
 
 ## multiple genes
 # all COQ genes
-goi <- anno[c(CIA5,LHCSR3,LHCSR1,PSBS),]  # ,rbcl
+goi <- anno[c(CIA5,PSBS,LHCSR1,LHCSR3),]  # ,rbcl
 goi[,c("geneSymbol","Description")]
 goi$geneSymbol[1] <- "CIA5"
 
@@ -428,11 +428,11 @@ plot(gt)
 
 #### -export CIA5
 ```{r export cia5, eval=FALSE}
-ggexport(g1, filename = paste(pubdir,"Counts_plap6_CIA5.pdf",sep="/"),width = 8.2, height = 4.7)
-ggsave(g1, filename = paste(pubdir,"Counts_plap6_CIA5.tiff",sep="/"),width = 8.2, height = 4.7)
-
-ggexport(gt, filename = paste(pubdir,"Counts_plap6_rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
-ggsave(gt, filename = paste(pubdir,"Counts_plap6_rbcl.tiff",sep="/"),width = 8.2, height = 4.7)
+# ggexport(g1, filename = paste(pubdir,"Counts_plap6_CIA5.pdf",sep="/"),width = 8.2, height = 4.7)
+# ggsave(g1, filename = paste(pubdir,"Counts_plap6_CIA5.tiff",sep="/"),width = 8.2, height = 4.7)
+# 
+# ggexport(gt, filename = paste(pubdir,"Counts_plap6_rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
+# ggsave(gt, filename = paste(pubdir,"Counts_plap6_rbcl.tiff",sep="/"),width = 8.2, height = 4.7)
 
 ggexport(p, filename = paste(pubdir,"Counts_plap6_CIA5+LHCSR+PSBS.pdf",sep="/"),width = 8.2, height = 4.7)
 ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+LHCSR+PSBS.tiff",sep="/"),width = 8.2, height = 4.7)

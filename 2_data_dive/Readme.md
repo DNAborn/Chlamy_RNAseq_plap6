@@ -3380,22 +3380,22 @@ TAP
     PLAP6 <- "Cre03.g188700"
     CIA5 <- "Cre02.g096300"
     rbcl <- "CreCp.g802313"
-    LHCSR3 <- c("Cre08.g367400","Cre08.g367500")
+    LHCSR3 <- c("Cre08.g367500","Cre08.g367400")
     LHCSR1 <- "Cre08.g365900"
     PSBS <- c("Cre01.g016600","Cre01.g016750")
 
     ## multiple genes
     # all COQ genes
-    goi <- anno[c(CIA5,LHCSR3,LHCSR1,PSBS),]  # ,rbcl
+    goi <- anno[c(CIA5,PSBS,LHCSR1,LHCSR3),]  # ,rbcl
     goi[,c("geneSymbol","Description")]
 
     ##               geneSymbol                                          Description
     ## Cre02.g096300       CCM1                    Regulator of CO2-responsive genes
-    ## Cre08.g367400    LHCSR3B     Stress-related chlorophyll a/b binding protein 3
-    ## Cre08.g367500    LHCSR3A     Stress-related chlorophyll a/b binding protein 2
-    ## Cre08.g365900     LHCSR1     Stress-related chlorophyll a/b binding protein 1
     ## Cre01.g016600      PSBS1 chloroplast Photosystem II-associated 22 kDa protein
     ## Cre01.g016750      PSBS2 chloroplast Photosystem II-associated 22 kDa protein
+    ## Cre08.g365900     LHCSR1     Stress-related chlorophyll a/b binding protein 1
+    ## Cre08.g367500    LHCSR3A     Stress-related chlorophyll a/b binding protein 2
+    ## Cre08.g367400    LHCSR3B     Stress-related chlorophyll a/b binding protein 3
 
     goi$geneSymbol[1] <- "CIA5"
 
@@ -3431,24 +3431,24 @@ TAP
     ## [1] "CIA5"
 
     ## [1] 2
-    ## [1] "Cre08.g367400"
-    ## [1] "LHCSR3B"
+    ## [1] "Cre01.g016600"
+    ## [1] "PSBS1"
 
     ## [1] 3
-    ## [1] "Cre08.g367500"
-    ## [1] "LHCSR3A"
+    ## [1] "Cre01.g016750"
+    ## [1] "PSBS2"
 
     ## [1] 4
     ## [1] "Cre08.g365900"
     ## [1] "LHCSR1"
 
     ## [1] 5
-    ## [1] "Cre01.g016600"
-    ## [1] "PSBS1"
+    ## [1] "Cre08.g367500"
+    ## [1] "LHCSR3A"
 
     ## [1] 6
-    ## [1] "Cre01.g016750"
-    ## [1] "PSBS2"
+    ## [1] "Cre08.g367400"
+    ## [1] "LHCSR3B"
 
     length(goi)
 
@@ -3459,19 +3459,19 @@ TAP
     ## $CIA5
 
     ## 
-    ## $LHCSR3B
+    ## $PSBS1
 
     ## 
-    ## $LHCSR3A
+    ## $PSBS2
 
     ## 
     ## $LHCSR1
 
     ## 
-    ## $PSBS1
+    ## $LHCSR3A
 
     ## 
-    ## $PSBS2
+    ## $LHCSR3B
 
     p <- patchwork::wrap_plots(g_list) + plot_layout(guides = "collect", axis_titles="collect", axes='collect_y')
     p
