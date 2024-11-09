@@ -311,7 +311,7 @@ for (i in goi$gene_id){
     theme_bw() +
     ggtitle(s) +
     theme(plot.title = element_text(hjust = 0.5)) +
-    ylab("Normalized read counts [log2])")
+    ylab("Normalized RNA counts [log2])")
   assign(x = paste("g",n, sep=""),g)
   plot(g)
 }
@@ -392,7 +392,7 @@ for (i in goi$gene_id){
 #    ggtitle(paste0(s," (",goi[i,"gene_id"],")")) +
     ggtitle(s) +
     theme(plot.title = element_text(hjust = 0.5)) + 
-    ylab("Normalized read counts [log2])")
+    ylab("Normalized RNA counts [log2])")
   g_list[[s]] <- g
   assign(x = paste("g",n, sep=""),g)
   plot(g)
@@ -400,10 +400,11 @@ for (i in goi$gene_id){
 length(goi)
 
 g_list
-patchwork::wrap_plots(g_list) + plot_layout(guides = "collect", axis_titles="collect", axes='collect_y')
-
-p <- g1 + g2 + plot_layout(guides = "collect", axis_titles="collect", axes='collect')
+p <- patchwork::wrap_plots(g_list) + plot_layout(guides = "collect", axis_titles="collect", axes='collect_y')
 p
+
+# p <- g1 + g2 + plot_layout(guides = "collect", axis_titles="collect", axes='collect')
+# p
 
 
 # only rbcl in TAP
@@ -433,8 +434,8 @@ ggsave(g1, filename = paste(pubdir,"Counts_plap6_CIA5.tiff",sep="/"),width = 8.2
 ggexport(gt, filename = paste(pubdir,"Counts_plap6_rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
 ggsave(gt, filename = paste(pubdir,"Counts_plap6_rbcl.tiff",sep="/"),width = 8.2, height = 4.7)
 
-ggexport(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
-ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.tiff",sep="/"),width = 8.2, height = 4.7)
+ggexport(p, filename = paste(pubdir,"Counts_plap6_CIA5+LHCSR+PSBS.pdf",sep="/"),width = 8.2, height = 4.7)
+ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+LHCSR+PSBS.tiff",sep="/"),width = 8.2, height = 4.7)
 
 ```
 

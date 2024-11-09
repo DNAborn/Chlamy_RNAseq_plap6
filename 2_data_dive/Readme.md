@@ -3251,7 +3251,7 @@ TAP
         theme_bw() +
         ggtitle(s) +
         theme(plot.title = element_text(hjust = 0.5)) +
-        ylab("Normalized read counts [log2])")
+        ylab("Normalized RNA counts [log2])")
       assign(x = paste("g",n, sep=""),g)
       plot(g)
     }
@@ -3420,7 +3420,7 @@ TAP
     #    ggtitle(paste0(s," (",goi[i,"gene_id"],")")) +
         ggtitle(s) +
         theme(plot.title = element_text(hjust = 0.5)) + 
-        ylab("Normalized read counts [log2])")
+        ylab("Normalized RNA counts [log2])")
       g_list[[s]] <- g
       assign(x = paste("g",n, sep=""),g)
       plot(g)
@@ -3473,10 +3473,11 @@ TAP
     ## 
     ## $PSBS2
 
-    patchwork::wrap_plots(g_list) + plot_layout(guides = "collect", axis_titles="collect", axes='collect_y')
-
-    p <- g1 + g2 + plot_layout(guides = "collect", axis_titles="collect", axes='collect')
+    p <- patchwork::wrap_plots(g_list) + plot_layout(guides = "collect", axis_titles="collect", axes='collect_y')
     p
+
+    # p <- g1 + g2 + plot_layout(guides = "collect", axis_titles="collect", axes='collect')
+    # p
 
 
     # only rbcl in TAP
@@ -3495,7 +3496,7 @@ TAP
         theme(plot.title = element_text(hjust = 0.5))
     plot(gt)
 
-<img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-2.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-3.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-4.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-5.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-6.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-7.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-8.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-9.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-10.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-11.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-12.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-13.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-14.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-15.png" width="33%" />
+<img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-2.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-3.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-4.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-5.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-6.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-7.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-8.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-9.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-10.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-11.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-12.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-13.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-14.png" width="33%" />
 
 #### -export CIA5
 
@@ -3505,8 +3506,8 @@ TAP
     ggexport(gt, filename = paste(pubdir,"Counts_plap6_rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
     ggsave(gt, filename = paste(pubdir,"Counts_plap6_rbcl.tiff",sep="/"),width = 8.2, height = 4.7)
 
-    ggexport(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
-    ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.tiff",sep="/"),width = 8.2, height = 4.7)
+    ggexport(p, filename = paste(pubdir,"Counts_plap6_CIA5+LHCSR+PSBS.pdf",sep="/"),width = 8.2, height = 4.7)
+    ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+LHCSR+PSBS.tiff",sep="/"),width = 8.2, height = 4.7)
 
 ### PQs
 
