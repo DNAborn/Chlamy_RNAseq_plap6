@@ -11,7 +11,7 @@ editor_options:
   chunk_output_type: console
 knit: (function(input_file, encoding) {
     rmarkdown::render(input_file,output_file= 'Readme.md')
-    })
+    })    
 ---
   
 ```{r setup, include=FALSE}
@@ -67,6 +67,7 @@ library("ggpubr")
 library(vsn)
 
 library(PCAtools)
+library(aplot)
 
 # library(wget)
 
@@ -309,14 +310,15 @@ for (i in goi$gene_id){
     scale_fill_manual(values=c("grey30","orchid1")) +
     theme_bw() +
     ggtitle(s) +
-    theme(plot.title = element_text(hjust = 0.5))
+    theme(plot.title = element_text(hjust = 0.5)) +
+    ylab("Normalized read counts [log2])")
   assign(x = paste("g",n, sep=""),g)
   plot(g)
 }
 
 length(goi)
 
-p <- g9+g2+g11+g6+g8+g12+ plot_layout(guides = "collect", axis_titles="collect", axes = 'collect') & theme(legend.position = 'right')
+p <- g9+g2+g11+g6+g8+g12+ plot_layout(guides = "collect", axis_titles="collect", axes = 'collect_y') & theme(legend.position = 'right')
 p
 
 
@@ -349,22 +351,30 @@ ggsave(p, filename = paste(pubdir,"Counts_plap6_COQs.tiff",sep="/"),width = 8.2,
 
 
 
-### CIA5 & rbcl
+### CIA5, rbcl, LHCSR3, LHCSR1, PSBS
 ```{r counts_cia5_rbcl, fig.show="hold",out.width="33%"}
 anno[str_detect(anno[["geneSymbol"]],"CCM1"),1:9]
 anno[str_detect(anno[["previousIdentifiers"]],"CIA5"),1:9]
+anno[str_detect(anno[["geneSymbol"]],"PSBS"),1:9]
 
 
 PLAP6 <- "Cre03.g188700"
 CIA5 <- "Cre02.g096300"
 rbcl <- "CreCp.g802313"
+LHCSR3 <- c("Cre08.g367400","Cre08.g367500")
+LHCSR1 <- "Cre08.g365900"
+PSBS <- c("Cre01.g016600","Cre01.g016750")
 
 ## multiple genes
 # all COQ genes
-goi <- anno[c(CIA5,rbcl),]
+goi <- anno[c(CIA5,LHCSR3,LHCSR1,PSBS),]  # ,rbcl
+goi[,c("geneSymbol","Description")]
 goi$geneSymbol[1] <- "CIA5"
 
+
+
 n <- {0}
+g_list <- list()
 for (i in goi$gene_id){
   n <- n+1
   print(n)
@@ -379,12 +389,18 @@ for (i in goi$gene_id){
     scale_color_manual(values=c("grey30","orchid1")) +
     scale_fill_manual(values=c("grey30","orchid1")) +
     theme_bw() +
+#    ggtitle(paste0(s," (",goi[i,"gene_id"],")")) +
     ggtitle(s) +
-    theme(plot.title = element_text(hjust = 0.5))
+    theme(plot.title = element_text(hjust = 0.5)) + 
+    ylab("Normalized read counts [log2])")
+  g_list[[s]] <- g
   assign(x = paste("g",n, sep=""),g)
   plot(g)
 }
 length(goi)
+
+g_list
+patchwork::wrap_plots(g_list) + plot_layout(guides = "collect", axis_titles="collect", axes='collect_y')
 
 p <- g1 + g2 + plot_layout(guides = "collect", axis_titles="collect", axes='collect')
 p

@@ -44,6 +44,7 @@
     library(vsn)
 
     library(PCAtools)
+    library(aplot)
 
     # library(wget)
 
@@ -84,6 +85,8 @@
 
     dds <- readRDS(paste(datadir,"dds.RDS",sep="/"))
     anno <- readRDS(paste(datadir,"anno.RDS",sep="/"))
+
+    # load(paste(datadir,"dds.RDS",sep="/"))
 
 ## Make results
 
@@ -3247,7 +3250,8 @@ TAP
         scale_fill_manual(values=c("grey30","orchid1")) +
         theme_bw() +
         ggtitle(s) +
-        theme(plot.title = element_text(hjust = 0.5))
+        theme(plot.title = element_text(hjust = 0.5)) +
+        ylab("Normalized read counts [log2])")
       assign(x = paste("g",n, sep=""),g)
       plot(g)
     }
@@ -3304,7 +3308,7 @@ TAP
 
     ## [1] 27
 
-    p <- g9+g2+g11+g6+g8+g12+ plot_layout(guides = "collect", axis_titles="collect", axes = 'collect') & theme(legend.position = 'right')
+    p <- g9+g2+g11+g6+g8+g12+ plot_layout(guides = "collect", axis_titles="collect", axes = 'collect_y') & theme(legend.position = 'right')
     p
 
 
@@ -3329,9 +3333,9 @@ TAP
 #### -export COQs
 
     ggexport(p, filename = paste(pubdir,"Counts_plap6_COQs.pdf",sep="/"),width = 8.2, height = 4.7)
-    ggsave(p, filename = paste(pubdir,"Counts_plap6_COQs.png",sep="/"),width = 8.2, height = 4.7)
+    ggsave(p, filename = paste(pubdir,"Counts_plap6_COQs.tiff",sep="/"),width = 8.2, height = 4.7)
 
-### CIA5 & rbcl
+### CIA5, rbcl, LHCSR3, LHCSR1, PSBS
 
     anno[str_detect(anno[["geneSymbol"]],"CCM1"),1:9]
 
@@ -3355,16 +3359,50 @@ TAP
     ##                                     Description
     ## Cre02.g096300 Regulator of CO2-responsive genes
 
+    anno[str_detect(anno[["geneSymbol"]],"PSBS"),1:9]
+
+    ##                   locusName_4532 initial_v6_locus_ID action
+    ## Cre01.g016600 Cre01.g016600_4532         Cr_01_01885       
+    ## Cre01.g016750 Cre01.g016750_4532         Cr_01_01900       
+    ##               Replacement_v5.v6._model geneSymbol strainLocusId
+    ## Cre01.g016600                               PSBS1 4532_01_02081
+    ## Cre01.g016750                               PSBS2 4532_01_02096
+    ##                                                                PMID
+    ## Cre01.g016600 16143839#27329221#27930292#20673336#10667783#15222740
+    ## Cre01.g016750                   16143839#27329221#27930292#20673336
+    ##               previousIdentifiers
+    ## Cre01.g016600            #g397.t1
+    ## Cre01.g016750            #g400.t1
+    ##                                                        Description
+    ## Cre01.g016600 chloroplast Photosystem II-associated 22 kDa protein
+    ## Cre01.g016750 chloroplast Photosystem II-associated 22 kDa protein
+
     PLAP6 <- "Cre03.g188700"
     CIA5 <- "Cre02.g096300"
     rbcl <- "CreCp.g802313"
+    LHCSR3 <- c("Cre08.g367400","Cre08.g367500")
+    LHCSR1 <- "Cre08.g365900"
+    PSBS <- c("Cre01.g016600","Cre01.g016750")
 
     ## multiple genes
     # all COQ genes
-    goi <- anno[c(CIA5,rbcl),]
+    goi <- anno[c(CIA5,LHCSR3,LHCSR1,PSBS),]  # ,rbcl
+    goi[,c("geneSymbol","Description")]
+
+    ##               geneSymbol                                          Description
+    ## Cre02.g096300       CCM1                    Regulator of CO2-responsive genes
+    ## Cre08.g367400    LHCSR3B     Stress-related chlorophyll a/b binding protein 3
+    ## Cre08.g367500    LHCSR3A     Stress-related chlorophyll a/b binding protein 2
+    ## Cre08.g365900     LHCSR1     Stress-related chlorophyll a/b binding protein 1
+    ## Cre01.g016600      PSBS1 chloroplast Photosystem II-associated 22 kDa protein
+    ## Cre01.g016750      PSBS2 chloroplast Photosystem II-associated 22 kDa protein
+
     goi$geneSymbol[1] <- "CIA5"
 
+
+
     n <- {0}
+    g_list <- list()
     for (i in goi$gene_id){
       n <- n+1
       print(n)
@@ -3379,8 +3417,11 @@ TAP
         scale_color_manual(values=c("grey30","orchid1")) +
         scale_fill_manual(values=c("grey30","orchid1")) +
         theme_bw() +
+    #    ggtitle(paste0(s," (",goi[i,"gene_id"],")")) +
         ggtitle(s) +
-        theme(plot.title = element_text(hjust = 0.5))
+        theme(plot.title = element_text(hjust = 0.5)) + 
+        ylab("Normalized read counts [log2])")
+      g_list[[s]] <- g
       assign(x = paste("g",n, sep=""),g)
       plot(g)
     }
@@ -3390,28 +3431,82 @@ TAP
     ## [1] "CIA5"
 
     ## [1] 2
-    ## [1] "CreCp.g802313"
-    ## [1] "rbcL"
+    ## [1] "Cre08.g367400"
+    ## [1] "LHCSR3B"
+
+    ## [1] 3
+    ## [1] "Cre08.g367500"
+    ## [1] "LHCSR3A"
+
+    ## [1] 4
+    ## [1] "Cre08.g365900"
+    ## [1] "LHCSR1"
+
+    ## [1] 5
+    ## [1] "Cre01.g016600"
+    ## [1] "PSBS1"
+
+    ## [1] 6
+    ## [1] "Cre01.g016750"
+    ## [1] "PSBS2"
 
     length(goi)
 
     ## [1] 27
 
+    g_list
+
+    ## $CIA5
+
+    ## 
+    ## $LHCSR3B
+
+    ## 
+    ## $LHCSR3A
+
+    ## 
+    ## $LHCSR1
+
+    ## 
+    ## $PSBS1
+
+    ## 
+    ## $PSBS2
+
+    patchwork::wrap_plots(g_list) + plot_layout(guides = "collect", axis_titles="collect", axes='collect_y')
+
     p <- g1 + g2 + plot_layout(guides = "collect", axis_titles="collect", axes='collect')
     p
 
-<img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-2.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-3.png" width="33%" />
+
+    # only rbcl in TAP
+    i <- goi$gene_id[2]
+    d <-  plotCounts(dds, gene=i, intgroup=c("condition","media","genotype"),main=s,returnData=TRUE)
+
+    gt <- ggplot(d[d$media == "TAP",], aes(x = media, y = count, color = genotype)) + 
+        geom_boxplot(aes(fill=genotype), alpha=0.5) +
+        geom_point(position=position_dodge(width=0.75)) +
+        scale_y_continuous(trans = "log2") +
+        # coord_cartesian(ylim = c(0,2500)) +
+        scale_color_manual(values=c("grey30","orchid1")) +
+        scale_fill_manual(values=c("grey30","orchid1")) +
+        theme_bw() +
+        ggtitle(s) +
+        theme(plot.title = element_text(hjust = 0.5))
+    plot(gt)
+
+<img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-2.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-3.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-4.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-5.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-6.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-7.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-8.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-9.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-10.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-11.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-12.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-13.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-14.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-15.png" width="33%" />
 
 #### -export CIA5
 
     ggexport(g1, filename = paste(pubdir,"Counts_plap6_CIA5.pdf",sep="/"),width = 8.2, height = 4.7)
-    ggsave(g1, filename = paste(pubdir,"Counts_plap6_CIA5.png",sep="/"),width = 8.2, height = 4.7)
+    ggsave(g1, filename = paste(pubdir,"Counts_plap6_CIA5.tiff",sep="/"),width = 8.2, height = 4.7)
 
-    ggexport(g2, filename = paste(pubdir,"Counts_plap6_rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
-    ggsave(g2, filename = paste(pubdir,"Counts_plap6_rbcl.png",sep="/"),width = 8.2, height = 4.7)
+    ggexport(gt, filename = paste(pubdir,"Counts_plap6_rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
+    ggsave(gt, filename = paste(pubdir,"Counts_plap6_rbcl.tiff",sep="/"),width = 8.2, height = 4.7)
 
     ggexport(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
-    ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.png",sep="/"),width = 8.2, height = 4.7)
+    ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+rbcl.tiff",sep="/"),width = 8.2, height = 4.7)
 
 ### PQs
 
