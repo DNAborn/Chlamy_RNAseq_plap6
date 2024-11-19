@@ -882,6 +882,11 @@ plotloadings(p,
              col = viridis(3),labSize = 3)
 ```
 
+```{r version_info}
+
+session_info()
+
+```
 
 
 
