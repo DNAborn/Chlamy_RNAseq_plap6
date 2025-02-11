@@ -105,7 +105,7 @@ file.exists(indexDir, fastaPath, gtfPath)
 
 ## Load dds
 ```{r load_dds}
-dds <- readRDS(paste(datadir,"dds.RDS",sep="/"))
+dds <- readRDS(paste(datadir,"dds2.RDS",sep="/"))
 anno <- readRDS(paste(datadir,"anno.RDS",sep="/"))
 
 # load(paste(datadir,"dds.RDS",sep="/"))

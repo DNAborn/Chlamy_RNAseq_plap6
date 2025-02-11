@@ -8,7 +8,7 @@ output:
 toc: true
 always_allow_html: true
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
   
 ```{r setup, include=FALSE}
@@ -140,7 +140,7 @@ strain <- str_replace_all(strain, pattern="fib",replacement="Δplap6")
 condition <- paste(strain,media,sep="_") %>% factor(levels = c("WT_TAP","Δplap6_TAP","WT_HSM","Δplap6_HSM"))
 strain  <- strain %>% factor() %>% relevel("WT")
 lane  <- lane %>% factor()
-media  <- media %>% factor()  %>% relevel("TAP")
+media  <- media %>% factor()  %>% relevel("HSM")
 replicate <- replicate %>% factor()
 
 trial <- c(rep(1,6),rep(2,8),rep(1,2),rep(2,4),rep(1,8),rep(1,12),rep(2,12),rep(1,12)) %>% factor() %>% relevel("1")
@@ -256,7 +256,7 @@ coldata <- data.frame(coldata,m.table)
 coldata %>% head(10) %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 colnames(coldata)
 condition %>% levels()
-
+coldata$media
 # load tximeta
 # with linked Transcriptome
 ## Chlamy
@@ -611,9 +611,14 @@ gse <- readRDS(paste(datadir,"gse.RDS",sep="/"))
 colData(gse) %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 head(mcols(gse)) %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 gse$condition %>% levels()
+gse$media <- gse$media %>% relevel("HSM")
 
-# dds <- DESeqDataSet(gse, ~media+strain+media:genotype)
-dds <- DESeqDataSet(gse, ~condition)
+dds <- DESeqDataSet(gse, ~strain+media+strain:media)
+# pCRY: ~genotype+treatment+genotype:treatment
+
+# Alternative
+# dds <- DESeqDataSet(gse, ~condition)
+
 colData(dds)$names %>% head()
 
 ##########################################\n
@@ -624,12 +629,12 @@ hist(counts(dds), breaks=1000000, ylim = c(0,100000), xlim = c(0,100))
 # -> dip at log(counts(dds)=2)
 
 # remove 0 counts
-remove0 <- rowSums(counts(dds) == 0) == length(colData(dds)[, 1])
+remove0 <- rowSums(counts(dds) == 10) == length(colData(dds)[, 1])
 summary(remove0)
 dds <- dds[!remove0,]
 
 # min 16 counts in 16 samples
-sample.number <- nrow(colData(dds)) / colData(gse)$condition %>% levels() %>% length()
+sample.number <- nrow(colData(dds)) / colData(gse)$media %>% levels() %>% length()
 keep.sn <- rowSums(counts(dds) >= sample.number) >= sample.number
 summary(keep.sn)
 dds <- dds[keep.sn,]
@@ -661,8 +666,8 @@ plotCounts(dds, gene = "Cre10.g423750", intgroup = "condition", col=colData(dds)
 ###############
 # save dds #####
 
-# saveRDS(dds, file = paste(datadir,"dds.RDS",sep="/"), compress = FALSE)
-# dds <- readRDS(paste(datadir,"dds.RDS",sep="/"))
+saveRDS(dds, file = paste(datadir,"dds_wo.RDS",sep="/"), compress = FALSE)
+dds <- readRDS(paste(datadir,"dds_wo.RDS",sep="/"))
 
 ```
 
@@ -778,8 +783,8 @@ plotCounts(dds, gene = "Cre10.g423750", intgroup = "condition",col=colData(dds)$
 
 # save dds #####
 
-saveRDS(dds, file = paste(datadir,"dds.RDS",sep="/"), compress = FALSE)
-dds <- readRDS(paste(datadir,"dds.RDS",sep="/"))
+saveRDS(dds, file = paste(datadir,"dds2.RDS",sep="/"), compress = FALSE)
+dds <- readRDS(paste(datadir,"dds2.RDS",sep="/"))
 dds
 
 ```
