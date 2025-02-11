@@ -137,7 +137,7 @@ for (i in list.files(path = quantdir)){
   lane <-c(lane,str_split(i, pattern = "_", simplify = TRUE)[,6])
 }
 strain <- str_replace_all(strain, pattern="fib",replacement="Δplap6")
-condition <- paste(strain,media,sep="_") %>% factor(levels = c("WT_TAP","Δplap6_TAP","WT_HSM","Δplap6_HSM"))
+condition <- paste(strain,media,sep="_") %>% factor(levels = c("WT_HSM","WT_TAP","Δplap6_HSM","Δplap6_TAP"))
 strain  <- strain %>% factor() %>% relevel("WT")
 lane  <- lane %>% factor()
 media  <- media %>% factor()  %>% relevel("HSM")
@@ -610,7 +610,8 @@ gse <- readRDS(paste(datadir,"gse.RDS",sep="/"))
 
 colData(gse) %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 head(mcols(gse)) %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
-gse$condition %>% levels()
+gse$condition <- gse$condition %>% factor(levels = c("WT_HSM","WT_TAP","Δplap6_HSM","Δplap6_TAP"))
+
 gse$media <- gse$media %>% relevel("HSM")
 
 dds <- DESeqDataSet(gse, ~strain+media+strain:media)

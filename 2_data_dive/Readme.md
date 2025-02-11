@@ -45,7 +45,7 @@
 
     library(PCAtools)
     library(aplot)
-
+    library(ggExtra)
     # library(wget)
 
 ### R folders
@@ -81,9 +81,36 @@
 
     ## [1] TRUE TRUE TRUE
 
+### R functions
+
+    getresults_SK <- function(contrast,nres){
+    r1 <- results(dds, contrast = contrast)
+    r1$symbol <- mcols(dds)$symbol
+    assign(paste("res",nres,sep="."),r1)
+    r1 <- list(r1)
+    names(r1) <- nres
+    r1
+    }
+
+
+    topgenes_f <- function(res,p=0.05,bM=10,l2FC=1){
+    a <- subset(res, padj < p & baseMean > bM & abs(log2FoldChange) > l2FC)
+    if(nrow(a)>0) {
+    a <- a[order(a$baseMean, decreasing = T),]
+      a$rank.bm <- seq(1:length(rownames(a)))
+    a <- a[order(a$padj, decreasing = F),]
+      a$rank.padj <- seq(1:length(rownames(a)))
+    a <- a[order(abs(a$log2FoldChange), decreasing = T),]
+      a$rank.l2FC <- seq(1:length(rownames(a)))
+    a$rank.sum <- a$rank.l2FC+a$rank.bm+a$rank.padj
+      a <- a[order(a$rank.sum),]
+      }
+    a
+    }
+
 ## Load dds
 
-    dds <- readRDS(paste(datadir,"dds.RDS",sep="/"))
+    dds <- readRDS(paste(datadir,"dds2.RDS",sep="/"))
     anno <- readRDS(paste(datadir,"anno.RDS",sep="/"))
 
     # load(paste(datadir,"dds.RDS",sep="/"))
@@ -91,9 +118,6 @@
 ## Make results
 
     resultsNames(dds)
-
-    ## [1] "Intercept"                      "condition_Δplap6_TAP_vs_WT_TAP"
-    ## [3] "condition_WT_HSM_vs_WT_TAP"     "condition_Δplap6_HSM_vs_WT_TAP"
 
     # TAP = Δplap6_TAP - WT_TAP
     # HSM = Δplap6_HSM - WT_HSM
@@ -122,84 +146,28 @@
     res4 <- res_WT.HSM.vs.WT.TAP
 
     summary(res1)
-
-    ## 
-    ## out of 15749 with nonzero total read count
-    ## adjusted p-value < 0.1
-    ## LFC > 0 (up)       : 4097, 26%
-    ## LFC < 0 (down)     : 5418, 34%
-    ## outliers [1]       : 0, 0%
-    ## low counts [2]     : 0, 0%
-    ## (mean count < 11)
-    ## [1] see 'cooksCutoff' argument of ?results
-    ## [2] see 'independentFiltering' argument of ?results
-
     top_res1 <- subset(res1, padj < 0.01 & baseMean > 50 &
                          (log2FoldChange < -1 | log2FoldChange > 1))
     top_res1 <- top_res1[order(top_res1$log2FoldChange, decreasing = T),]
     dim(top_res1)
 
-    ## [1] 1563    7
-
     summary(res2)
-
-    ## 
-    ## out of 15749 with nonzero total read count
-    ## adjusted p-value < 0.1
-    ## LFC > 0 (up)       : 1789, 11%
-    ## LFC < 0 (down)     : 1966, 12%
-    ## outliers [1]       : 0, 0%
-    ## low counts [2]     : 0, 0%
-    ## (mean count < 11)
-    ## [1] see 'cooksCutoff' argument of ?results
-    ## [2] see 'independentFiltering' argument of ?results
-
     top_res2 <- subset(res2, padj < 0.01 & baseMean > 50 &
                          (log2FoldChange < -1 | log2FoldChange > 1))
     top_res2 <- top_res2[order(top_res2$log2FoldChange, decreasing = T),]
     dim(top_res2)
 
-    ## [1] 276   7
-
     summary(res3)
-
-    ## 
-    ## out of 15749 with nonzero total read count
-    ## adjusted p-value < 0.1
-    ## LFC > 0 (up)       : 6395, 41%
-    ## LFC < 0 (down)     : 6547, 42%
-    ## outliers [1]       : 0, 0%
-    ## low counts [2]     : 0, 0%
-    ## (mean count < 11)
-    ## [1] see 'cooksCutoff' argument of ?results
-    ## [2] see 'independentFiltering' argument of ?results
-
     top_res3 <- subset(res3, padj < 0.01 & baseMean > 50 &
                          (log2FoldChange < -2 | log2FoldChange > 2))
     top_res3 <- top_res3[order(top_res3$log2FoldChange, decreasing = T),]
     dim(top_res3)
 
-    ## [1] 1569    7
-
     summary(res4)
-
-    ## 
-    ## out of 15749 with nonzero total read count
-    ## adjusted p-value < 0.1
-    ## LFC > 0 (up)       : 5973, 38%
-    ## LFC < 0 (down)     : 7000, 44%
-    ## outliers [1]       : 0, 0%
-    ## low counts [2]     : 0, 0%
-    ## (mean count < 11)
-    ## [1] see 'cooksCutoff' argument of ?results
-    ## [2] see 'independentFiltering' argument of ?results
-
     top_res4 <- subset(res4, padj < 0.01 & baseMean > 50 &
                          (log2FoldChange < -2 | log2FoldChange > 2))
     top_res4 <- top_res4[order(top_res4$log2FoldChange, decreasing = T),]
     dim(top_res4)
-
-    ## [1] 1413    7
 
     resLFC_TAP <- lfcShrink(dds, contrast = c("condition","Δplap6_TAP","WT_TAP"), type="ashr")
     resLFC_TAP$Symbol <- mcols(dds)$id.symbol
@@ -211,33 +179,122 @@
     resLFC_WT$Symbol <- mcols(dds)$id.symbol
 
     res1["Cre01.g000150",]
-
-    ## log2 fold change (MLE): condition Δplap6_TAP vs WT_TAP 
-    ## Wald test p-value: condition Δplap6 TAP vs WT TAP 
-    ## DataFrame with 1 row and 7 columns
-    ##                baseMean log2FoldChange     lfcSE      stat      pvalue
-    ##               <numeric>      <numeric> <numeric> <numeric>   <numeric>
-    ## Cre01.g000150   1531.01       -0.42827 0.0652672  -6.56179 5.31649e-11
-    ##                      padj      Symbol
-    ##                 <numeric> <character>
-    ## Cre01.g000150 3.46993e-10        ZRT2
-
     plotMA(res1, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
     plotMA(resLFC_TAP, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
     summary(res1)
 
+## Make results NEW
+
+    resultsNames(dds)
+
+    ## [1] "Intercept"             "strain_Δplap6_vs_WT"   "media_TAP_vs_HSM"     
+    ## [4] "strainΔplap6.mediaTAP"
+
+    #  "strain_Δplap6_vs_WT"   "media_TAP_vs_HSM"      "strainΔplap6.mediaTAP"
+    colData(dds)$media
+
+    ##  [1] TAP TAP TAP TAP TAP TAP TAP HSM HSM HSM HSM HSM HSM HSM HSM HSM TAP HSM HSM
+    ## [20] HSM TAP TAP TAP TAP TAP TAP
+    ## Levels: HSM TAP
+
+    colData(dds)$strain
+
+    ##  [1] WT     Δplap6 Δplap6 Δplap6 Δplap6 Δplap6 WT     WT     WT     WT    
+    ## [11] WT     WT     WT     Δplap6 Δplap6 Δplap6 WT     Δplap6 Δplap6 Δplap6
+    ## [21] WT     WT     WT     WT     Δplap6 Δplap6
+    ## Levels: WT Δplap6
+
+    res_l <- list()
+
+    # Media-Effekt für jeden Genotyp
+    nres <- "WT_TAP.vs.HSM"
+    contrast <- list(c("media_TAP_vs_HSM"))
+    res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
+
+    nres <- "pcry_TAP.vs.HSM"
+    contrast <- list(c("media_TAP_vs_HSM","strainΔplap6.mediaTAP"))
+    res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
+
+
+    # Unterschiede zwischen WT und ko bei gleichem Medium
+    nres <- "HSM_pcry.vs.WT"
+    contrast <- list(c("strain_Δplap6_vs_WT"))
+    res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
+
+    nres <- "TAP_pcry.vs.WT"
+    contrast <- list(c("strain_Δplap6_vs_WT","strainΔplap6.mediaTAP"))
+    res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
+
+
+    # Unterschiede im Medien-Effekt (interaction term)
+    nres <- "pcry_TAPvHSM.vs.WT_TAPvHSM"
+    contrast <- list(c("strainΔplap6.mediaTAP"))
+    res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
+
+    print(length(res_l))
+
+    ## [1] 5
+
+    print(names(res_l))
+
+    ## [1] "WT_TAP.vs.HSM"              "pcry_TAP.vs.HSM"           
+    ## [3] "HSM_pcry.vs.WT"             "TAP_pcry.vs.WT"            
+    ## [5] "pcry_TAPvHSM.vs.WT_TAPvHSM"
+
+    ## Make deg & top lists:
+    deg_list <- lapply(res_l,topgenes_f)
+    deg_genes_l <- lapply(res_l,topgenes_f) %>%  lapply(.,rownames) 
+
+    top_list <- lapply(res_l,topgenes_f,p=0.01, bM=100, l2FC=2)
+    top_genes_l <- lapply(res_l,topgenes_f,p=0.01, bM=100, l2FC=2) %>%  lapply(.,rownames) 
+
+
+
+    ## Make shrinkage
+    res_ashr_list <- list()
+
+    l <- length(res_l)
+    for (j in 1:l){
+    res_ashr_list[[names(res_l)[j]]] <- lfcShrink(res=res_l[[j]], dds=dds, type="ashr")
+    }
+
+
+
+
+    res_l$pcry_TAPvHSM.vs.WT_TAPvHSM["Cre01.g000150",]
+
+    ## log2 fold change (MLE): strainΔplap6.mediaTAP effect 
+    ## Wald test p-value: strainΔplap6.mediaTAP effect 
+    ## DataFrame with 1 row and 7 columns
+    ##                baseMean log2FoldChange     lfcSE      stat    pvalue      padj
+    ##               <numeric>      <numeric> <numeric> <numeric> <numeric> <numeric>
+    ## Cre01.g000150   1533.44      -0.154884 0.0993396  -1.55914  0.118964  0.261685
+    ##                    symbol
+    ##               <character>
+    ## Cre01.g000150        ZRT2
+
+    plotMA(res_l$pcry_TAPvHSM.vs.WT_TAPvHSM, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
+
+![](Readme_files/figure-markdown_strict/make%20results2-1.png)
+
+    plotMA(res_ashr_list$pcry_TAPvHSM.vs.WT_TAPvHSM, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
+
+![](Readme_files/figure-markdown_strict/make%20results2-2.png)
+
+    summary(res_l$pcry_TAPvHSM.vs.WT_TAPvHSM)
+
     ## 
-    ## out of 15749 with nonzero total read count
+    ## out of 14617 with nonzero total read count
     ## adjusted p-value < 0.1
-    ## LFC > 0 (up)       : 4097, 26%
-    ## LFC < 0 (down)     : 5418, 34%
+    ## LFC > 0 (up)       : 2096, 14%
+    ## LFC < 0 (down)     : 2742, 19%
     ## outliers [1]       : 0, 0%
     ## low counts [2]     : 0, 0%
-    ## (mean count < 11)
+    ## (mean count < 48)
     ## [1] see 'cooksCutoff' argument of ?results
     ## [2] see 'independentFiltering' argument of ?results
 
-<img src="Readme_files/figure-markdown_strict/make_results-1.png" width="50%" /><img src="Readme_files/figure-markdown_strict/make_results-2.png" width="50%" />
+    res <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM
 
 # 2.) Data Dive
 
@@ -2322,9 +2379,8 @@ Hexaprenyldihydroxybenzoate methyltransferase
 ![](Readme_files/figure-markdown_strict/countsexamples-4.png)
 
     g <- anno[str_detect(anno[["geneSymbol"]],"ROC40"),"gene_id"]
-    plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, main =anno[g,"geneSymbol"])
-
-![](Readme_files/figure-markdown_strict/countsexamples-5.png)
+    # plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, main =anno[g,"geneSymbol"])
+    # ROC40 too low counts
 
     # search genes
     anno[str_detect(anno[["geneSymbol"]],"CRY"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
@@ -2866,7 +2922,7 @@ Plant-like Cryptochrome photoreceptor
     gene <- COQ3
     plotCounts(dds, gene = gene, intgroup = "condition", col=colData(dds)$genotype, main =anno[gene,"geneSymbol"])
 
-![](Readme_files/figure-markdown_strict/countsexamples-6.png)
+![](Readme_files/figure-markdown_strict/countsexamples-5.png)
 
     # with ggplot
     d <- plotCounts(dds, gene = gene, intgroup = c("condition","media","genotype"), col=colData(dds)$genotype, main =anno[gene,"geneSymbol"], returnData=TRUE)
@@ -2897,7 +2953,7 @@ genotype
 S1
 </td>
 <td style="text-align:right;">
-314.3222
+318.3623
 </td>
 <td style="text-align:left;">
 WT\_TAP
@@ -2914,7 +2970,7 @@ WT
 S10
 </td>
 <td style="text-align:right;">
-546.2275
+547.8516
 </td>
 <td style="text-align:left;">
 Δplap6\_TAP
@@ -2931,7 +2987,7 @@ TAP
 S11
 </td>
 <td style="text-align:right;">
-468.3312
+470.6446
 </td>
 <td style="text-align:left;">
 Δplap6\_TAP
@@ -2948,7 +3004,7 @@ TAP
 S12
 </td>
 <td style="text-align:right;">
-487.2699
+489.4928
 </td>
 <td style="text-align:left;">
 Δplap6\_TAP
@@ -2965,7 +3021,7 @@ TAP
 S13
 </td>
 <td style="text-align:right;">
-510.7922
+514.3026
 </td>
 <td style="text-align:left;">
 Δplap6\_TAP
@@ -2982,7 +3038,7 @@ TAP
 S14
 </td>
 <td style="text-align:right;">
-508.3305
+510.6331
 </td>
 <td style="text-align:left;">
 Δplap6\_TAP
@@ -3004,7 +3060,7 @@ TAP
       ggtitle(anno[gene,"geneSymbol"])
     plot(g1)
 
-![](Readme_files/figure-markdown_strict/countsexamples-7.png)
+![](Readme_files/figure-markdown_strict/countsexamples-6.png)
 
     # more advanced:
     g1 <- ggplot(d, aes(x = media, y = count, color = genotype)) + 
@@ -3017,7 +3073,7 @@ TAP
       theme(plot.title = element_text(hjust = 0.5))
     plot(g1)
 
-![](Readme_files/figure-markdown_strict/countsexamples-8.png)
+![](Readme_files/figure-markdown_strict/countsexamples-7.png)
 
 ### COQs
 
@@ -3500,11 +3556,11 @@ TAP
 
 #### -export CIA5
 
-    ggexport(g1, filename = paste(pubdir,"Counts_plap6_CIA5.pdf",sep="/"),width = 8.2, height = 4.7)
-    ggsave(g1, filename = paste(pubdir,"Counts_plap6_CIA5.tiff",sep="/"),width = 8.2, height = 4.7)
-
-    ggexport(gt, filename = paste(pubdir,"Counts_plap6_rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
-    ggsave(gt, filename = paste(pubdir,"Counts_plap6_rbcl.tiff",sep="/"),width = 8.2, height = 4.7)
+    # ggexport(g1, filename = paste(pubdir,"Counts_plap6_CIA5.pdf",sep="/"),width = 8.2, height = 4.7)
+    # ggsave(g1, filename = paste(pubdir,"Counts_plap6_CIA5.tiff",sep="/"),width = 8.2, height = 4.7)
+    # 
+    # ggexport(gt, filename = paste(pubdir,"Counts_plap6_rbcl.pdf",sep="/"),width = 8.2, height = 4.7)
+    # ggsave(gt, filename = paste(pubdir,"Counts_plap6_rbcl.tiff",sep="/"),width = 8.2, height = 4.7)
 
     ggexport(p, filename = paste(pubdir,"Counts_plap6_CIA5+LHCSR+PSBS.pdf",sep="/"),width = 8.2, height = 4.7)
     ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+LHCSR+PSBS.tiff",sep="/"),width = 8.2, height = 4.7)
@@ -3621,29 +3677,178 @@ TAP
 
     # ggexport(ga, filename = "graphs3/Counts_YYK.pdf",width = 12, height = 12)
 
+## Plot Counts v2
+
+    # "WT_TAP"     "Δplap6_TAP" "WT_HSM"     "Δplap6_HSM"
+    group.colors <- c("grey50","black","orchid1","orchid4")
+
+    goi <- anno[c(PHO1,coqs[,"gene_id"]),]
+
+    # coqs6 <- c("COQ2","COQD2","COQ3","COQ5A","COQ5B","COQ8")
+    # goi <- anno[coqs6,"gene_id"]
+
+    l <- nrow(goi)
+    all_counts <- {}
+    for (i in 1:l){
+      d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=res$symbol[i],returnData=TRUE)
+      d$Gene <- rep(goi[i,"geneSymbol"],length(rownames(d)))
+      d$sample <- rownames(d)
+      rownames(d) <- {}
+      all_counts <- bind_rows(all_counts,d)
+      }
+
+    all_counts$condition <- factor(all_counts$condition, levels = c("WT_TAP","WT_HSM","Δplap6_TAP","Δplap6_HSM"))
+
+    all_counts$Gene <- factor(all_counts$Gene)
+    levels(all_counts$Gene)
+
+    ##  [1] "COQ10" "COQ2"  "COQ3"  "COQ4"  "COQ5"  "COQ5A" "COQ5B" "COQ6"  "COQ8" 
+    ## [10] "COQ9"  "COQD2" "PHO1"
+
+    max_val <- 1.0*max(all_counts$count)
+
+    # Plot
+    all_counts$Gene
+
+    ##   [1] PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1 
+    ##  [13] PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1 
+    ##  [25] PHO1  PHO1  COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2
+    ##  [37] COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2
+    ##  [49] COQD2 COQD2 COQD2 COQD2 COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5 
+    ##  [61] COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5 
+    ##  [73] COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6 
+    ##  [85] COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6 
+    ##  [97] COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ4  COQ4  COQ4  COQ4 
+    ## [109] COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4 
+    ## [121] COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ5A COQ5A
+    ## [133] COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A
+    ## [145] COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A
+    ## [157] COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9 
+    ## [169] COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9 
+    ## [181] COQ9  COQ9  COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B
+    ## [193] COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B
+    ## [205] COQ5B COQ5B COQ5B COQ5B COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2 
+    ## [217] COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2 
+    ## [229] COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ10 COQ10 COQ10 COQ10 COQ10 COQ10
+    ## [241] COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10
+    ## [253] COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ3  COQ3  COQ3  COQ3 
+    ## [265] COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3 
+    ## [277] COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ8  COQ8 
+    ## [289] COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8 
+    ## [301] COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8 
+    ## Levels: COQ10 COQ2 COQ3 COQ4 COQ5 COQ5A COQ5B COQ6 COQ8 COQ9 COQD2 PHO1
+
+    gcounts_coqs <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
+      geom_boxplot(fatten = 1) +
+      scale_fill_manual(values = "grey") +
+      scale_color_manual(values = "black") +
+      geom_point(position = position_dodge(width = 0.75)) + 
+      scale_color_manual(values = group.colors) +
+      labs(title = "COQ genes all") + 
+      theme_bw() +
+      removeGrid(x=T, y=T) +
+        geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+      scale_y_continuous(trans = "log2") & plot_annotation(title = colData(dds)$experiment[1])
+    gcounts_coqs %>% print()
+
+![](Readme_files/figure-markdown_strict/unnamed-chunk-1-1.png)
+
+    ggexport(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aio_all.pdf",sep="/"),width = 8.2, height = 4.7)
+    ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aoi_all.tiff",sep="/"),width = 8.2, height = 4.7)
+
+
+
+    coqs6 <- c("COQ2","COQD2","COQ3","COQ5A","COQ5B","COQ8")
+    goi <- anno[anno$geneSymbol %in% coqs6,]
+
+    l <- nrow(goi)
+    all_counts <- {}
+    for (i in 1:l){
+      d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=res$symbol[i],returnData=TRUE)
+      d$Gene <- rep(goi[i,"geneSymbol"],length(rownames(d)))
+      d$sample <- rownames(d)
+      rownames(d) <- {}
+      all_counts <- bind_rows(all_counts,d)
+      }
+
+    all_counts$Gene
+
+    ##   [1] "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2"
+    ##  [10] "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2"
+    ##  [19] "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQ5A"
+    ##  [28] "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A"
+    ##  [37] "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A"
+    ##  [46] "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5B" "COQ5B"
+    ##  [55] "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B"
+    ##  [64] "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B"
+    ##  [73] "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ2"  "COQ2"  "COQ2" 
+    ##  [82] "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2" 
+    ##  [91] "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2" 
+    ## [100] "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ3"  "COQ3"  "COQ3"  "COQ3" 
+    ## [109] "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3" 
+    ## [118] "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3" 
+    ## [127] "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8" 
+    ## [136] "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8" 
+    ## [145] "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8" 
+    ## [154] "COQ8"  "COQ8"  "COQ8"
+
+    levels(all_counts$condition)
+
+    ## [1] "WT_HSM"     "WT_TAP"     "Δplap6_HSM" "Δplap6_TAP"
+
+    all_counts$Gene <- factor(all_counts$Gene, levels = coqs6)
+    levels(all_counts$Gene)
+
+    ## [1] "COQ2"  "COQD2" "COQ3"  "COQ5A" "COQ5B" "COQ8"
+
+    max_val <- 1.0*max(all_counts$count)
+
+    # Plot
+    all_counts$Gene
+
+    ##   [1] COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2
+    ##  [13] COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2
+    ##  [25] COQD2 COQD2 COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A
+    ##  [37] COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A
+    ##  [49] COQ5A COQ5A COQ5A COQ5A COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B
+    ##  [61] COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B
+    ##  [73] COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ2  COQ2  COQ2  COQ2  COQ2  COQ2 
+    ##  [85] COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2 
+    ##  [97] COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ3  COQ3  COQ3  COQ3 
+    ## [109] COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3 
+    ## [121] COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ8  COQ8 
+    ## [133] COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8 
+    ## [145] COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8 
+    ## Levels: COQ2 COQD2 COQ3 COQ5A COQ5B COQ8
+
+    gcounts_coqs <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
+      geom_boxplot(fatten = 1) +
+      scale_fill_manual(values = "grey") +
+      scale_color_manual(values = "black") +
+      geom_point(position = position_dodge(width = 0.75)) + 
+      scale_color_manual(values = group.colors) +
+      labs(title = "COQ genes (core)") + 
+      theme_bw() +
+      removeGrid(x=T, y=T) +
+        geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+      scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
+    gcounts_coqs %>% print()
+
+![](Readme_files/figure-markdown_strict/unnamed-chunk-1-2.png)
+
+    ggexport(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aio.pdf",sep="/"),width = 8.2, height = 4.7)
+    ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aoi.tiff",sep="/"),width = 8.2, height = 4.7)
+
 ## Volcano Plot
 
     library(EnhancedVolcano)
 
-    plot(res1$log2FoldChange,res1$baseMean )
-
-![](Readme_files/figure-markdown_strict/volcano-1.png)
+    plot(res_ashr_list $log2FoldChange,res1$baseMean )
 
     # colnames(mcols(dds))
     # mcols(dds) <- left_join(as.data.frame(mcols(dds)),anno[,c("gene_id","prev.symbols","id.symbol")],by = "gene_id")
 
     summary(res1)
-
-    ## 
-    ## out of 15749 with nonzero total read count
-    ## adjusted p-value < 0.1
-    ## LFC > 0 (up)       : 4097, 26%
-    ## LFC < 0 (down)     : 5418, 34%
-    ## outliers [1]       : 0, 0%
-    ## low counts [2]     : 0, 0%
-    ## (mean count < 11)
-    ## [1] see 'cooksCutoff' argument of ?results
-    ## [2] see 'independentFiltering' argument of ?results
 
     EnhancedVolcano(res1,
                     x = 'log2FoldChange',
@@ -3667,8 +3872,6 @@ TAP
                     legendPosition = 'right',
     )
 
-![](Readme_files/figure-markdown_strict/volcano-2.png)
-
     # ggsave("graphs3/EnhancedVolcano.pdf",
     #        width = 12,
     #        height = 10)
@@ -3680,11 +3883,1660 @@ TAP
       geom_point(data = as.data.frame(res1[goi$gene_id,]), colour = "red") +
       geom_text_repel(data = as.data.frame(res1[goi$gene_id,]), aes(label=anno[goi$gene_id,"id.symbol"]),colour = "red",hjust=-0.5, vjust=-1) + xlim(-5,5)
 
-![](Readme_files/figure-markdown_strict/volcano-3.png)
-
     # ggsave("graphs3/Vulcano COQs-2.pdf",
     #        width = 10,
     #        height = 6)
+
+## Volcano Plot v2
+
+    res_ashr_list %>% names()
+
+    ## [1] "WT_TAP.vs.HSM"              "pcry_TAP.vs.HSM"           
+    ## [3] "HSM_pcry.vs.WT"             "TAP_pcry.vs.WT"            
+    ## [5] "pcry_TAPvHSM.vs.WT_TAPvHSM"
+
+    res <- res_ashr_list$pcry_TAPvHSM.vs.WT_TAPvHSM
+    res_n <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM
+
+    # of shrinked results
+    total <- subset(res, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
+    up <- subset(res, padj< 0.05 & log2FoldChange > 1) %>% nrow()
+    down <- subset(res, padj< 0.05 & log2FoldChange < -1) %>% nrow()
+
+    # of "true" results
+    total <- subset(res_n, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
+    up <- subset(res_n, padj< 0.05 & log2FoldChange > 1) %>% nrow()
+    down <- subset(res_n, padj< 0.05 & log2FoldChange < -1) %>% nrow()
+
+
+
+    # points outside the grid
+
+    pmax <- 10^-50
+    l2FCmax <- 6
+    subset(res, padj < pmax | log2FoldChange > l2FCmax | log2FoldChange < -l2FCmax)
+
+    ## log2 fold change (MMSE): strainΔplap6.mediaTAP effect 
+    ## Wald test p-value: strainΔplap6.mediaTAP effect 
+    ## DataFrame with 8 rows and 5 columns
+    ##                baseMean log2FoldChange     lfcSE       pvalue         padj
+    ##               <numeric>      <numeric> <numeric>    <numeric>    <numeric>
+    ## Cre02.g090850  6905.479        1.12654 0.0596759  3.12764e-82  9.14333e-79
+    ## Cre02.g095076  2913.021        1.97627 0.0844564 1.01453e-122 7.41469e-119
+    ## Cre02.g141400 34268.536       -2.13699 0.1370365  9.99893e-57  1.82693e-53
+    ## Cre04.g224500  5224.837        1.45701 0.0711136  4.52110e-95  1.65212e-91
+    ## Cre06.g281250  9340.125        2.55789 0.1061751 6.77849e-131 9.90811e-127
+    ## Cre12.g553700  3011.576        1.62132 0.0730825 1.84374e-110 8.98333e-107
+    ## Cre13.g575500  1303.270        1.70389 0.0976397  1.33455e-69  3.25117e-66
+    ## Cre14.g609202   409.184       -2.07614 0.1228248  6.82954e-66  1.42611e-62
+
+    res[res$padj < pmax,]$padj <- pmax
+    # res[res$log2FoldChange < -l2FCmax,]$log2FoldChange <- -l2FCmax
+
+    subset(res, padj < pmax | log2FoldChange > l2FCmax | log2FoldChange < -l2FCmax)
+
+    ## log2 fold change (MMSE): strainΔplap6.mediaTAP effect 
+    ## Wald test p-value: strainΔplap6.mediaTAP effect 
+    ## DataFrame with 0 rows and 5 columns
+
+    mcols(dds) %>% nrow()
+
+    ## [1] 14617
+
+    res %>% nrow()
+
+    ## [1] 14617
+
+    volcano_dd <- EnhancedVolcano(res,
+         lab = mcols(dds)[,"geneSymbol"],
+         selectLab = top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
+        x = 'log2FoldChange',
+        y = 'padj',
+        col=c("grey","grey","grey","orchid2"),
+        title = "Differences in media effect between pcry and WT",
+        titleLabSize = 12,
+        subtitle = paste0("upregulated: ",up,", downregulated: ",down,"\n(total: ",total,")"),
+    #    subtitle = {},
+        subtitleLabSize = 10,
+        caption = NULL,
+        # xlim = c(-7,7),
+        ylim = c(0,50),
+        pCutoff = 0.05,
+        FCcutoff = 1,
+        maxoverlapsConnectors = 20,
+        drawConnectors = TRUE,
+        widthConnectors = 0.5,
+        colConnectors = "grey70",
+        legendLabels=c('ns','ns','ns',
+          'padj < 0.05 & Log2FC > 1'),
+        labSize = 4,
+        axisLabSize = 12,
+        legendLabSize = 12,
+        legendIconSize = 3,
+        gridlines.major = FALSE,
+        gridlines.minor = FALSE,
+        pointSize = 3
+    )
+    volcano_dd
+
+![](Readme_files/figure-markdown_strict/volcano2-1.png)
+
+    top <- top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)]
+
+    # List TOP genes (with Symbol)
+    anno[anno[anno$geneSymbol %in% top,"gene_id"],c("geneSymbol","previousIdentifiers","Description","previousIdentifiers","Description","Comments","TMHMM_transmembrane","TargetP","Predalgo","Flagellar_Proteome")] %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+geneSymbol
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+previousIdentifiers
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Description
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+previousIdentifiers.1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Description.1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Comments
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+TMHMM\_transmembrane
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+TargetP
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Predalgo
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Flagellar\_Proteome
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Cre01.g025200
+</td>
+<td style="text-align:left;">
+MMP4
+</td>
+<td style="text-align:left;">
+MMP4#g579.t1
+</td>
+<td style="text-align:left;">
+Metalloproteinase of VMP family
+</td>
+<td style="text-align:left;">
+MMP4#g579.t1
+</td>
+<td style="text-align:left;">
+Metalloproteinase of VMP family
+</td>
+<td style="text-align:left;">
+Conserved organelle protein with lipase active site
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (RC 3 score: 0.723 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (score 0.591 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre01.g048350
+</td>
+<td style="text-align:left;">
+CGL53
+</td>
+<td style="text-align:left;">
+EBM1#g1074.t1
+</td>
+<td style="text-align:left;">
+conserved protein with glycosyl hydrolase family 5 domain
+</td>
+<td style="text-align:left;">
+EBM1#g1074.t1
+</td>
+<td style="text-align:left;">
+conserved protein with glycosyl hydrolase family 5 domain
+</td>
+<td style="text-align:left;">
+Conserved in the Green Lineage
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (RC 5 score: 0.511 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre01.g053150
+</td>
+<td style="text-align:left;">
+GPD3
+</td>
+<td style="text-align:left;">
+GPDH3#g1174.t2
+</td>
+<td style="text-align:left;">
+Glycerol-3-phosphate dehydrogenase/dihydroxyacetone-3-phosphate
+reductase
+</td>
+<td style="text-align:left;">
+GPDH3#g1174.t2
+</td>
+<td style="text-align:left;">
+Glycerol-3-phosphate dehydrogenase/dihydroxyacetone-3-phosphate
+reductase
+</td>
+<td style="text-align:left;">
+Identified as GPDH3 (PMID 22358185)# Closely related to nearby GPDH2
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Mitochondrion (RC 3 score: 0.898 TPlen: 42 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Chloroplast (score 3.157 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre09.g388355
+</td>
+<td style="text-align:left;">
+PHC33
+</td>
+<td style="text-align:left;">
+PHC20#g9538.t1
+</td>
+<td style="text-align:left;">
+Pherophorin-chlamydomonas homolog 33
+</td>
+<td style="text-align:left;">
+PHC20#g9538.t1
+</td>
+<td style="text-align:left;">
+Pherophorin-chlamydomonas homolog 33
+</td>
+<td style="text-align:left;">
+Belongs to the large pherophorin-family, a family of glycoproteins with
+a central hydroxyproline-rich (HR) domain#
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Mitochondrion (RC 4 score: 0.575 TPlen: 37 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (score 1.087 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Total Peptides:1 (Axoneme:1; M+M:0; KCl extract:0; Tergitol:0)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre09.g388353
+</td>
+<td style="text-align:left;">
+PHC34
+</td>
+<td style="text-align:left;">
+g9537.t1
+</td>
+<td style="text-align:left;">
+Pherophorin-chlamydomonas homolog 34
+</td>
+<td style="text-align:left;">
+g9537.t1
+</td>
+<td style="text-align:left;">
+Pherophorin-chlamydomonas homolog 34
+</td>
+<td style="text-align:left;">
+Belongs to the large pherophorin-family, a family of glycoproteins with
+a central hydroxyproline-rich (HR) domain#
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (RC 4 score: 0.625 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (score 1.505 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Total Peptides:1 (Axoneme:1; M+M:0; KCl extract:0; Tergitol:0)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre09.g388351
+</td>
+<td style="text-align:left;">
+PHC32
+</td>
+<td style="text-align:left;">
+g9535.t1
+</td>
+<td style="text-align:left;">
+Pherophorin-chlamydomonas homolog 32
+</td>
+<td style="text-align:left;">
+g9535.t1
+</td>
+<td style="text-align:left;">
+Pherophorin-chlamydomonas homolog 32
+</td>
+<td style="text-align:left;">
+Belongs to the large pherophorin-family, a family of glycoproteins with
+a central hydroxyproline-rich (HR) domain#
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (RC 2 score: 0.766 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (score 1.885 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Total Peptides:1 (Axoneme:1; M+M:0; KCl extract:0; Tergitol:0)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre02.g141400
+</td>
+<td style="text-align:left;">
+PCK1
+</td>
+<td style="text-align:left;">
+g2662.t1#PCK1#
+</td>
+<td style="text-align:left;">
+Phosphoenolpyruvate carboxykinase
+</td>
+<td style="text-align:left;">
+g2662.t1#PCK1#
+</td>
+<td style="text-align:left;">
+Phosphoenolpyruvate carboxykinase
+</td>
+<td style="text-align:left;">
+phosphoenolpyruvate carboxykinase# PEP carboxykinase (EC 4.1.1.49)#
+based on high similarity to PEPCK from Panicum maximum (GenBank
+AAQ10076) and many other plants# Target-P predicts no organelle
+targeting, so probably cytosolic form# may represent a minor splice
+variant of PCK1a
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Chloroplast (RC 5 score: 0.704 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Chloroplast (score 3.609 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre04.g217350
+</td>
+<td style="text-align:left;">
+KUP4
+</td>
+<td style="text-align:left;">
+KUP4#g4525.t1#
+</td>
+<td style="text-align:left;">
+Potassium ion uptake transporter
+</td>
+<td style="text-align:left;">
+KUP4#g4525.t1#
+</td>
+<td style="text-align:left;">
+Potassium ion uptake transporter
+</td>
+<td style="text-align:left;">
+Potassium ion uptake transporter, distantly linked to KUP5 gene encoding
+a similar protein
+</td>
+<td style="text-align:left;">
+TMHMM: 11 helices (SP) Topology:
+i29-51o66-88i228-250o265-284i296-318o343-365i372-394o414-436i497-519o523-545i552-571o
+</td>
+<td style="text-align:left;">
+Other (RC 3 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre06.g265400
+</td>
+<td style="text-align:left;">
+HTB12
+</td>
+<td style="text-align:left;">
+HTB11#HTB42#g5960.t1#HTB12
+</td>
+<td style="text-align:left;">
+Histone H2B
+</td>
+<td style="text-align:left;">
+HTB11#HTB42#g5960.t1#HTB12
+</td>
+<td style="text-align:left;">
+Histone H2B
+</td>
+<td style="text-align:left;">
+replication linked H2B# histone gene cluster XII (type 34BA)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 2 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre06.g267950
+</td>
+<td style="text-align:left;">
+HTR10
+</td>
+<td style="text-align:left;">
+HTR10#g6012.t1
+</td>
+<td style="text-align:left;">
+Histone H3
+</td>
+<td style="text-align:left;">
+HTR10#g6012.t1
+</td>
+<td style="text-align:left;">
+Histone H3
+</td>
+<td style="text-align:left;">
+replication linked H3# histone gene cluster X (type 34AB)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices Topology: i
+</td>
+<td style="text-align:left;">
+Chloroplast (RC 5 score: 0.605 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Chloroplast (score 1.353 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre06.g273850
+</td>
+<td style="text-align:left;">
+HTB7
+</td>
+<td style="text-align:left;">
+\#HTB7#g6143.t1
+</td>
+<td style="text-align:left;">
+Histone H2B
+</td>
+<td style="text-align:left;">
+\#HTB7#g6143.t1
+</td>
+<td style="text-align:left;">
+Histone H2B
+</td>
+<td style="text-align:left;">
+replication linked H2B# histone gene cluster VII (type 34AB)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 2 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre06.g275800
+</td>
+<td style="text-align:left;">
+HTB3
+</td>
+<td style="text-align:left;">
+HTB31#HTB4#g6183.t1
+</td>
+<td style="text-align:left;">
+Histone H2B
+</td>
+<td style="text-align:left;">
+HTB31#HTB4#g6183.t1
+</td>
+<td style="text-align:left;">
+Histone H2B
+</td>
+<td style="text-align:left;">
+replication linked H2B# histone gene cluster III (type 34AB)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 2 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre06.g275850
+</td>
+<td style="text-align:left;">
+HTA3
+</td>
+<td style="text-align:left;">
+HTA6#g6184.t1#
+</td>
+<td style="text-align:left;">
+Histone H2A
+</td>
+<td style="text-align:left;">
+HTA6#g6184.t1#
+</td>
+<td style="text-align:left;">
+Histone H2A
+</td>
+<td style="text-align:left;">
+replication linked H2A# histone gene cluster III (type 43BA)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 5 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Chloroplast (score 1.829 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre06.g276600
+</td>
+<td style="text-align:left;">
+HTR2
+</td>
+<td style="text-align:left;">
+g6200.t1#
+</td>
+<td style="text-align:left;">
+Histone H3
+</td>
+<td style="text-align:left;">
+g6200.t1#
+</td>
+<td style="text-align:left;">
+Histone H3
+</td>
+<td style="text-align:left;">
+replication linked H3# histone gene cluster II (type 43AB)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices Topology: i
+</td>
+<td style="text-align:left;">
+Chloroplast (RC 5 score: 0.605 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Chloroplast (score 1.353 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre06.g276900
+</td>
+<td style="text-align:left;">
+HTB1
+</td>
+<td style="text-align:left;">
+HTB24#g6207.t1
+</td>
+<td style="text-align:left;">
+Histone H2B
+</td>
+<td style="text-align:left;">
+HTB24#g6207.t1
+</td>
+<td style="text-align:left;">
+Histone H2B
+</td>
+<td style="text-align:left;">
+replication linked H2B# histone gene cluster I (type 43BA)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 1 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre06.g278245
+</td>
+<td style="text-align:left;">
+PAO5
+</td>
+<td style="text-align:left;">
+PAO9#Cre13.g600650.t1.2#g6387.t1#Cre13.g600650.t1.1
+</td>
+<td style="text-align:left;">
+Pheophorbide a oxygenase-related protein
+</td>
+<td style="text-align:left;">
+PAO9#Cre13.g600650.t1.2#g6387.t1#Cre13.g600650.t1.1
+</td>
+<td style="text-align:left;">
+Pheophorbide a oxygenase-related protein
+</td>
+<td style="text-align:left;">
+Contains Rieske iron-sulfur cluster and PAO domains and transmembrane
+domain for attachment to thylakoid membrane# closely related to linked
+Cre06.g305650# belongs to the classical family of short chain
+dehydrogenases \[PMID: 15180984\]#
+</td>
+<td style="text-align:left;">
+TMHMM: 2 helices Topology: i479-501o524-546i
+</td>
+<td style="text-align:left;">
+Chloroplast (RC 3 score: 0.895 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Chloroplast (score 2.346 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre06.g281250
+</td>
+<td style="text-align:left;">
+CFA1
+</td>
+<td style="text-align:left;">
+\#CFA1#g6541.t1
+</td>
+<td style="text-align:left;">
+Cyclopropane fatty acid synthase
+</td>
+<td style="text-align:left;">
+\#CFA1#g6541.t1
+</td>
+<td style="text-align:left;">
+Cyclopropane fatty acid synthase
+</td>
+<td style="text-align:left;">
+Uses AdoMet to introduce a methylene group into fatty acids
+</td>
+<td style="text-align:left;">
+TMHMM: 7 helices Topology:
+o942-964i984-1006o1021-1040i1047-1069o1073-1092i1113-1135o1145-1167i
+</td>
+<td style="text-align:left;">
+Other (RC 4 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre07.g354350
+</td>
+<td style="text-align:left;">
+CYP743B1
+</td>
+<td style="text-align:left;">
+CYP20#g8243.t1
+</td>
+<td style="text-align:left;">
+Cytochrome P450, CYP197 superfamily
+</td>
+<td style="text-align:left;">
+CYP20#g8243.t1
+</td>
+<td style="text-align:left;">
+Cytochrome P450, CYP197 superfamily
+</td>
+<td style="text-align:left;">
+cytochrome P450, unknown function, in CYP711 clan. The CYP711 clan
+includes CYP711A1 of Arabidopsis (MAX1). This gene product makes a
+carotenoid-derived branch inhibiting hormone. The CYP743 family has best
+BLAST hits to CYP3 family members (animal sequences). The top 100 BLAST
+hits were all animal sequences. The plant CYP711 clan may share a common
+ancestor with the animal CYP3/CYP4 clan. Belongs to a cluster of three
+highly similar CYP
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices (SP)
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (RC 5 score: 0.255 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Mitochondrion (score 2.070 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre09.g393543
+</td>
+<td style="text-align:left;">
+HCP2
+</td>
+<td style="text-align:left;">
+Cre02.g129550.t1.1#Cre02.g129550.t1.2#g9757.t1#HCP2
+</td>
+<td style="text-align:left;">
+Hybrid-cluster protein
+</td>
+<td style="text-align:left;">
+Cre02.g129550.t1.1#Cre02.g129550.t1.2#g9757.t1#HCP2
+</td>
+<td style="text-align:left;">
+Hybrid-cluster protein
+</td>
+<td style="text-align:left;">
+Prismane/CO dehydrogenase family
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Mitochondrion (RC 3 score: 0.775 TPlen: 58 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Mitochondrion (score 3.410 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre11.g467538
+</td>
+<td style="text-align:left;">
+GOX8
+</td>
+<td style="text-align:left;">
+GOX10#GOX8#g11468.t1#Cre18.g750800.t1.1
+</td>
+<td style="text-align:left;">
+Glyoxal oxidase 8
+</td>
+<td style="text-align:left;">
+GOX10#GOX8#g11468.t1#Cre18.g750800.t1.1
+</td>
+<td style="text-align:left;">
+Glyoxal oxidase 8
+</td>
+<td style="text-align:left;">
+The substrate of this oxidase is unsure, as the similarity is to both
+glyoxal oxidases and galactose oxidases, found in fungi, bacteria,
+animals and plants (both use the same Tyr radical / metal mechanism)#
+the plant homologues are secreted, but the fate of the Chlamydomonas
+isoforms is uncertain# belongs to a family of 20 genes more related to
+each other than to their higher plant homologues, contain the kelch
+repeat and a C-terminal domain of unknown function (E-set domains of
+sugar-utilizing enzymes)# in tandem with GOX6 and GOX7
+</td>
+<td style="text-align:left;">
+TMHMM: 1 helices (SP) Topology: i13-35o
+</td>
+<td style="text-align:left;">
+Mitochondrion (RC 5 score: 0.464 TPlen: 49 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (score 2.398 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre11.g481600
+</td>
+<td style="text-align:left;">
+GAS28
+</td>
+<td style="text-align:left;">
+GAS28#g11958.t1
+</td>
+<td style="text-align:left;">
+Hydroxyproline-rich glycoprotein, stress-induced
+</td>
+<td style="text-align:left;">
+GAS28#g11958.t1
+</td>
+<td style="text-align:left;">
+Hydroxyproline-rich glycoprotein, stress-induced
+</td>
+<td style="text-align:left;">
+hydroxyproline-rich glycoprotein whose mRNA is up-regulated in gametes,
+in zygotes, by agglutination/cAMP treatment, by osmotic stress and by
+cell wall removal \[PMID: 16183845\]. Closely linked to GAS30.
+Independently sequenced: DQ017908.
+</td>
+<td style="text-align:left;">
+TMHMM: 1 helices (SP) Topology: i7-29o
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (RC 3 score: 0.679 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (score 1.203 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre11.g481750
+</td>
+<td style="text-align:left;">
+GAS30
+</td>
+<td style="text-align:left;">
+GAS30#g11961.t1#
+</td>
+<td style="text-align:left;">
+Hydroxyproline-rich glycoprotein, stress-induced
+</td>
+<td style="text-align:left;">
+GAS30#g11961.t1#
+</td>
+<td style="text-align:left;">
+Hydroxyproline-rich glycoprotein, stress-induced
+</td>
+<td style="text-align:left;">
+Belongs to the large pherophorin-family, a family of extracellular
+matrix glycoproteins (cell wall glycoproteins) with a central
+hydroxyproline-rich (HR) domain. The mRNA is up-regulated in gametes, in
+zygotes, by agglutination/cAMP treatment, by osmotic stress and by cell
+wall removal \[PMID: 16183845\]. Closely linked to GAS28. Independently
+sequenced: DQ017907.
+</td>
+<td style="text-align:left;">
+TMHMM: 1 helices Topology: i63-85o
+</td>
+<td style="text-align:left;">
+Chloroplast (RC 2 score: 0.886 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Mitochondrion (score 0.987 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre12.g506450
+</td>
+<td style="text-align:left;">
+HFO19
+</td>
+<td style="text-align:left;">
+HFO35#g12440.t1#
+</td>
+<td style="text-align:left;">
+Histone H4
+</td>
+<td style="text-align:left;">
+HFO35#g12440.t1#
+</td>
+<td style="text-align:left;">
+Histone H4
+</td>
+<td style="text-align:left;">
+Replication linked H4# histone gene cluster XIX (type 43)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 5 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre12.g504500
+</td>
+<td style="text-align:left;">
+HTA15
+</td>
+<td style="text-align:left;">
+HTA16#g12478.t1#HTA15
+</td>
+<td style="text-align:left;">
+Histone H2A
+</td>
+<td style="text-align:left;">
+HTA16#g12478.t1#HTA15
+</td>
+<td style="text-align:left;">
+Histone H2A
+</td>
+<td style="text-align:left;">
+replication linked H2A# histone gene cluster XV (type 34BA)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 5 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Chloroplast (score 1.829 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre12.g502600
+</td>
+<td style="text-align:left;">
+SLT1
+</td>
+<td style="text-align:left;">
+\#g12519.t1
+</td>
+<td style="text-align:left;">
+Sodium/sulfate co-transporter
+</td>
+<td style="text-align:left;">
+\#g12519.t1
+</td>
+<td style="text-align:left;">
+Sodium/sulfate co-transporter
+</td>
+<td style="text-align:left;">
+SAC1-like transporter 1, putative sodium/sulfate co-transporter,
+transcript is up-regulated during sulfur-deprivation# related to the
+SAC1 protein which regulates sulfur-deficiency responses \[PMID:
+16307308\]
+</td>
+<td style="text-align:left;">
+TMHMM: 11 helices (SP) Topology:
+i5-27o47-69i104-126o146-168i189-211o601-620i625-643o653-672i685-707o774-796i803-825o
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (RC 4 score: 0.916 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (score 0.907 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre12.g546600
+</td>
+<td style="text-align:left;">
+FEA2
+</td>
+<td style="text-align:left;">
+g13623.t1
+</td>
+<td style="text-align:left;">
+Fe-assimilation protein
+</td>
+<td style="text-align:left;">
+g13623.t1
+</td>
+<td style="text-align:left;">
+Fe-assimilation protein
+</td>
+<td style="text-align:left;">
+Expression induced by Fe deficiency# secreted/ glycosylated# FEA
+proteins are lost to the medium in cell-wall less mutants, which makes
+them more sensitive to Fe deficiency# Cis-acting regulatory elements
+were characterized \[PMID: 19351705\]# High-CO2 inducible#
+</td>
+<td style="text-align:left;">
+TMHMM: 1 helices (SP) Topology: i7-29o
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (RC 1 score: 0.952 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Secretory\_pathway (score 2.223 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre12.g545101
+</td>
+<td style="text-align:left;">
+XDH1
+</td>
+<td style="text-align:left;">
+XDH1#Cre12.g545050.t1.3#g13658.t1
+</td>
+<td style="text-align:left;">
+Xanthine dehydrogenase/oxidase
+</td>
+<td style="text-align:left;">
+XDH1#Cre12.g545050.t1.3#g13658.t1
+</td>
+<td style="text-align:left;">
+Xanthine dehydrogenase/oxidase
+</td>
+<td style="text-align:left;">
+Includes: Xanthine dehydrogenase (XD)# Xanthine oxidase (XO) (Xanthine
+oxidoreductase)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 2 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre13.g570000
+</td>
+<td style="text-align:left;">
+HFO20
+</td>
+<td style="text-align:left;">
+HFO2#g14023.t2
+</td>
+<td style="text-align:left;">
+Histone H4
+</td>
+<td style="text-align:left;">
+HFO2#g14023.t2
+</td>
+<td style="text-align:left;">
+Histone H4
+</td>
+<td style="text-align:left;">
+Replication linked H4# histone gene cluster XX (type 34BA)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 5 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre13.g588150
+</td>
+<td style="text-align:left;">
+VTC2
+</td>
+<td style="text-align:left;">
+\#g14427.t1
+</td>
+<td style="text-align:left;">
+GDP-L-galactose phosphorylase
+</td>
+<td style="text-align:left;">
+\#g14427.t1
+</td>
+<td style="text-align:left;">
+GDP-L-galactose phosphorylase
+</td>
+<td style="text-align:left;">
+first committed step in vitamin C biosynthesis# mutant shows reduced
+vitamin C content, and increased 5mC/decreased 5gmC in its DNA, due to
+impairement of TET-mediated 5mC modifications
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 4 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Mitochondrion (score 0.616 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre14.g629700
+</td>
+<td style="text-align:left;">
+MME3
+</td>
+<td style="text-align:left;">
+g15165.t1
+</td>
+<td style="text-align:left;">
+NADP-dependent malic enzyme 3
+</td>
+<td style="text-align:left;">
+g15165.t1
+</td>
+<td style="text-align:left;">
+NADP-dependent malic enzyme 3
+</td>
+<td style="text-align:left;">
+Malic Enzyme, NADP-dependent# malate dehydrogenase, decarboxylating (EC
+1.1.1.40)# direct repeat with MME2# targeting uncertain, but predicted
+cytosolic by homology
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Mitochondrion (RC 2 score: 0.844 TPlen: 42 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Chloroplast (score 0.933 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre16.g651050
+</td>
+<td style="text-align:left;">
+CYC6
+</td>
+<td style="text-align:left;">
+PETJ#g15750.t1
+</td>
+<td style="text-align:left;">
+Cytochrome c6
+</td>
+<td style="text-align:left;">
+PETJ#g15750.t1
+</td>
+<td style="text-align:left;">
+Cytochrome c6
+</td>
+<td style="text-align:left;">
+cytochrome c6, chloroplast precursor (Cyt c553) (Cyt c552) (PETJ)
+\[PMID: 3036842# PMID: 1714451\]
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Mitochondrion (RC 2 score: 0.783 TPlen: 22 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Chloroplast (score 3.525 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre16.g663000
+</td>
+<td style="text-align:left;">
+THB12
+</td>
+<td style="text-align:left;">
+PRX#g16007.t1
+</td>
+<td style="text-align:left;">
+Truncated hemoglobin
+</td>
+<td style="text-align:left;">
+PRX#g16007.t1
+</td>
+<td style="text-align:left;">
+Truncated hemoglobin
+</td>
+<td style="text-align:left;">
+oxygen-binding heme protein belonging to group I of truncated 2-on2
+hemoglobins (trHbs)# homologs are found in bacteria, plants and
+unicellular eukaryotes (Paramecium, Tetrahymena)# there are several
+pairs of related and linked genes in this family, this one is not far
+from THB11 on Chr\_16# may carry out NO dioxygenation in the presence of
+nitrate reductase acting as an electron donnor
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 3 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre17.g702900
+</td>
+<td style="text-align:left;">
+GFY4
+</td>
+<td style="text-align:left;">
+GFY4#g17039.t1
+</td>
+<td style="text-align:left;">
+Putative acetate transporter
+</td>
+<td style="text-align:left;">
+GFY4#g17039.t1
+</td>
+<td style="text-align:left;">
+Putative acetate transporter
+</td>
+<td style="text-align:left;">
+GPR1/FUN34/YaaH family membrane protein# located in microbodies
+</td>
+<td style="text-align:left;">
+TMHMM: 6 helices (SP) Topology:
+i41-63o67-89i96-118o128-150i155-177o183-205i
+</td>
+<td style="text-align:left;">
+Other (RC 2 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre17.g702950
+</td>
+<td style="text-align:left;">
+GFY5
+</td>
+<td style="text-align:left;">
+GFY5#g17040.t1
+</td>
+<td style="text-align:left;">
+Putative acetate transporter
+</td>
+<td style="text-align:left;">
+GFY5#g17040.t1
+</td>
+<td style="text-align:left;">
+Putative acetate transporter
+</td>
+<td style="text-align:left;">
+GPR1/FUN34/YaaH family membrane protein# located in microbodies
+</td>
+<td style="text-align:left;">
+TMHMM: 6 helices (SP) Topology:
+i42-64o68-90i97-119o129-151i156-178o184-206i
+</td>
+<td style="text-align:left;">
+Other (RC 3 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre17.g708600
+</td>
+<td style="text-align:left;">
+HTB27
+</td>
+<td style="text-align:left;">
+HTB20#g17167.t1#
+</td>
+<td style="text-align:left;">
+Histone H2B
+</td>
+<td style="text-align:left;">
+HTB20#g17167.t1#
+</td>
+<td style="text-align:left;">
+Histone H2B
+</td>
+<td style="text-align:left;">
+replication linked H2B# histone gene cluster XXVII (type 34BA)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 2 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre17.g708700
+</td>
+<td style="text-align:left;">
+HTR27
+</td>
+<td style="text-align:left;">
+HTR20#g17169.t1#
+</td>
+<td style="text-align:left;">
+Histone H3
+</td>
+<td style="text-align:left;">
+HTR20#g17169.t1#
+</td>
+<td style="text-align:left;">
+Histone H3
+</td>
+<td style="text-align:left;">
+replication linked H3# histone gene cluster XXVII (type 34BA)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices Topology: i
+</td>
+<td style="text-align:left;">
+Chloroplast (RC 5 score: 0.605 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Chloroplast (score 1.353 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre17.g711750
+</td>
+<td style="text-align:left;">
+HTB30
+</td>
+<td style="text-align:left;">
+HTB22#HTB5#g17237.t1#
+</td>
+<td style="text-align:left;">
+Histone H2B
+</td>
+<td style="text-align:left;">
+HTB22#HTB5#g17237.t1#
+</td>
+<td style="text-align:left;">
+Histone H2B
+</td>
+<td style="text-align:left;">
+replication linked H2B# histone gene cluster XXX (type 34BA)# mapped to
+LG XIX - Walther & Hall (NAR 23:3756-3763# 1995)
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Other (RC 2 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Other (score - on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cre17.g730100
+</td>
+<td style="text-align:left;">
+RSEP1
+</td>
+<td style="text-align:left;">
+RSE1#g17644.t1
+</td>
+<td style="text-align:left;">
+Intramembrane metalloprotease
+</td>
+<td style="text-align:left;">
+RSE1#g17644.t1
+</td>
+<td style="text-align:left;">
+Intramembrane metalloprotease
+</td>
+<td style="text-align:left;">
+Intramembrane metalloprotease related to site-2 protease# contains M5
+domain, with HExxH motif embedded in transmembrane helix# homologous to
+bacterial RseP/YaeL/PsoIVFB involved in transmembrane signaling# could
+be organelle-targeted# Target of CRR1
+</td>
+<td style="text-align:left;">
+TMHMM: 0 helices
+</td>
+<td style="text-align:left;">
+Mitochondrion (RC 5 score: 0.237 TPlen: 73 on \#1 protein)
+</td>
+<td style="text-align:left;">
+Mitochondrion (score 2.070 on \#1 protein)
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CreCp.g802268
+</td>
+<td style="text-align:left;">
+rpl20
+</td>
+<td style="text-align:left;">
+CreCp.g001200#2717012#ChreCp006
+</td>
+<td style="text-align:left;">
+50S ribosomal protein L20
+</td>
+<td style="text-align:left;">
+CreCp.g001200#2717012#ChreCp006
+</td>
+<td style="text-align:left;">
+50S ribosomal protein L20
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CreCp.g802280
+</td>
+<td style="text-align:left;">
+psaA\_exon1
+</td>
+<td style="text-align:left;">
+CreCp.g002700#2717000#ChreCp019
+</td>
+<td style="text-align:left;">
+photosystem I P700 apoprotein A1 transpliced exon 1 of 3
+</td>
+<td style="text-align:left;">
+CreCp.g002700#2717000#ChreCp019
+</td>
+<td style="text-align:left;">
+photosystem I P700 apoprotein A1 transpliced exon 1 of 3
+</td>
+<td style="text-align:left;">
+Note=transpliced\_with\_CreCp.g802280\_CreCp.g802281\_CreCp.g802282#
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CreCp.g802304
+</td>
+<td style="text-align:left;">
+psbE
+</td>
+<td style="text-align:left;">
+CreCp.g005800#2716990#ChreCp040
+</td>
+<td style="text-align:left;">
+cytochrome b559 alpha subunit
+</td>
+<td style="text-align:left;">
+CreCp.g005800#2716990#ChreCp040
+</td>
+<td style="text-align:left;">
+cytochrome b559 alpha subunit
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+
+    top9 <- top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)] %>% .[1:9]
+
+    goi <- anno %>% .[.$geneSymbol %in% top9,]
+
+    # Plot TOP counts
+    l <- nrow(goi)
+    all_counts <- {}
+    for (i in 1:l){
+      d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=res$symbol[i],returnData=TRUE)
+      d$Gene <- rep(goi[i,"geneSymbol"],length(rownames(d)))
+      d$sample <- rownames(d)
+      rownames(d) <- {}
+      all_counts <- bind_rows(all_counts,d)
+      }
+
+    all_counts$Gene <- factor(all_counts$Gene)
+    levels(all_counts$Gene)
+
+    ## [1] "CFA1"  "CYC6"  "GAS28" "GFY5"  "PCK1"  "PHC32" "PHC33" "PHC34" "SLT1"
+
+    max_val <- 1.0*max(all_counts$count)
+
+    # Plot
+    all_counts$Gene
+
+    ##   [1] PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33
+    ##  [13] PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33
+    ##  [25] PHC33 PHC33 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34
+    ##  [37] PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34
+    ##  [49] PHC34 PHC34 PHC34 PHC34 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32
+    ##  [61] PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32
+    ##  [73] PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PCK1  PCK1  PCK1  PCK1  PCK1  PCK1 
+    ##  [85] PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1 
+    ##  [97] PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  CFA1  CFA1  CFA1  CFA1 
+    ## [109] CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1 
+    ## [121] CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  GAS28 GAS28
+    ## [133] GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28
+    ## [145] GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28
+    ## [157] SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1 
+    ## [169] SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1 
+    ## [181] SLT1  SLT1  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6 
+    ## [193] CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6 
+    ## [205] CYC6  CYC6  CYC6  CYC6  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5 
+    ## [217] GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5 
+    ## [229] GFY5  GFY5  GFY5  GFY5  GFY5  GFY5 
+    ## Levels: CFA1 CYC6 GAS28 GFY5 PCK1 PHC32 PHC33 PHC34 SLT1
+
+    gcounts_top9 <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
+      geom_boxplot(fatten = 1) +
+      scale_fill_manual(values = "grey") +
+      scale_color_manual(values = "black") +
+      geom_point(position = position_dodge(width = 0.75)) + 
+      scale_color_manual(values = group.colors) +
+      labs(title = "TOP genes with different media effect (pcry vs. WT)") + 
+      theme_bw() +
+      removeGrid(x=T, y=T) +
+        geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+      scale_y_continuous(trans = "log2") & plot_annotation(title = colData(dds)$experiment[1])
+    gcounts_top9 %>% print()
+
+![](Readme_files/figure-markdown_strict/volcano2-2.png)
+
+    ggexport(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aio_all.pdf",sep="/"),width = 8.2, height = 4.7)
+    ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aoi_all.tiff",sep="/"),width = 8.2, height = 4.7)
 
 ## Heatmap
 
@@ -3701,16 +5553,18 @@ TAP
 ![](Readme_files/figure-markdown_strict/heatmap1-1.png)
 
     # all top genes
-    select <- unique(
-      rownames(top_res1),
-      rownames(top_res2)) %>% 
-      unique(rownames(top_res3)) %>%
-      unique(rownames(top_res4)) %>%
-      unique(rownames(goi))
+    # select <- unique(
+    #   rownames(top_res1),
+    #   rownames(top_res2)) %>% 
+    #   unique(rownames(top_res3)) %>%
+    #   unique(rownames(top_res4)) %>%
+    #   unique(rownames(goi))
+
+    select <- anno %>% .[.$geneSymbol %in% top,"gene_id"]
 
     length(select)
 
-    ## [1] 1563
+    ## [1] 41
 
     df <- assay(ntd)[select,]
     rownames(df) <- mcols(dds)[select,"id.symbol"]
@@ -3725,31 +5579,26 @@ TAP
     #        width = 10,
     #        height = 30)
 
-    # all fib genes
-    select <- unique(c(
-      rownames(top_res1),
-      rownames(top_res2),
-      rownames(goi)))
-
-    select <- unique(c(head(rownames(top_res1),n=50),
-                       tail(rownames(top_res1),n=50),
-                       head(rownames(top_res2),n=50),
-                       tail(rownames(top_res2),n=50),
-                       rownames(goi)))
-
-    length(select)
-
-    ## [1] 182
-
-    df <- assay(ntd)[select,]
-    rownames(df) <- mcols(dds)[select,"id.symbol"]
-
-    anno_col <- as.data.frame(colData(dds)[,c("condition","media","genotype")])
-    xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
-                   cluster_cols=TRUE, annotation_col=anno_col)
-
-![](Readme_files/figure-markdown_strict/heatmap1-3.png)
-
+    # # all fib genes
+    # select <- unique(c(
+    #   rownames(top_res1),
+    #   rownames(top_res2),
+    #   rownames(goi)))
+    # 
+    # select <- unique(c(head(rownames(top_res1),n=50),
+    #                    tail(rownames(top_res1),n=50),
+    #                    head(rownames(top_res2),n=50),
+    #                    tail(rownames(top_res2),n=50),
+    #                    rownames(goi)))
+    # 
+    # length(select)
+    # 
+    # df <- assay(ntd)[select,]
+    # rownames(df) <- mcols(dds)[select,"id.symbol"]
+    # 
+    # anno_col <- as.data.frame(colData(dds)[,c("condition","media","genotype")])
+    # xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
+    #                cluster_cols=TRUE, annotation_col=anno_col)
     # ggsave("graphs3/Heatmap_Δplap6.vs.WT.pdf",plot=xx,
     #        width = 10,
     #        height = 30)

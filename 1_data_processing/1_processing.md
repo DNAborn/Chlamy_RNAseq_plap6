@@ -162,7 +162,7 @@ RNA\_03\_WT-TAP-OR3\_S3\_L008
       lane <-c(lane,str_split(i, pattern = "_", simplify = TRUE)[,6])
     }
     strain <- str_replace_all(strain, pattern="fib",replacement="Δplap6")
-    condition <- paste(strain,media,sep="_") %>% factor(levels = c("WT_TAP","Δplap6_TAP","WT_HSM","Δplap6_HSM"))
+    condition <- paste(strain,media,sep="_") %>% factor(levels = c("WT_HSM","WT_TAP","Δplap6_HSM","Δplap6_TAP"))
     strain  <- strain %>% factor() %>% relevel("WT")
     lane  <- lane %>% factor()
     media  <- media %>% factor()  %>% relevel("HSM")
@@ -1547,9 +1547,7 @@ Mitochondrion (score 0.988 on \#1 protein)
 </tbody>
 </table>
 
-    gse$condition %>% levels()
-
-    ## [1] "WT_TAP"     "Δplap6_TAP" "WT_HSM"     "Δplap6_HSM"
+    gse$condition <- gse$condition %>% factor(levels = c("WT_HSM","WT_TAP","Δplap6_HSM","Δplap6_TAP"))
 
     gse$media <- gse$media %>% relevel("HSM")
 

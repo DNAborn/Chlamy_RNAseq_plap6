@@ -8,10 +8,10 @@ output:
 toc: true
 always_allow_html: true
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 knit: (function(input_file, encoding) {
-    })    
     rmarkdown::render(input_file,output_file= 'Readme.md')
+        })    
 ---
   
 ```{r setup, include=FALSE}
@@ -68,7 +68,7 @@ library(vsn)
 
 library(PCAtools)
 library(aplot)
-
+library(ggExtra)
 # library(wget)
 
 ```
@@ -103,6 +103,36 @@ file.exists(indexDir, fastaPath, gtfPath)
 
 ```
 
+### R functions
+```{r r_functions}
+getresults_SK <- function(contrast,nres){
+r1 <- results(dds, contrast = contrast)
+r1$symbol <- mcols(dds)$symbol
+assign(paste("res",nres,sep="."),r1)
+r1 <- list(r1)
+names(r1) <- nres
+r1
+}
+
+
+topgenes_f <- function(res,p=0.05,bM=10,l2FC=1){
+a <- subset(res, padj < p & baseMean > bM & abs(log2FoldChange) > l2FC)
+if(nrow(a)>0) {
+a <- a[order(a$baseMean, decreasing = T),]
+  a$rank.bm <- seq(1:length(rownames(a)))
+a <- a[order(a$padj, decreasing = F),]
+  a$rank.padj <- seq(1:length(rownames(a)))
+a <- a[order(abs(a$log2FoldChange), decreasing = T),]
+  a$rank.l2FC <- seq(1:length(rownames(a)))
+a$rank.sum <- a$rank.l2FC+a$rank.bm+a$rank.padj
+  a <- a[order(a$rank.sum),]
+  }
+a
+}
+
+
+```
+
 ## Load dds
 ```{r load_dds}
 dds <- readRDS(paste(datadir,"dds2.RDS",sep="/"))
@@ -114,7 +144,7 @@ anno <- readRDS(paste(datadir,"anno.RDS",sep="/"))
 
 ## Make results 
 
-```{r make_results, fig.show="hold", out.width="50%"}
+```{r make_results_old, fig.show="hold", out.width="50%", eval=FALSE}
 resultsNames(dds)
 
 # TAP = Δplap6_TAP - WT_TAP
@@ -180,6 +210,77 @@ res1["Cre01.g000150",]
 plotMA(res1, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
 plotMA(resLFC_TAP, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
 summary(res1)
+
+```
+## Make results NEW
+
+```{r make results2}
+resultsNames(dds)
+#  "strain_Δplap6_vs_WT"   "media_TAP_vs_HSM"      "strainΔplap6.mediaTAP"
+colData(dds)$media
+colData(dds)$strain
+
+res_l <- list()
+
+# Media-Effekt für jeden Genotyp
+nres <- "WT_TAP.vs.HSM"
+contrast <- list(c("media_TAP_vs_HSM"))
+res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
+
+nres <- "pcry_TAP.vs.HSM"
+contrast <- list(c("media_TAP_vs_HSM","strainΔplap6.mediaTAP"))
+res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
+
+
+# Unterschiede zwischen WT und ko bei gleichem Medium
+nres <- "HSM_pcry.vs.WT"
+contrast <- list(c("strain_Δplap6_vs_WT"))
+res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
+
+nres <- "TAP_pcry.vs.WT"
+contrast <- list(c("strain_Δplap6_vs_WT","strainΔplap6.mediaTAP"))
+res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
+
+
+# Unterschiede im Medien-Effekt (interaction term)
+nres <- "pcry_TAPvHSM.vs.WT_TAPvHSM"
+contrast <- list(c("strainΔplap6.mediaTAP"))
+res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
+
+print(length(res_l))
+print(names(res_l))
+
+
+
+
+
+## Make deg & top lists:
+deg_list <- lapply(res_l,topgenes_f)
+deg_genes_l <- lapply(res_l,topgenes_f) %>%  lapply(.,rownames) 
+
+top_list <- lapply(res_l,topgenes_f,p=0.01, bM=100, l2FC=2)
+top_genes_l <- lapply(res_l,topgenes_f,p=0.01, bM=100, l2FC=2) %>%  lapply(.,rownames) 
+
+
+
+## Make shrinkage
+res_ashr_list <- list()
+
+l <- length(res_l)
+for (j in 1:l){
+res_ashr_list[[names(res_l)[j]]] <- lfcShrink(res=res_l[[j]], dds=dds, type="ashr")
+}
+
+
+
+
+res_l$pcry_TAPvHSM.vs.WT_TAPvHSM["Cre01.g000150",]
+plotMA(res_l$pcry_TAPvHSM.vs.WT_TAPvHSM, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
+plotMA(res_ashr_list$pcry_TAPvHSM.vs.WT_TAPvHSM, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
+summary(res_l$pcry_TAPvHSM.vs.WT_TAPvHSM)
+
+res <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM
+
 
 ```
 
@@ -254,8 +355,8 @@ plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, mai
 g <- anno[str_detect(anno[["geneSymbol"]],"ROC15"),"gene_id"]
 plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, main =anno[g,"geneSymbol"])
 g <- anno[str_detect(anno[["geneSymbol"]],"ROC40"),"gene_id"]
-plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, main =anno[g,"geneSymbol"])
-
+# plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, main =anno[g,"geneSymbol"])
+# ROC40 too low counts
 
 # search genes
 anno[str_detect(anno[["geneSymbol"]],"CRY"),1:9] %>% head() %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
@@ -475,13 +576,104 @@ ga2
 
 ```
 
+## Plot Counts v2
+```{r}
+
+# "WT_TAP"     "Δplap6_TAP" "WT_HSM"     "Δplap6_HSM"
+group.colors <- c("grey50","black","orchid1","orchid4")
+
+goi <- anno[c(PHO1,coqs[,"gene_id"]),]
+
+# coqs6 <- c("COQ2","COQD2","COQ3","COQ5A","COQ5B","COQ8")
+# goi <- anno[coqs6,"gene_id"]
+
+l <- nrow(goi)
+all_counts <- {}
+for (i in 1:l){
+  d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=res$symbol[i],returnData=TRUE)
+  d$Gene <- rep(goi[i,"geneSymbol"],length(rownames(d)))
+  d$sample <- rownames(d)
+  rownames(d) <- {}
+  all_counts <- bind_rows(all_counts,d)
+  }
+
+all_counts$condition <- factor(all_counts$condition, levels = c("WT_TAP","WT_HSM","Δplap6_TAP","Δplap6_HSM"))
+
+all_counts$Gene <- factor(all_counts$Gene)
+levels(all_counts$Gene)
+
+max_val <- 1.0*max(all_counts$count)
+
+# Plot
+all_counts$Gene
+gcounts_coqs <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
+  geom_boxplot(fatten = 1) +
+  scale_fill_manual(values = "grey") +
+  scale_color_manual(values = "black") +
+  geom_point(position = position_dodge(width = 0.75)) + 
+  scale_color_manual(values = group.colors) +
+  labs(title = "COQ genes all") + 
+  theme_bw() +
+  removeGrid(x=T, y=T) +
+    geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+  scale_y_continuous(trans = "log2") & plot_annotation(title = colData(dds)$experiment[1])
+gcounts_coqs %>% print()
+
+ggexport(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aio_all.pdf",sep="/"),width = 8.2, height = 4.7)
+ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aoi_all.tiff",sep="/"),width = 8.2, height = 4.7)
+
+
+
+coqs6 <- c("COQ2","COQD2","COQ3","COQ5A","COQ5B","COQ8")
+goi <- anno[anno$geneSymbol %in% coqs6,]
+
+l <- nrow(goi)
+all_counts <- {}
+for (i in 1:l){
+  d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=res$symbol[i],returnData=TRUE)
+  d$Gene <- rep(goi[i,"geneSymbol"],length(rownames(d)))
+  d$sample <- rownames(d)
+  rownames(d) <- {}
+  all_counts <- bind_rows(all_counts,d)
+  }
+
+all_counts$Gene
+levels(all_counts$condition)
+all_counts$Gene <- factor(all_counts$Gene, levels = coqs6)
+levels(all_counts$Gene)
+
+max_val <- 1.0*max(all_counts$count)
+
+# Plot
+all_counts$Gene
+gcounts_coqs <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
+  geom_boxplot(fatten = 1) +
+  scale_fill_manual(values = "grey") +
+  scale_color_manual(values = "black") +
+  geom_point(position = position_dodge(width = 0.75)) + 
+  scale_color_manual(values = group.colors) +
+  labs(title = "COQ genes (core)") + 
+  theme_bw() +
+  removeGrid(x=T, y=T) +
+    geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+  scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
+gcounts_coqs %>% print()
+
+ggexport(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aio.pdf",sep="/"),width = 8.2, height = 4.7)
+ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aoi.tiff",sep="/"),width = 8.2, height = 4.7)
+
+
+
+```
+
+
 
 ## Volcano Plot
 
-```{r volcano}
+```{r volcano, eval=FALSE}
 library(EnhancedVolcano)
 
-plot(res1$log2FoldChange,res1$baseMean )
+plot(res_ashr_list $log2FoldChange,res1$baseMean )
 
 # colnames(mcols(dds))
 # mcols(dds) <- left_join(as.data.frame(mcols(dds)),anno[,c("gene_id","prev.symbols","id.symbol")],by = "gene_id")
@@ -527,6 +719,117 @@ ggplot(as.data.frame(res1),aes(log2FoldChange,-log(padj))) +
 
 ```
 
+## Volcano Plot v2
+```{r volcano2}
+
+res_ashr_list %>% names()
+
+res <- res_ashr_list$pcry_TAPvHSM.vs.WT_TAPvHSM
+res_n <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM
+
+# of shrinked results
+total <- subset(res, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
+up <- subset(res, padj< 0.05 & log2FoldChange > 1) %>% nrow()
+down <- subset(res, padj< 0.05 & log2FoldChange < -1) %>% nrow()
+
+# of "true" results
+total <- subset(res_n, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
+up <- subset(res_n, padj< 0.05 & log2FoldChange > 1) %>% nrow()
+down <- subset(res_n, padj< 0.05 & log2FoldChange < -1) %>% nrow()
+
+
+
+# points outside the grid
+
+pmax <- 10^-50
+l2FCmax <- 6
+subset(res, padj < pmax | log2FoldChange > l2FCmax | log2FoldChange < -l2FCmax)
+
+res[res$padj < pmax,]$padj <- pmax
+# res[res$log2FoldChange < -l2FCmax,]$log2FoldChange <- -l2FCmax
+
+subset(res, padj < pmax | log2FoldChange > l2FCmax | log2FoldChange < -l2FCmax)
+
+mcols(dds) %>% nrow()
+res %>% nrow()
+
+volcano_dd <- EnhancedVolcano(res,
+     lab = mcols(dds)[,"geneSymbol"],
+     selectLab = top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
+    x = 'log2FoldChange',
+    y = 'padj',
+    col=c("grey","grey","grey","orchid2"),
+    title = "Differences in media effect between pcry and WT",
+    titleLabSize = 12,
+    subtitle = paste0("upregulated: ",up,", downregulated: ",down,"\n(total: ",total,")"),
+#    subtitle = {},
+    subtitleLabSize = 10,
+    caption = NULL,
+    # xlim = c(-7,7),
+    ylim = c(0,50),
+    pCutoff = 0.05,
+    FCcutoff = 1,
+    maxoverlapsConnectors = 20,
+    drawConnectors = TRUE,
+    widthConnectors = 0.5,
+    colConnectors = "grey70",
+    legendLabels=c('ns','ns','ns',
+      'padj < 0.05 & Log2FC > 1'),
+    labSize = 4,
+    axisLabSize = 12,
+    legendLabSize = 12,
+    legendIconSize = 3,
+    gridlines.major = FALSE,
+    gridlines.minor = FALSE,
+    pointSize = 3
+)
+volcano_dd
+
+top <- top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)]
+
+# List TOP genes (with Symbol)
+anno[anno[anno$geneSymbol %in% top,"gene_id"],c("geneSymbol","previousIdentifiers","Description","previousIdentifiers","Description","Comments","TMHMM_transmembrane","TargetP","Predalgo","Flagellar_Proteome")] %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
+
+top9 <- top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)] %>% .[1:9]
+
+goi <- anno %>% .[.$geneSymbol %in% top9,]
+
+# Plot TOP counts
+l <- nrow(goi)
+all_counts <- {}
+for (i in 1:l){
+  d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=res$symbol[i],returnData=TRUE)
+  d$Gene <- rep(goi[i,"geneSymbol"],length(rownames(d)))
+  d$sample <- rownames(d)
+  rownames(d) <- {}
+  all_counts <- bind_rows(all_counts,d)
+  }
+
+all_counts$Gene <- factor(all_counts$Gene)
+levels(all_counts$Gene)
+
+max_val <- 1.0*max(all_counts$count)
+
+# Plot
+all_counts$Gene
+gcounts_top9 <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
+  geom_boxplot(fatten = 1) +
+  scale_fill_manual(values = "grey") +
+  scale_color_manual(values = "black") +
+  geom_point(position = position_dodge(width = 0.75)) + 
+  scale_color_manual(values = group.colors) +
+  labs(title = "TOP genes with different media effect (pcry vs. WT)") + 
+  theme_bw() +
+  removeGrid(x=T, y=T) +
+    geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+  scale_y_continuous(trans = "log2") & plot_annotation(title = colData(dds)$experiment[1])
+gcounts_top9 %>% print()
+
+ggexport(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aio_all.pdf",sep="/"),width = 8.2, height = 4.7)
+ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aoi_all.tiff",sep="/"),width = 8.2, height = 4.7)
+
+```
+
 
 ## Heatmap
 ```{r heatmap1}
@@ -541,12 +844,14 @@ pheatmap(assay(ntd)[select,], cluster_rows=TRUE, show_rownames=FALSE,
          cluster_cols=TRUE, annotation_col=df)
 
 # all top genes
-select <- unique(
-  rownames(top_res1),
-  rownames(top_res2)) %>% 
-  unique(rownames(top_res3)) %>%
-  unique(rownames(top_res4)) %>%
-  unique(rownames(goi))
+# select <- unique(
+#   rownames(top_res1),
+#   rownames(top_res2)) %>% 
+#   unique(rownames(top_res3)) %>%
+#   unique(rownames(top_res4)) %>%
+#   unique(rownames(goi))
+
+select <- anno %>% .[.$geneSymbol %in% top,"gene_id"]
 
 length(select)
 df <- assay(ntd)[select,]
@@ -559,26 +864,26 @@ xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
 #        width = 10,
 #        height = 30)
 
-# all fib genes
-select <- unique(c(
-  rownames(top_res1),
-  rownames(top_res2),
-  rownames(goi)))
-
-select <- unique(c(head(rownames(top_res1),n=50),
-                   tail(rownames(top_res1),n=50),
-                   head(rownames(top_res2),n=50),
-                   tail(rownames(top_res2),n=50),
-                   rownames(goi)))
-
-length(select)
-
-df <- assay(ntd)[select,]
-rownames(df) <- mcols(dds)[select,"id.symbol"]
-
-anno_col <- as.data.frame(colData(dds)[,c("condition","media","genotype")])
-xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
-               cluster_cols=TRUE, annotation_col=anno_col)
+# # all fib genes
+# select <- unique(c(
+#   rownames(top_res1),
+#   rownames(top_res2),
+#   rownames(goi)))
+# 
+# select <- unique(c(head(rownames(top_res1),n=50),
+#                    tail(rownames(top_res1),n=50),
+#                    head(rownames(top_res2),n=50),
+#                    tail(rownames(top_res2),n=50),
+#                    rownames(goi)))
+# 
+# length(select)
+# 
+# df <- assay(ntd)[select,]
+# rownames(df) <- mcols(dds)[select,"id.symbol"]
+# 
+# anno_col <- as.data.frame(colData(dds)[,c("condition","media","genotype")])
+# xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
+#                cluster_cols=TRUE, annotation_col=anno_col)
 # ggsave("graphs3/Heatmap_Δplap6.vs.WT.pdf",plot=xx,
 #        width = 10,
 #        height = 30)
