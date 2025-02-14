@@ -5546,9 +5546,18 @@ cytochrome b559 alpha subunit
     # select top 100 highest expressed genes
     select <- order(rowMeans(counts(dds,normalized=TRUE)),
                     decreasing=TRUE)[1:100]
-    df <- as.data.frame(colData(dds)[,c("condition","media","genotype")])
+    df <- as.data.frame(colData(dds)[,c("condition","media","strain")])
+
+    anno_colors <- list(media = c("black","white"),
+                        strain = c("grey30","orchid2"),
+                        condition = group.colors)
+
+    names(anno_colors$media) <- levels(df$media)
+    names(anno_colors$strain) <- levels(df$strain)
+    names(anno_colors$condition) <- levels(df$condition)
+
     pheatmap(assay(ntd)[select,], cluster_rows=TRUE, show_rownames=FALSE,
-             cluster_cols=TRUE, annotation_col=df)
+             cluster_cols=TRUE, annotation_col=df, annotation_colors = anno_colors)
 
 ![](Readme_files/figure-markdown_strict/heatmap1-1.png)
 
@@ -5569,9 +5578,18 @@ cytochrome b559 alpha subunit
     df <- assay(ntd)[select,]
     rownames(df) <- mcols(dds)[select,"id.symbol"]
 
-    anno_col <- as.data.frame(colData(dds)[,c("condition","media","genotype")])
+    anno_col <- as.data.frame(colData(dds)[,c("media","strain","condition")])
+
+    anno_colors <- list(media = c("white","black"),
+                        strain = c("grey50","orchid1"),
+                        condition = group.colors)
+
+    names(anno_colors$media) <- levels(anno_col$media)
+    names(anno_colors$strain) <- levels(anno_col$strain)
+    names(anno_colors$condition) <- levels(anno_col$condition)
+
     xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
-                   cluster_cols=TRUE, annotation_col=anno_col)
+                   cluster_cols=TRUE, annotation_col=anno_col, annotation_colors = anno_colors)
 
 ![](Readme_files/figure-markdown_strict/heatmap1-2.png)
 
