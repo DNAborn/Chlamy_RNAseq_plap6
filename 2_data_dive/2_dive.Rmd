@@ -931,7 +931,7 @@ xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
 ```
 
 ## Selected Metabolic Genes
-
+### Get gene set
 ```{r}
 
 # 1. Glyoxylate Cycle Suppression
@@ -940,7 +940,7 @@ goi <- glyoxylate
 colnames(anno)
 gene_table <- anno[str_detect(anno[["geneSymbol"]],paste(goi, collapse="|")),c(24,5,9,10,8)]
 
-gene_table <- bind_rows(gene_table,anno[str_detect(anno[["prev.symbols"]],paste("ICL2", collapse="|")),c(24,5,8,9,10)]
+gene_table <- bind_rows(gene_table,anno[str_detect(anno[["prev.symbols"]],paste("ICL2", collapse="|")),c(24,5,9,10,8)]
                         )
 gene_table["Cre03.g149250","geneSymbol"] <- "ICL2"
 gene_table$pathway <- "Glyoxylate_Supr."
@@ -950,16 +950,182 @@ anno[str_detect(anno[["Description"]],paste("Isocitrate", collapse="|")),c(5,8,9
 anno[str_detect(anno[["Comments"]],paste("Isocitrate lyase", collapse="|")),c(5,8,9,10)]
 
 
-# Tricarboxylic Acid (TCA) Cycle & Malate Metabolism Disruption
+# 2. Tricarboxylic Acid (TCA) Cycle & Malate Metabolism Disruption
 TCA = c("MDH5","MDH2","FUMm","ACONTm","CSm","ACS")
 goi <- TCA
 anno[str_detect(anno[["geneSymbol"]],paste(goi, collapse="|")),c(24,5,9,10,8)]
 anno[str_detect(anno[["Description"]],paste(c(goi,"Aconitate","Citrate","Fumarase"), collapse="|")),c(24,5,8,9,10)]
 anno[str_detect(anno[["Comments"]],paste(c(goi,"Aconitate","Fumarase"), collapse="|")),c(24,5,8,9,10)]
 
+TCA2 <- c("Cre10.g423250","Cre09.g410700","Cre01.g055408","Cre01.g042750","Cre12.g514750","Cre03.g149100")
+
+genes_TCA <- anno[TCA2,c(24,5,9,10,8)]
+genes_TCA$pathway <- "TCA"
+
+gene_table <- bind_rows(gene_table,genes_TCA)
+
+
+# 3. Gluconeogenesis & Acetate Utilization Decline
+Gluconeogenesis <- c("PCK1","ENOm")
+goi <- Gluconeogenesis
+anno[str_detect(anno[["geneSymbol"]],paste(goi, collapse="|")),c(24,5,9,10,8)]
+anno[str_detect(anno[["Description"]],paste(c("Enolase"), collapse="|")),c(24,5,8,9,10)]
+
+Gluconeogenesis2 <- c("Cre02.g141400","Cre12.g513200")
+
+genes_Gluconeogenesis <- anno[Gluconeogenesis2,c(24,5,9,10,8)]
+genes_Gluconeogenesis$pathway <- "Gluconeogenesis"
+
+gene_table <- bind_rows(gene_table,genes_Gluconeogenesis)
+
+
+gene_table %>% kable()
+write_xlsx(data.frame(gene_table),
+           paste(outdir,"Metabolic_Gene_List.xlsx",sep="/"))
+
+metabolic_genes <- gene_table
+
+```
+
+### Visualization Metabolic pathway
+#### Plot counts
+```{r}
+
+
+goi <- metabolic_genes
+
+l <- nrow(goi)
+all_counts <- {}
+for (i in 1:l){
+  d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=res$symbol[i],returnData=TRUE)
+  d$Gene <- rep(goi[i,"geneSymbol"],length(rownames(d)))
+  d$sample <- rownames(d)
+  rownames(d) <- {}
+  all_counts <- bind_rows(all_counts,d)
+  }
+
+max_val <- 1.0*max(all_counts$count)
+
+all_counts$Gene <- factor(all_counts$Gene, levels = metabolic_genes$geneSymbol)
+
+
+# Plot
+gcounts_metabolic <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
+  geom_boxplot(fatten = 1) +
+  scale_fill_manual(values = "grey") +
+  scale_color_manual(values = "black") +
+  geom_point(position = position_dodge(width = 0.75)) + 
+  scale_color_manual(values = group.colors) +
+  labs(title = "Metabolic Genes") + 
+  theme_bw() +
+  removeGrid(x=T, y=T) +
+    geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+  scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
+gcounts_metabolic %>% print()
+
+ggexport(gcounts_coqs, filename = paste(pubdir,"Counts_metabolic.pdf",sep="/"),width = 8.2, height = 4.7)
+ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_metabolic.tiff",sep="/"),width = 8.2, height = 4.7)
 
 
 ```
+
+#### Volcano
+```{r}
+
+res <- res_ashr_list$pcry_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
+res_n <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
+
+# of shrinked results
+total <- subset(res, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
+up <- subset(res, padj< 0.05 & log2FoldChange > 1) %>% nrow()
+down <- subset(res, padj< 0.05 & log2FoldChange < -1) %>% nrow()
+
+# of "true" results
+total <- subset(res_n, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
+up <- subset(res_n, padj< 0.05 & log2FoldChange > 1) %>% nrow()
+down <- subset(res_n, padj< 0.05 & log2FoldChange < -1) %>% nrow()
+
+
+
+# points outside the grid
+
+pmax <- 10^-50
+l2FCmax <- 6
+subset(res, padj < pmax | log2FoldChange > l2FCmax | log2FoldChange < -l2FCmax)
+
+res[res$padj < pmax,]$padj <- pmax
+# res[res$log2FoldChange < -l2FCmax,]$log2FoldChange <- -l2FCmax
+
+subset(res, padj < pmax | log2FoldChange > l2FCmax | log2FoldChange < -l2FCmax)
+
+mcols(dds) %>% nrow()
+res %>% nrow()
+
+volcano_dd <- EnhancedVolcano(res,
+     lab = metabolic_genes$geneSymbol,
+     selectLab = top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
+    x = 'log2FoldChange',
+    y = 'padj',
+    col=c("grey","grey","grey","orchid2"),
+    title = "Differences in media effect between pcry and WT",
+    titleLabSize = 12,
+    subtitle = paste0("upregulated: ",up,", downregulated: ",down,"\n(total: ",total,")"),
+#    subtitle = {},
+    subtitleLabSize = 10,
+    caption = NULL,
+    # xlim = c(-7,7),
+    ylim = c(0,50),
+    pCutoff = 0.05,
+    FCcutoff = 1,
+    maxoverlapsConnectors = 20,
+    drawConnectors = TRUE,
+    widthConnectors = 0.5,
+    colConnectors = "grey70",
+    legendLabels=c('ns','ns','ns',
+      'padj < 0.05 & Log2FC > 1'),
+    labSize = 4,
+    axisLabSize = 12,
+    legendLabSize = 12,
+    legendIconSize = 3,
+    gridlines.major = FALSE,
+    gridlines.minor = FALSE,
+    pointSize = 3
+)
+volcano_dd
+
+```
+
+#### Heatmap
+```{r}
+
+
+select <- metabolic_genes$gene_id
+
+length(select)
+df <- assay(ntd)[select,]
+df <- df[,order(colData(dds)[,"condition"])]
+rownames(df) <- mcols(dds)[select,"id.symbol"]
+
+anno_col <- as.data.frame(colData(dds)[,c("media","strain","condition")])
+anno_row <- metabolic_genes["pathway"]
+rownames(anno_row) <- metabolic_genes$geneSymbol
+
+anno_colors <- list(media = c("white","black"),
+                    strain = c("grey50","orchid1"),
+                    condition = group.colors)
+
+names(anno_colors$media) <- levels(anno_col$media)
+names(anno_colors$strain) <- levels(anno_col$strain)
+names(anno_colors$condition) <- levels(anno_col$condition)
+
+xx <- pheatmap(df, cluster_rows=FALSE, show_rownames=TRUE,
+               cluster_cols=TRUE, annotation_col=anno_col,
+               annotation_row=anno_row, annotation_colors = anno_colors)
+
+
+
+```
+
 
 
 # GO-terms

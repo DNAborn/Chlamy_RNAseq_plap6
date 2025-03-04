@@ -46,6 +46,8 @@
     library(PCAtools)
     library(aplot)
     library(ggExtra)
+
+    library(topGO)
     # library(wget)
 
 ### R folders
@@ -5640,7 +5642,504 @@ cytochrome b559 alpha subunit
     #        width = 10,
     #        height = 10)
 
+## Selected Metabolic Genes
+
+### Get gene set
+
+    # 1. Glyoxylate Cycle Suppression
+    glyoxylate <- c("MAS1","ICL1", "ICL3")
+    goi <- glyoxylate
+    colnames(anno)
+
+    ##  [1] "locusName_4532"                       
+    ##  [2] "initial_v6_locus_ID"                  
+    ##  [3] "action"                               
+    ##  [4] "Replacement_v5.v6._model"             
+    ##  [5] "geneSymbol"                           
+    ##  [6] "strainLocusId"                        
+    ##  [7] "PMID"                                 
+    ##  [8] "previousIdentifiers"                  
+    ##  [9] "Description"                          
+    ## [10] "Comments"                             
+    ## [11] "Polycistronic"                        
+    ## [12] "TMHMM_transmembrane"                  
+    ## [13] "TargetP"                              
+    ## [14] "Predalgo"                             
+    ## [15] "interactions"                         
+    ## [16] "experimental_localization"            
+    ## [17] "CLiP_library"                         
+    ## [18] "mutant_phenotypes"                    
+    ## [19] "Plastid.ribosome_pulldown"            
+    ## [20] "TF_database..PMID.27067009."          
+    ## [21] "Flagellar_Proteome"                   
+    ## [22] "Co.expression.cluster..PMID.28710131."
+    ## [23] "GEnome.scale.Metabolic.Model"         
+    ## [24] "gene_id"                              
+    ## [25] "previousIdentifiers_list"             
+    ## [26] "prev.symbols"                         
+    ## [27] "id.symbol"
+
+    gene_table <- anno[str_detect(anno[["geneSymbol"]],paste(goi, collapse="|")),c(24,5,9,10,8)]
+
+    gene_table <- bind_rows(gene_table,anno[str_detect(anno[["prev.symbols"]],paste("ICL2", collapse="|")),c(24,5,9,10,8)]
+                            )
+    gene_table["Cre03.g149250","geneSymbol"] <- "ICL2"
+    gene_table$pathway <- "Glyoxylate_Supr."
+
+    anno[str_detect(anno[["Description"]],paste("Isocitrate", collapse="|")),c(24,5,8,9,10)]
+
+    ##                     gene_id geneSymbol previousIdentifiers
+    ## Cre02.g143250 Cre02.g143250       IDH2           #g2620.t1
+    ## Cre03.g149250 Cre03.g149250                  ICL2#g3035.t1
+    ## Cre04.g214500 Cre04.g214500       IDH3            g4684.t1
+    ## Cre06.g282800 Cre06.g282800       ICL1           g6576.t1#
+    ## Cre17.g728800 Cre17.g728800       IDH1          g17614.t1#
+    ##                                            Description
+    ## Cre02.g143250  Isocitrate dehydrogenase, NAD-dependent
+    ## Cre03.g149250                         Isocitrate lyase
+    ## Cre04.g214500 Isocitrate dehydrogenase, NADP-dependent
+    ## Cre06.g282800                         Isocitrate lyase
+    ## Cre17.g728800  Isocitrate dehydrogenase, NAD-dependent
+    ##                                                                                                                                                                                                                                       Comments
+    ## Cre02.g143250                                                                                                                                   isocitrate dehydrogenase, NAD-dependent, possibly mitochondrial based on homology to AT3G09810
+    ## Cre03.g149250                                                                                                                                                                                                Isocitrate lyase/phosphorylmutase
+    ## Cre04.g214500 NADP specific isocitrate dehydrogenase (EC 1.1.1.42), mitochondrial precursor# similar to mammalian mitochondrial ICDH (e.g., GenBank XP_536192), predicted by Target-P to have an organellar targeting sequence (mitochondrial)
+    ## Cre06.g282800                                                                                                                                      isocitrate lyase (EC 4.1.3.1)# isocitrase# 98% identical to cDNA (AAB61446) [PMID: 9049260]
+    ## Cre17.g728800                                                                                                                                                           NAD-dependent isocitrate dehydrogenase, probable mitochondrial isoform
+
+    anno[str_detect(anno[["Description"]],paste("Isocitrate", collapse="|")),c(5,8,9,10)]
+
+    ##               geneSymbol previousIdentifiers
+    ## Cre02.g143250       IDH2           #g2620.t1
+    ## Cre03.g149250                  ICL2#g3035.t1
+    ## Cre04.g214500       IDH3            g4684.t1
+    ## Cre06.g282800       ICL1           g6576.t1#
+    ## Cre17.g728800       IDH1          g17614.t1#
+    ##                                            Description
+    ## Cre02.g143250  Isocitrate dehydrogenase, NAD-dependent
+    ## Cre03.g149250                         Isocitrate lyase
+    ## Cre04.g214500 Isocitrate dehydrogenase, NADP-dependent
+    ## Cre06.g282800                         Isocitrate lyase
+    ## Cre17.g728800  Isocitrate dehydrogenase, NAD-dependent
+    ##                                                                                                                                                                                                                                       Comments
+    ## Cre02.g143250                                                                                                                                   isocitrate dehydrogenase, NAD-dependent, possibly mitochondrial based on homology to AT3G09810
+    ## Cre03.g149250                                                                                                                                                                                                Isocitrate lyase/phosphorylmutase
+    ## Cre04.g214500 NADP specific isocitrate dehydrogenase (EC 1.1.1.42), mitochondrial precursor# similar to mammalian mitochondrial ICDH (e.g., GenBank XP_536192), predicted by Target-P to have an organellar targeting sequence (mitochondrial)
+    ## Cre06.g282800                                                                                                                                      isocitrate lyase (EC 4.1.3.1)# isocitrase# 98% identical to cDNA (AAB61446) [PMID: 9049260]
+    ## Cre17.g728800                                                                                                                                                           NAD-dependent isocitrate dehydrogenase, probable mitochondrial isoform
+
+    anno[str_detect(anno[["Comments"]],paste("Isocitrate lyase", collapse="|")),c(5,8,9,10)]
+
+    ##               geneSymbol previousIdentifiers      Description
+    ## Cre03.g149250                  ICL2#g3035.t1 Isocitrate lyase
+    ##                                        Comments
+    ## Cre03.g149250 Isocitrate lyase/phosphorylmutase
+
+    # 2. Tricarboxylic Acid (TCA) Cycle & Malate Metabolism Disruption
+    TCA = c("MDH5","MDH2","FUMm","ACONTm","CSm","ACS")
+    goi <- TCA
+    anno[str_detect(anno[["geneSymbol"]],paste(goi, collapse="|")),c(24,5,9,10,8)]
+
+    ##                     gene_id geneSymbol                  Description
+    ## Cre01.g055408 Cre01.g055408       ACS2          Acetyl-CoA synthase
+    ## Cre01.g071662 Cre01.g071662       ACS1 Acetyl-CoA synthetase/ligase
+    ## Cre07.g353450 Cre07.g353450       ACS3 Acetyl-CoA synthetase/ligase
+    ## Cre09.g410700 Cre09.g410700       MDH5  NADP-Malate Dehydrogenase 5
+    ## Cre10.g423250 Cre10.g423250       MDH2       Malate dehydrogenase 2
+    ##                                                                                                                                                                                                                                          Comments
+    ## Cre01.g055408                                                                                                                                     identical to XP_001700230# located in peroxisomal microbodies (Lauersen et al, Algal Res. 2016)
+    ## Cre01.g071662                            Acetyl-CoA synthetase (EC 6.2.1.1)# Acetate-CoA ligase# Not in mitochondrion or plastid based on Target-P prediction (predicted as other with high reliability)# similar to rice ACS (GenBank XP_466041)
+    ## Cre07.g353450 Acetyl-CoA synthetase (EC 6.2.1.1)# Acetate-CoA ligase# probable mitochondrial protein based on mass spectrometry identification (QFYTAPTLLR + SLLQLGDAWPR), although organelle targeting predicted as other by Target-P and iPSORT
+    ## Cre09.g410700                                                                                                                             Malate dehydrogenase [NADP], possibly plastidic (NADP-MDH)# GI:1969739# Found in the flagellar proteome
+    ## Cre10.g423250                                                                                                  Malate dehydrogenase ( MDH) (= malic dehydrogenase) [EC:1.1.1.37]# NAD-dependent# putative glyoxysomal localization# PMID: 1921471
+    ##                                               previousIdentifiers
+    ## Cre01.g055408                                            g1224.t1
+    ## Cre01.g071662 Cre23.g765700.t1.1#Cre23.g765700.t1.2#ACS1#g1290.t1
+    ## Cre07.g353450                                      ACS3#g8221.t1#
+    ## Cre09.g410700                                 MDN5#MDH5#g10173.t1
+    ## Cre10.g423250                                 MDN2#MDH2#g10469.t1
+
+    anno[str_detect(anno[["Description"]],paste(c(goi,"Aconitate","Citrate","Fumarase"), collapse="|")),c(24,5,8,9,10)]
+
+    ##                     gene_id geneSymbol previousIdentifiers
+    ## Cre01.g042750 Cre01.g042750       ACH1            #g957.t1
+    ## Cre03.g149100 Cre03.g149100       CIS2           g3032.t1#
+    ## Cre12.g514750 Cre12.g514750       CIS1          #g12702.t1
+    ##                                                Description
+    ## Cre01.g042750                          Aconitate hydratase
+    ## Cre03.g149100 Citrate synthase, glyoxysomal/microbody form
+    ## Cre12.g514750              Citrate synthase, mitochondrial
+    ##                                                                                                                                                                  Comments
+    ## Cre01.g042750                                                                             Aconitate hydratase (EC 4.2.1.3), mitochondrial# citrate hydro-lyase# aconitase
+    ## Cre03.g149100 Citrate synthase (EC 2.3.3.1), glyoxysomal/microbody form# similarity to Arabidopsis citrate synthase glyoxysomal precursor (GenBank Q9LXS6)# PMID: 1921471
+    ## Cre12.g514750                            Citrate synthase (EC 2.3.3.1), mitochondrial form# similarity to carrot citrate synthase mitochondrial precursor (GenBank O8433)
+
+    anno[str_detect(anno[["Comments"]],paste(c(goi,"Aconitate","Fumarase"), collapse="|")),c(24,5,8,9,10)]
+
+    ##                     gene_id geneSymbol
+    ## Cre01.g042750 Cre01.g042750       ACH1
+    ## Cre01.g071662 Cre01.g071662       ACS1
+    ## Cre03.g194850 Cre03.g194850       MDH1
+    ## Cre10.g456400 Cre10.g456400           
+    ##                                               previousIdentifiers
+    ## Cre01.g042750                                            #g957.t1
+    ## Cre01.g071662 Cre23.g765700.t1.1#Cre23.g765700.t1.2#ACS1#g1290.t1
+    ## Cre03.g194850                                  MDN1#MDH1#g4035.t1
+    ## Cre10.g456400                                      DAT1#g11198.t2
+    ##                                                       Description
+    ## Cre01.g042750                                 Aconitate hydratase
+    ## Cre01.g071662                        Acetyl-CoA synthetase/ligase
+    ## Cre03.g194850 NAD-dependent malate dehydrogenase 1, chloroplastic
+    ## Cre10.g456400  Dicarboxylate/amino acid cation sodium transporter
+    ##                                                                                                                                                                                                                                                                     Comments
+    ## Cre01.g042750                                                                                                                                                                                Aconitate hydratase (EC 4.2.1.3), mitochondrial# citrate hydro-lyase# aconitase
+    ## Cre01.g071662                                                       Acetyl-CoA synthetase (EC 6.2.1.1)# Acetate-CoA ligase# Not in mitochondrion or plastid based on Target-P prediction (predicted as other with high reliability)# similar to rice ACS (GenBank XP_466041)
+    ## Cre03.g194850 Malate dehydrogenase (MDH) (= malic dehydrogenase) [EC:1.1.1.37]# NAD-dependent# sodium acetate-induced in Chlamydomonas reinhardtii# nuclear gene# gene product is localized in the chloroplast# Genbank entry U42979, as MDH2# present in thylakoid-enriched
+    ## Cre10.g456400                                                                                                                                       related to dicarboxylate amino acids cation sodium proton (DAACS) transporter# DAACS family transporter absent in plants
+
+    TCA2 <- c("Cre10.g423250","Cre09.g410700","Cre01.g055408","Cre01.g042750","Cre12.g514750","Cre03.g149100")
+
+    genes_TCA <- anno[TCA2,c(24,5,9,10,8)]
+    genes_TCA$pathway <- "TCA"
+
+    gene_table <- bind_rows(gene_table,genes_TCA)
+
+
+    # 3. Gluconeogenesis & Acetate Utilization Decline
+    Gluconeogenesis <- c("PCK1","ENOm")
+    goi <- Gluconeogenesis
+    anno[str_detect(anno[["geneSymbol"]],paste(goi, collapse="|")),c(24,5,9,10,8)]
+
+    ##                     gene_id geneSymbol                       Description
+    ## Cre02.g141400 Cre02.g141400       PCK1 Phosphoenolpyruvate carboxykinase
+    ##                                                                                                                                                                                                                                                                                               Comments
+    ## Cre02.g141400 phosphoenolpyruvate carboxykinase# PEP carboxykinase (EC 4.1.1.49)# based on high similarity to PEPCK from Panicum maximum (GenBank AAQ10076) and many other plants# Target-P predicts no organelle targeting, so probably cytosolic form# may represent a minor splice variant of PCK1a
+    ##               previousIdentifiers
+    ## Cre02.g141400      g2662.t1#PCK1#
+
+    anno[str_detect(anno[["Description"]],paste(c("Enolase"), collapse="|")),c(24,5,8,9,10)]
+
+    ##                     gene_id geneSymbol previousIdentifiers Description
+    ## Cre12.g513200 Cre12.g513200       ENO1 PGH1#ENO#g12671.t1#     Enolase
+    ##                                                                                                                                                                                                                                                                                                                                                                                                                                              Comments
+    ## Cre12.g513200 Phosphoenolpyruvate hydratase# 2-phosphoglycerate dehydratase# EC 4.2.1.11 [GI:18143, Dumont et al. (1993) Plant Sci. 89, 55-67]# product localization unsure: an N-terminal extension also found in Dunaliella and At1g74030 potentially targets it to an organelle, especially if cDNA is extended >6 nt upstream# found in the flagellar proteome [PMID: 15998802] and associated with central pair projection C1b (PMID: 16030251).
+
+    Gluconeogenesis2 <- c("Cre02.g141400","Cre12.g513200")
+
+    genes_Gluconeogenesis <- anno[Gluconeogenesis2,c(24,5,9,10,8)]
+    genes_Gluconeogenesis$pathway <- "Gluconeogenesis"
+
+    gene_table <- bind_rows(gene_table,genes_Gluconeogenesis)
+
+
+    gene_table %>% kable()
+
+<table>
+<colgroup>
+<col style="width: 2%" />
+<col style="width: 2%" />
+<col style="width: 1%" />
+<col style="width: 7%" />
+<col style="width: 73%" />
+<col style="width: 9%" />
+<col style="width: 2%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">gene_id</th>
+<th style="text-align: left;">geneSymbol</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Comments</th>
+<th style="text-align: left;">previousIdentifiers</th>
+<th style="text-align: left;">pathway</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g144807</td>
+<td style="text-align: left;">Cre03.g144807</td>
+<td style="text-align: left;">MAS1</td>
+<td style="text-align: left;">Malate synthase</td>
+<td style="text-align: left;">Malate synthase (EC 2.3.3.9)# identical to
+cDNA sequence (AAP75564)# PMID: 19214701</td>
+<td
+style="text-align: left;">g2904.t1#Cre01.g057800.t1.1#MAS1#Cre01.g057800.t1.2</td>
+<td style="text-align: left;">Glyoxylate_Supr.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g282800</td>
+<td style="text-align: left;">Cre06.g282800</td>
+<td style="text-align: left;">ICL1</td>
+<td style="text-align: left;">Isocitrate lyase</td>
+<td style="text-align: left;">isocitrate lyase (EC 4.1.3.1)# isocitrase#
+98% identical to cDNA (AAB61446) [PMID: 9049260]</td>
+<td style="text-align: left;">g6576.t1#</td>
+<td style="text-align: left;">Glyoxylate_Supr.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g149250</td>
+<td style="text-align: left;">Cre03.g149250</td>
+<td style="text-align: left;">ICL2</td>
+<td style="text-align: left;">Isocitrate lyase</td>
+<td style="text-align: left;">Isocitrate lyase/phosphorylmutase</td>
+<td style="text-align: left;">ICL2#g3035.t1</td>
+<td style="text-align: left;">Glyoxylate_Supr.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre10.g423250</td>
+<td style="text-align: left;">Cre10.g423250</td>
+<td style="text-align: left;">MDH2</td>
+<td style="text-align: left;">Malate dehydrogenase 2</td>
+<td style="text-align: left;">Malate dehydrogenase ( MDH) (= malic
+dehydrogenase) [EC:1.1.1.37]# NAD-dependent# putative glyoxysomal
+localization# PMID: 1921471</td>
+<td style="text-align: left;">MDN2#MDH2#g10469.t1</td>
+<td style="text-align: left;">TCA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre09.g410700</td>
+<td style="text-align: left;">Cre09.g410700</td>
+<td style="text-align: left;">MDH5</td>
+<td style="text-align: left;">NADP-Malate Dehydrogenase 5</td>
+<td style="text-align: left;">Malate dehydrogenase [NADP], possibly
+plastidic (NADP-MDH)# GI:1969739# Found in the flagellar proteome</td>
+<td style="text-align: left;">MDN5#MDH5#g10173.t1</td>
+<td style="text-align: left;">TCA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre01.g055408</td>
+<td style="text-align: left;">Cre01.g055408</td>
+<td style="text-align: left;">ACS2</td>
+<td style="text-align: left;">Acetyl-CoA synthase</td>
+<td style="text-align: left;">identical to XP_001700230# located in
+peroxisomal microbodies (Lauersen et al, Algal Res. 2016)</td>
+<td style="text-align: left;">g1224.t1</td>
+<td style="text-align: left;">TCA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre01.g042750</td>
+<td style="text-align: left;">Cre01.g042750</td>
+<td style="text-align: left;">ACH1</td>
+<td style="text-align: left;">Aconitate hydratase</td>
+<td style="text-align: left;">Aconitate hydratase (EC 4.2.1.3),
+mitochondrial# citrate hydro-lyase# aconitase</td>
+<td style="text-align: left;">#g957.t1</td>
+<td style="text-align: left;">TCA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre12.g514750</td>
+<td style="text-align: left;">Cre12.g514750</td>
+<td style="text-align: left;">CIS1</td>
+<td style="text-align: left;">Citrate synthase, mitochondrial</td>
+<td style="text-align: left;">Citrate synthase (EC 2.3.3.1),
+mitochondrial form# similarity to carrot citrate synthase mitochondrial
+precursor (GenBank O8433)</td>
+<td style="text-align: left;">#g12702.t1</td>
+<td style="text-align: left;">TCA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g149100</td>
+<td style="text-align: left;">Cre03.g149100</td>
+<td style="text-align: left;">CIS2</td>
+<td style="text-align: left;">Citrate synthase, glyoxysomal/microbody
+form</td>
+<td style="text-align: left;">Citrate synthase (EC 2.3.3.1),
+glyoxysomal/microbody form# similarity to Arabidopsis citrate synthase
+glyoxysomal precursor (GenBank Q9LXS6)# PMID: 1921471</td>
+<td style="text-align: left;">g3032.t1#</td>
+<td style="text-align: left;">TCA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre02.g141400</td>
+<td style="text-align: left;">Cre02.g141400</td>
+<td style="text-align: left;">PCK1</td>
+<td style="text-align: left;">Phosphoenolpyruvate carboxykinase</td>
+<td style="text-align: left;">phosphoenolpyruvate carboxykinase# PEP
+carboxykinase (EC 4.1.1.49)# based on high similarity to PEPCK from
+Panicum maximum (GenBank AAQ10076) and many other plants# Target-P
+predicts no organelle targeting, so probably cytosolic form# may
+represent a minor splice variant of PCK1a</td>
+<td style="text-align: left;">g2662.t1#PCK1#</td>
+<td style="text-align: left;">Gluconeogenesis</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre12.g513200</td>
+<td style="text-align: left;">Cre12.g513200</td>
+<td style="text-align: left;">ENO1</td>
+<td style="text-align: left;">Enolase</td>
+<td style="text-align: left;">Phosphoenolpyruvate hydratase#
+2-phosphoglycerate dehydratase# EC 4.2.1.11 [GI:18143, Dumont et
+al. (1993) Plant Sci. 89, 55-67]# product localization unsure: an
+N-terminal extension also found in Dunaliella and At1g74030 potentially
+targets it to an organelle, especially if cDNA is extended &gt;6 nt
+upstream# found in the flagellar proteome [PMID: 15998802] and
+associated with central pair projection C1b (PMID: 16030251).</td>
+<td style="text-align: left;">PGH1#ENO#g12671.t1#</td>
+<td style="text-align: left;">Gluconeogenesis</td>
+</tr>
+</tbody>
+</table>
+
+    write_xlsx(data.frame(gene_table),
+               paste(outdir,"Metabolic_Gene_List.xlsx",sep="/"))
+
+    metabolic_genes <- gene_table
+
+### Visualization Metabolic pathway
+
+#### Plot counts
+
+    goi <- metabolic_genes
+
+    l <- nrow(goi)
+    all_counts <- {}
+    for (i in 1:l){
+      d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=res$symbol[i],returnData=TRUE)
+      d$Gene <- rep(goi[i,"geneSymbol"],length(rownames(d)))
+      d$sample <- rownames(d)
+      rownames(d) <- {}
+      all_counts <- bind_rows(all_counts,d)
+      }
+
+    max_val <- 1.0*max(all_counts$count)
+
+    all_counts$Gene <- factor(all_counts$Gene, levels = metabolic_genes$geneSymbol)
+
+
+    # Plot
+    gcounts_metabolic <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
+      geom_boxplot(fatten = 1) +
+      scale_fill_manual(values = "grey") +
+      scale_color_manual(values = "black") +
+      geom_point(position = position_dodge(width = 0.75)) + 
+      scale_color_manual(values = group.colors) +
+      labs(title = "Metabolic Genes") + 
+      theme_bw() +
+      removeGrid(x=T, y=T) +
+        geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+      scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
+    gcounts_metabolic %>% print()
+
+![](Readme_files/figure-markdown_strict/unnamed-chunk-3-1.png)
+
+    ggexport(gcounts_coqs, filename = paste(pubdir,"Counts_metabolic.pdf",sep="/"),width = 8.2, height = 4.7)
+    ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_metabolic.tiff",sep="/"),width = 8.2, height = 4.7)
+
+#### Volcano
+
+    res <- res_ashr_list$pcry_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
+    res_n <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
+
+    # of shrinked results
+    total <- subset(res, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
+    up <- subset(res, padj< 0.05 & log2FoldChange > 1) %>% nrow()
+    down <- subset(res, padj< 0.05 & log2FoldChange < -1) %>% nrow()
+
+    # of "true" results
+    total <- subset(res_n, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
+    up <- subset(res_n, padj< 0.05 & log2FoldChange > 1) %>% nrow()
+    down <- subset(res_n, padj< 0.05 & log2FoldChange < -1) %>% nrow()
+
+
+
+    # points outside the grid
+
+    pmax <- 10^-50
+    l2FCmax <- 6
+    subset(res, padj < pmax | log2FoldChange > l2FCmax | log2FoldChange < -l2FCmax)
+
+    ## log2 fold change (MMSE): strainΔplap6.mediaTAP effect 
+    ## Wald test p-value: strainΔplap6.mediaTAP effect 
+    ## DataFrame with 1 row and 5 columns
+    ##                baseMean log2FoldChange     lfcSE      pvalue        padj
+    ##               <numeric>      <numeric> <numeric>   <numeric>   <numeric>
+    ## Cre02.g141400   34268.5       -2.13699  0.137036 9.99893e-57 1.82693e-53
+
+    res[res$padj < pmax,]$padj <- pmax
+    # res[res$log2FoldChange < -l2FCmax,]$log2FoldChange <- -l2FCmax
+
+    subset(res, padj < pmax | log2FoldChange > l2FCmax | log2FoldChange < -l2FCmax)
+
+    ## log2 fold change (MMSE): strainΔplap6.mediaTAP effect 
+    ## Wald test p-value: strainΔplap6.mediaTAP effect 
+    ## DataFrame with 0 rows and 5 columns
+
+    mcols(dds) %>% nrow()
+
+    ## [1] 14617
+
+    res %>% nrow()
+
+    ## [1] 11
+
+    volcano_dd <- EnhancedVolcano(res,
+         lab = metabolic_genes$geneSymbol,
+         selectLab = top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
+        x = 'log2FoldChange',
+        y = 'padj',
+        col=c("grey","grey","grey","orchid2"),
+        title = "Differences in media effect between pcry and WT",
+        titleLabSize = 12,
+        subtitle = paste0("upregulated: ",up,", downregulated: ",down,"\n(total: ",total,")"),
+    #    subtitle = {},
+        subtitleLabSize = 10,
+        caption = NULL,
+        # xlim = c(-7,7),
+        ylim = c(0,50),
+        pCutoff = 0.05,
+        FCcutoff = 1,
+        maxoverlapsConnectors = 20,
+        drawConnectors = TRUE,
+        widthConnectors = 0.5,
+        colConnectors = "grey70",
+        legendLabels=c('ns','ns','ns',
+          'padj < 0.05 & Log2FC > 1'),
+        labSize = 4,
+        axisLabSize = 12,
+        legendLabSize = 12,
+        legendIconSize = 3,
+        gridlines.major = FALSE,
+        gridlines.minor = FALSE,
+        pointSize = 3
+    )
+    volcano_dd
+
+![](Readme_files/figure-markdown_strict/unnamed-chunk-4-1.png)
+
+#### Heatmap
+
+    select <- metabolic_genes$gene_id
+
+    length(select)
+
+    ## [1] 11
+
+    df <- assay(ntd)[select,]
+    df <- df[,order(colData(dds)[,"condition"])]
+    rownames(df) <- mcols(dds)[select,"id.symbol"]
+
+    anno_col <- as.data.frame(colData(dds)[,c("media","strain","condition")])
+    anno_row <- metabolic_genes["pathway"]
+    rownames(anno_row) <- metabolic_genes$geneSymbol
+
+    anno_colors <- list(media = c("white","black"),
+                        strain = c("grey50","orchid1"),
+                        condition = group.colors)
+
+    names(anno_colors$media) <- levels(anno_col$media)
+    names(anno_colors$strain) <- levels(anno_col$strain)
+    names(anno_colors$condition) <- levels(anno_col$condition)
+
+    xx <- pheatmap(df, cluster_rows=FALSE, show_rownames=TRUE,
+                   cluster_cols=TRUE, annotation_col=anno_col,
+                   annotation_row=anno_row, annotation_colors = anno_colors)
+
+![](Readme_files/figure-markdown_strict/unnamed-chunk-5-1.png)
+
 # GO-terms
+
+    TOPGO
 
 # Export
 
