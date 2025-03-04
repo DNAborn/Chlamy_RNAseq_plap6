@@ -8,7 +8,7 @@ output:
 toc: true
 always_allow_html: true
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 knit: (function(input_file, encoding) {
     rmarkdown::render(input_file,output_file= 'Readme.md')
         })    
@@ -69,6 +69,8 @@ library(vsn)
 library(PCAtools)
 library(aplot)
 library(ggExtra)
+
+library(topGO)
 # library(wget)
 
 ```
@@ -832,7 +834,7 @@ ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aoi_all.tiff",se
 
 
 ## Heatmap
-```{r heatmap1}
+```{r heatmap1, fig.height=9, fig.width=6, out.width="80%"}
 library("pheatmap")
 ntd <- normTransform(dds)
 
@@ -864,6 +866,7 @@ select <- anno %>% .[.$geneSymbol %in% top,"gene_id"]
 
 length(select)
 df <- assay(ntd)[select,]
+df <- df[,order(colData(dds)[,"condition"])]
 rownames(df) <- mcols(dds)[select,"id.symbol"]
 
 anno_col <- as.data.frame(colData(dds)[,c("media","strain","condition")])
@@ -877,7 +880,7 @@ names(anno_colors$strain) <- levels(anno_col$strain)
 names(anno_colors$condition) <- levels(anno_col$condition)
 
 xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
-               cluster_cols=TRUE, annotation_col=anno_col, annotation_colors = anno_colors)
+               cluster_cols=FALSE, annotation_col=anno_col, annotation_colors = anno_colors)
 
 # ggsave("graphs3/Heatmap_top.pdf",plot=xx,
 #        width = 10,
@@ -924,6 +927,44 @@ xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
 # ggsave("graphs3/Heatmap_YYK.pdf",plot=xx,
 #        width = 10,
 #        height = 10)
+
+```
+
+## Selected Metabolic Genes
+
+```{r}
+
+# 1. Glyoxylate Cycle Suppression
+glyoxylate <- c("MAS1","ICL1", "ICL3")
+goi <- glyoxylate
+colnames(anno)
+gene_table <- anno[str_detect(anno[["geneSymbol"]],paste(goi, collapse="|")),c(24,5,9,10,8)]
+
+gene_table <- bind_rows(gene_table,anno[str_detect(anno[["prev.symbols"]],paste("ICL2", collapse="|")),c(24,5,8,9,10)]
+                        )
+gene_table["Cre03.g149250","geneSymbol"] <- "ICL2"
+gene_table$pathway <- "Glyoxylate_Supr."
+
+anno[str_detect(anno[["Description"]],paste("Isocitrate", collapse="|")),c(24,5,8,9,10)]
+anno[str_detect(anno[["Description"]],paste("Isocitrate", collapse="|")),c(5,8,9,10)]
+anno[str_detect(anno[["Comments"]],paste("Isocitrate lyase", collapse="|")),c(5,8,9,10)]
+
+
+# Tricarboxylic Acid (TCA) Cycle & Malate Metabolism Disruption
+TCA = c("MDH5","MDH2","FUMm","ACONTm","CSm","ACS")
+goi <- TCA
+anno[str_detect(anno[["geneSymbol"]],paste(goi, collapse="|")),c(24,5,9,10,8)]
+anno[str_detect(anno[["Description"]],paste(c(goi,"Aconitate","Citrate","Fumarase"), collapse="|")),c(24,5,8,9,10)]
+anno[str_detect(anno[["Comments"]],paste(c(goi,"Aconitate","Fumarase"), collapse="|")),c(24,5,8,9,10)]
+
+
+
+```
+
+
+# GO-terms
+```{r, eval=FALSE}
+TOPGO
 
 ```
 

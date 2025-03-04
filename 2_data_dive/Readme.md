@@ -5559,7 +5559,7 @@ cytochrome b559 alpha subunit
     pheatmap(assay(ntd)[select,], cluster_rows=TRUE, show_rownames=FALSE,
              cluster_cols=TRUE, annotation_col=df, annotation_colors = anno_colors)
 
-![](Readme_files/figure-markdown_strict/heatmap1-1.png)
+<img src="Readme_files/figure-markdown_strict/heatmap1-1.png" width="80%" />
 
     # all top genes
     # select <- unique(
@@ -5576,6 +5576,7 @@ cytochrome b559 alpha subunit
     ## [1] 41
 
     df <- assay(ntd)[select,]
+    df <- df[,order(colData(dds)[,"condition"])]
     rownames(df) <- mcols(dds)[select,"id.symbol"]
 
     anno_col <- as.data.frame(colData(dds)[,c("media","strain","condition")])
@@ -5589,9 +5590,9 @@ cytochrome b559 alpha subunit
     names(anno_colors$condition) <- levels(anno_col$condition)
 
     xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
-                   cluster_cols=TRUE, annotation_col=anno_col, annotation_colors = anno_colors)
+                   cluster_cols=FALSE, annotation_col=anno_col, annotation_colors = anno_colors)
 
-![](Readme_files/figure-markdown_strict/heatmap1-2.png)
+<img src="Readme_files/figure-markdown_strict/heatmap1-2.png" width="80%" />
 
     # ggsave("graphs3/Heatmap_top.pdf",plot=xx,
     #        width = 10,
@@ -5638,6 +5639,8 @@ cytochrome b559 alpha subunit
     # ggsave("graphs3/Heatmap_YYK.pdf",plot=xx,
     #        width = 10,
     #        height = 10)
+
+# GO-terms
 
 # Export
 
