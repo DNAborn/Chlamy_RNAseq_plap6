@@ -6147,16 +6147,16 @@ associated with central pair projection C1b (PMID: 16030251).</td>
     plap6 <- res_l$plap6_TAP.vs.HSM %>% as.data.frame() %>% .[metabolic_genes$gene_id,c("log2FoldChange","symbol")]
 
     df <- bind_cols(metabolic_genes, WT, plap6)
-    colnames(df)[7] <- "log2FC(WT)"
-    colnames(df)[9] <- "log2FC(plap6)"
+    colnames(df)[7] <- "WT (log2FC)"
+    colnames(df)[9] <- "plap6 (log2FC)"
 
-    cross <- ggplot(df, aes(x = `log2FC(WT)`, y = `log2FC(plap6)`, col=pathway)) +
+    cross <- ggplot(df, aes(x = `WT (log2FC)`, y = `plap6 (log2FC)`, col=pathway)) +
       geom_point() +
       geom_text_repel(aes(label = df$geneSymbol), size=4) +
       theme_bw() +
       coord_fixed(ratio = 1, xlim = c(-4,4),ylim=c(-4,4)) +
       geom_abline(col="grey") +
-      ggtitle("Acetate effect") +
+      ggtitle("Acetate effect (TAP vs. HSM)") +
       theme(plot.title = element_text(hjust = 0.5))
 
     goi <- metabolic_genes[c(5,10,11),]
