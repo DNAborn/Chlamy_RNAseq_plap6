@@ -213,23 +213,23 @@
     contrast <- list(c("media_TAP_vs_HSM"))
     res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
 
-    nres <- "pcry_TAP.vs.HSM"
+    nres <- "plap6_TAP.vs.HSM"
     contrast <- list(c("media_TAP_vs_HSM","strainΔplap6.mediaTAP"))
     res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
 
 
     # Unterschiede zwischen WT und ko bei gleichem Medium
-    nres <- "HSM_pcry.vs.WT"
+    nres <- "HSM_plap6.vs.WT"
     contrast <- list(c("strain_Δplap6_vs_WT"))
     res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
 
-    nres <- "TAP_pcry.vs.WT"
+    nres <- "TAP_plap6.vs.WT"
     contrast <- list(c("strain_Δplap6_vs_WT","strainΔplap6.mediaTAP"))
     res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
 
 
     # Unterschiede im Medien-Effekt (interaction term)
-    nres <- "pcry_TAPvHSM.vs.WT_TAPvHSM"
+    nres <- "plap6_TAPvHSM.vs.WT_TAPvHSM"
     contrast <- list(c("strainΔplap6.mediaTAP"))
     res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
 
@@ -239,9 +239,9 @@
 
     print(names(res_l))
 
-    ## [1] "WT_TAP.vs.HSM"              "pcry_TAP.vs.HSM"           
-    ## [3] "HSM_pcry.vs.WT"             "TAP_pcry.vs.WT"            
-    ## [5] "pcry_TAPvHSM.vs.WT_TAPvHSM"
+    ## [1] "WT_TAP.vs.HSM"               "plap6_TAP.vs.HSM"           
+    ## [3] "HSM_plap6.vs.WT"             "TAP_plap6.vs.WT"            
+    ## [5] "plap6_TAPvHSM.vs.WT_TAPvHSM"
 
     ## Make deg & top lists:
     deg_list <- lapply(res_l,topgenes_f)
@@ -263,7 +263,7 @@
 
 
 
-    res_l$pcry_TAPvHSM.vs.WT_TAPvHSM["Cre01.g000150",]
+    res_l$plap6_TAPvHSM.vs.WT_TAPvHSM["Cre01.g000150",]
 
     ## log2 fold change (MLE): strainΔplap6.mediaTAP effect 
     ## Wald test p-value: strainΔplap6.mediaTAP effect 
@@ -275,15 +275,15 @@
     ##               <character>
     ## Cre01.g000150        ZRT2
 
-    plotMA(res_l$pcry_TAPvHSM.vs.WT_TAPvHSM, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
+    plotMA(res_l$plap6_TAPvHSM.vs.WT_TAPvHSM, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
 
 ![](Readme_files/figure-markdown_strict/make%20results2-1.png)
 
-    plotMA(res_ashr_list$pcry_TAPvHSM.vs.WT_TAPvHSM, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
+    plotMA(res_ashr_list$plap6_TAPvHSM.vs.WT_TAPvHSM, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
 
 ![](Readme_files/figure-markdown_strict/make%20results2-2.png)
 
-    summary(res_l$pcry_TAPvHSM.vs.WT_TAPvHSM)
+    summary(res_l$plap6_TAPvHSM.vs.WT_TAPvHSM)
 
     ## 
     ## out of 14617 with nonzero total read count
@@ -296,11 +296,11 @@
     ## [1] see 'cooksCutoff' argument of ?results
     ## [2] see 'independentFiltering' argument of ?results
 
-    res <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM
+    res <- res_l$plap6_TAPvHSM.vs.WT_TAPvHSM
 
 # 2.) Data Dive
 
-## Get gen names
+## Get gene names
 
     # Load data
     COQ3 <- "Cre10.g423750"
@@ -2365,7 +2365,7 @@ Hexaprenyldihydroxybenzoate methyltransferase
 
 ![](Readme_files/figure-markdown_strict/countsexamples-1.png)
 
-    g <- anno[str_detect(anno[["geneSymbol"]],"PCRY"),"gene_id"]
+    g <- anno[str_detect(anno[["geneSymbol"]],"PCRY1"),"gene_id"]
     plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, main =anno[g,"geneSymbol"])
 
 ![](Readme_files/figure-markdown_strict/countsexamples-2.png)
@@ -3893,12 +3893,12 @@ TAP
 
     res_ashr_list %>% names()
 
-    ## [1] "WT_TAP.vs.HSM"              "pcry_TAP.vs.HSM"           
-    ## [3] "HSM_pcry.vs.WT"             "TAP_pcry.vs.WT"            
-    ## [5] "pcry_TAPvHSM.vs.WT_TAPvHSM"
+    ## [1] "WT_TAP.vs.HSM"               "plap6_TAP.vs.HSM"           
+    ## [3] "HSM_plap6.vs.WT"             "TAP_plap6.vs.WT"            
+    ## [5] "plap6_TAPvHSM.vs.WT_TAPvHSM"
 
-    res <- res_ashr_list$pcry_TAPvHSM.vs.WT_TAPvHSM
-    res_n <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM
+    res <- res_ashr_list$plap6_TAPvHSM.vs.WT_TAPvHSM
+    res_n <- res_l$plap6_TAPvHSM.vs.WT_TAPvHSM
 
     # of shrinked results
     total <- subset(res, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
@@ -3951,11 +3951,11 @@ TAP
 
     volcano_dd <- EnhancedVolcano(res,
          lab = mcols(dds)[,"geneSymbol"],
-         selectLab = top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
+         selectLab = top_list$plap6_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
         x = 'log2FoldChange',
         y = 'padj',
         col=c("grey","grey","grey","orchid2"),
-        title = "Differences in media effect between pcry and WT",
+        title = "Differences in media effect between plap6 and WT",
         titleLabSize = 12,
         subtitle = paste0("upregulated: ",up,", downregulated: ",down,"\n(total: ",total,")"),
     #    subtitle = {},
@@ -3983,7 +3983,7 @@ TAP
 
 ![](Readme_files/figure-markdown_strict/volcano2-1.png)
 
-    top <- top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)]
+    top <- top_list$plap6_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)]
 
     # List TOP genes (with Symbol)
     anno[anno[anno$geneSymbol %in% top,"gene_id"],c("geneSymbol","previousIdentifiers","Description","previousIdentifiers","Description","Comments","TMHMM_transmembrane","TargetP","Predalgo","Flagellar_Proteome")] %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
@@ -5475,7 +5475,7 @@ cytochrome b559 alpha subunit
 </tbody>
 </table>
 
-    top9 <- top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)] %>% .[1:9]
+    top9 <- top_list$plap6_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)] %>% .[1:9]
 
     goi <- anno %>% .[.$geneSymbol %in% top9,]
 
@@ -5528,7 +5528,7 @@ cytochrome b559 alpha subunit
       scale_color_manual(values = "black") +
       geom_point(position = position_dodge(width = 0.75)) + 
       scale_color_manual(values = group.colors) +
-      labs(title = "TOP genes with different media effect (pcry vs. WT)") + 
+      labs(title = "TOP genes with different media effect (plap6 vs. WT)") + 
       theme_bw() +
       removeGrid(x=T, y=T) +
         geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
@@ -6021,15 +6021,15 @@ associated with central pair projection C1b (PMID: 16030251).</td>
       scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
     gcounts_metabolic %>% print()
 
-![](Readme_files/figure-markdown_strict/unnamed-chunk-3-1.png)
+![](Readme_files/figure-markdown_strict/Counts-1.png)
 
     ggexport(gcounts_coqs, filename = paste(pubdir,"Counts_metabolic.pdf",sep="/"),width = 8.2, height = 4.7)
     ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_metabolic.tiff",sep="/"),width = 8.2, height = 4.7)
 
 #### Volcano
 
-    res <- res_ashr_list$pcry_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
-    res_n <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
+    res <- res_ashr_list$plap6_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
+    res_n <- res_l$plap6_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
 
     # of shrinked results
     total <- subset(res, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
@@ -6075,11 +6075,11 @@ associated with central pair projection C1b (PMID: 16030251).</td>
 
     volcano_dd <- EnhancedVolcano(res,
          lab = metabolic_genes$geneSymbol,
-         selectLab = top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
+         selectLab = top_list$plap6_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
         x = 'log2FoldChange',
         y = 'padj',
         col=c("grey","grey","grey","orchid2"),
-        title = "Differences in media effect between pcry and WT",
+        title = "Differences in media effect between plap6 and WT",
         titleLabSize = 12,
         subtitle = paste0("upregulated: ",up,", downregulated: ",down,"\n(total: ",total,")"),
     #    subtitle = {},
@@ -6105,7 +6105,7 @@ associated with central pair projection C1b (PMID: 16030251).</td>
     )
     volcano_dd
 
-![](Readme_files/figure-markdown_strict/unnamed-chunk-4-1.png)
+![](Readme_files/figure-markdown_strict/Volcano-1.png)
 
 #### Heatmap
 
@@ -6135,7 +6135,63 @@ associated with central pair projection C1b (PMID: 16030251).</td>
                    cluster_cols=TRUE, annotation_col=anno_col,
                    annotation_row=anno_row, annotation_colors = anno_colors)
 
-![](Readme_files/figure-markdown_strict/unnamed-chunk-5-1.png)
+![](Readme_files/figure-markdown_strict/Heatmap-1.png) \#### Cross Plot
+
+    res_l %>% names()
+
+    ## [1] "WT_TAP.vs.HSM"               "plap6_TAP.vs.HSM"           
+    ## [3] "HSM_plap6.vs.WT"             "TAP_plap6.vs.WT"            
+    ## [5] "plap6_TAPvHSM.vs.WT_TAPvHSM"
+
+    WT <- res_l$WT_TAP.vs.HSM %>% as.data.frame() %>% .[metabolic_genes$gene_id,c("log2FoldChange","symbol")]
+    plap6 <- res_l$plap6_TAP.vs.HSM %>% as.data.frame() %>% .[metabolic_genes$gene_id,c("log2FoldChange","symbol")]
+
+    df <- bind_cols(metabolic_genes, WT, plap6)
+    colnames(df)[7] <- "log2FC(WT)"
+    colnames(df)[9] <- "log2FC(plap6)"
+
+    cross <- ggplot(df, aes(x = `log2FC(WT)`, y = `log2FC(plap6)`, col=pathway)) +
+      geom_point() +
+      geom_text_repel(aes(label = df$geneSymbol), size=4) +
+      theme_bw() +
+      coord_fixed(ratio = 1, xlim = c(-4,4),ylim=c(-4,4)) +
+      geom_abline(col="grey") +
+      ggtitle("Acetate effect") +
+      theme(plot.title = element_text(hjust = 0.5))
+
+    goi <- metabolic_genes[c(5,10,11),]
+
+    l <- nrow(goi)
+    all_counts <- {}
+    for (i in 1:l){
+      d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=res$symbol[i],returnData=TRUE)
+      d$Gene <- rep(goi[i,"geneSymbol"],length(rownames(d)))
+      d$sample <- rownames(d)
+      rownames(d) <- {}
+      all_counts <- bind_rows(all_counts,d)
+      }
+
+    max_val <- 1.0*max(all_counts$count)
+
+    all_counts$Gene <- factor(all_counts$Gene, levels = metabolic_genes$geneSymbol)
+
+
+    # Plot
+    counts <- gcounts_metabolic <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
+      geom_boxplot(fatten = 1) +
+      scale_fill_manual(values = "grey") +
+      scale_color_manual(values = "black") +
+      geom_point(position = position_dodge(width = 0.75)) + 
+      scale_color_manual(values = group.colors) +
+      labs(title = "Metabolic Genes") + 
+      theme_bw() +
+      removeGrid(x=T, y=T) +
+        geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+      scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
+
+    cross+counts
+
+![](Readme_files/figure-markdown_strict/Cross-1.png)
 
 # GO-terms
 

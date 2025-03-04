@@ -229,23 +229,23 @@ nres <- "WT_TAP.vs.HSM"
 contrast <- list(c("media_TAP_vs_HSM"))
 res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
 
-nres <- "pcry_TAP.vs.HSM"
+nres <- "plap6_TAP.vs.HSM"
 contrast <- list(c("media_TAP_vs_HSM","strainΔplap6.mediaTAP"))
 res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
 
 
 # Unterschiede zwischen WT und ko bei gleichem Medium
-nres <- "HSM_pcry.vs.WT"
+nres <- "HSM_plap6.vs.WT"
 contrast <- list(c("strain_Δplap6_vs_WT"))
 res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
 
-nres <- "TAP_pcry.vs.WT"
+nres <- "TAP_plap6.vs.WT"
 contrast <- list(c("strain_Δplap6_vs_WT","strainΔplap6.mediaTAP"))
 res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
 
 
 # Unterschiede im Medien-Effekt (interaction term)
-nres <- "pcry_TAPvHSM.vs.WT_TAPvHSM"
+nres <- "plap6_TAPvHSM.vs.WT_TAPvHSM"
 contrast <- list(c("strainΔplap6.mediaTAP"))
 res_l[nres] <- getresults_SK(contrast = contrast, nres = nres)
 
@@ -276,12 +276,12 @@ res_ashr_list[[names(res_l)[j]]] <- lfcShrink(res=res_l[[j]], dds=dds, type="ash
 
 
 
-res_l$pcry_TAPvHSM.vs.WT_TAPvHSM["Cre01.g000150",]
-plotMA(res_l$pcry_TAPvHSM.vs.WT_TAPvHSM, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
-plotMA(res_ashr_list$pcry_TAPvHSM.vs.WT_TAPvHSM, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
-summary(res_l$pcry_TAPvHSM.vs.WT_TAPvHSM)
+res_l$plap6_TAPvHSM.vs.WT_TAPvHSM["Cre01.g000150",]
+plotMA(res_l$plap6_TAPvHSM.vs.WT_TAPvHSM, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
+plotMA(res_ashr_list$plap6_TAPvHSM.vs.WT_TAPvHSM, main = "Δplap6 vs. WT in TAP", ylim=c(-4,4))
+summary(res_l$plap6_TAPvHSM.vs.WT_TAPvHSM)
 
-res <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM
+res <- res_l$plap6_TAPvHSM.vs.WT_TAPvHSM
 
 
 ```
@@ -289,7 +289,7 @@ res <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM
 
 # 2.) Data Dive
 
-## Get gen names
+## Get gene names
 
 ```{r gene_names}
 # Load data
@@ -350,7 +350,7 @@ anno[str_detect(anno[["geneSymbol"]],"CRY-DASH"),]
 g <- anno[str_detect(anno[["previousIdentifiers"]],"CRY-DASH1"),"gene_id"]
 g
 plotCounts(dds, gene = g, intgroup = "condition")
-g <- anno[str_detect(anno[["geneSymbol"]],"PCRY"),"gene_id"]
+g <- anno[str_detect(anno[["geneSymbol"]],"PCRY1"),"gene_id"]
 plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, main =anno[g,"geneSymbol"])
 g <- anno[str_detect(anno[["geneSymbol"]],"ACRY"),"gene_id"]
 plotCounts(dds, gene = g, intgroup = "condition", col=colData(dds)$genotype, main =anno[g,"geneSymbol"])
@@ -726,8 +726,8 @@ ggplot(as.data.frame(res1),aes(log2FoldChange,-log(padj))) +
 
 res_ashr_list %>% names()
 
-res <- res_ashr_list$pcry_TAPvHSM.vs.WT_TAPvHSM
-res_n <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM
+res <- res_ashr_list$plap6_TAPvHSM.vs.WT_TAPvHSM
+res_n <- res_l$plap6_TAPvHSM.vs.WT_TAPvHSM
 
 # of shrinked results
 total <- subset(res, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
@@ -757,11 +757,11 @@ res %>% nrow()
 
 volcano_dd <- EnhancedVolcano(res,
      lab = mcols(dds)[,"geneSymbol"],
-     selectLab = top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
+     selectLab = top_list$plap6_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
     x = 'log2FoldChange',
     y = 'padj',
     col=c("grey","grey","grey","orchid2"),
-    title = "Differences in media effect between pcry and WT",
+    title = "Differences in media effect between plap6 and WT",
     titleLabSize = 12,
     subtitle = paste0("upregulated: ",up,", downregulated: ",down,"\n(total: ",total,")"),
 #    subtitle = {},
@@ -787,12 +787,12 @@ volcano_dd <- EnhancedVolcano(res,
 )
 volcano_dd
 
-top <- top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)]
+top <- top_list$plap6_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)]
 
 # List TOP genes (with Symbol)
 anno[anno[anno$geneSymbol %in% top,"gene_id"],c("geneSymbol","previousIdentifiers","Description","previousIdentifiers","Description","Comments","TMHMM_transmembrane","TargetP","Predalgo","Flagellar_Proteome")] %>% kable() %>% kable_styling("striped", full_width = T) %>% scroll_box(height = "400px")
 
-top9 <- top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)] %>% .[1:9]
+top9 <- top_list$plap6_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)] %>% .[1:9]
 
 goi <- anno %>% .[.$geneSymbol %in% top9,]
 
@@ -820,7 +820,7 @@ gcounts_top9 <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
   scale_color_manual(values = "black") +
   geom_point(position = position_dodge(width = 0.75)) + 
   scale_color_manual(values = group.colors) +
-  labs(title = "TOP genes with different media effect (pcry vs. WT)") + 
+  labs(title = "TOP genes with different media effect (plap6 vs. WT)") + 
   theme_bw() +
   removeGrid(x=T, y=T) +
     geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
@@ -989,7 +989,7 @@ metabolic_genes <- gene_table
 
 ### Visualization Metabolic pathway
 #### Plot counts
-```{r}
+```{r Counts}
 
 
 goi <- metabolic_genes
@@ -1030,10 +1030,10 @@ ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_metabolic.tiff",sep="/"),wi
 ```
 
 #### Volcano
-```{r}
+```{r Volcano}
 
-res <- res_ashr_list$pcry_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
-res_n <- res_l$pcry_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
+res <- res_ashr_list$plap6_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
+res_n <- res_l$plap6_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
 
 # of shrinked results
 total <- subset(res, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
@@ -1063,11 +1063,11 @@ res %>% nrow()
 
 volcano_dd <- EnhancedVolcano(res,
      lab = metabolic_genes$geneSymbol,
-     selectLab = top_list$pcry_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
+     selectLab = top_list$plap6_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
     x = 'log2FoldChange',
     y = 'padj',
     col=c("grey","grey","grey","orchid2"),
-    title = "Differences in media effect between pcry and WT",
+    title = "Differences in media effect between plap6 and WT",
     titleLabSize = 12,
     subtitle = paste0("upregulated: ",up,", downregulated: ",down,"\n(total: ",total,")"),
 #    subtitle = {},
@@ -1096,7 +1096,7 @@ volcano_dd
 ```
 
 #### Heatmap
-```{r}
+```{r Heatmap}
 
 
 select <- metabolic_genes$gene_id
@@ -1125,6 +1125,61 @@ xx <- pheatmap(df, cluster_rows=FALSE, show_rownames=TRUE,
 
 
 ```
+#### Cross Plot
+```{r Cross, fig.height=6, fig.width=10}
+
+res_l %>% names()
+
+WT <- res_l$WT_TAP.vs.HSM %>% as.data.frame() %>% .[metabolic_genes$gene_id,c("log2FoldChange","symbol")]
+plap6 <- res_l$plap6_TAP.vs.HSM %>% as.data.frame() %>% .[metabolic_genes$gene_id,c("log2FoldChange","symbol")]
+
+df <- bind_cols(metabolic_genes, WT, plap6)
+colnames(df)[7] <- "log2FC(WT)"
+colnames(df)[9] <- "log2FC(plap6)"
+
+cross <- ggplot(df, aes(x = `log2FC(WT)`, y = `log2FC(plap6)`, col=pathway)) +
+  geom_point() +
+  geom_text_repel(aes(label = df$geneSymbol), size=4) +
+  theme_bw() +
+  coord_fixed(ratio = 1, xlim = c(-4,4),ylim=c(-4,4)) +
+  geom_abline(col="grey") +
+  ggtitle("Acetate effect") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+goi <- metabolic_genes[c(5,10,11),]
+
+l <- nrow(goi)
+all_counts <- {}
+for (i in 1:l){
+  d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=res$symbol[i],returnData=TRUE)
+  d$Gene <- rep(goi[i,"geneSymbol"],length(rownames(d)))
+  d$sample <- rownames(d)
+  rownames(d) <- {}
+  all_counts <- bind_rows(all_counts,d)
+  }
+
+max_val <- 1.0*max(all_counts$count)
+
+all_counts$Gene <- factor(all_counts$Gene, levels = metabolic_genes$geneSymbol)
+
+
+# Plot
+counts <- gcounts_metabolic <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
+  geom_boxplot(fatten = 1) +
+  scale_fill_manual(values = "grey") +
+  scale_color_manual(values = "black") +
+  geom_point(position = position_dodge(width = 0.75)) + 
+  scale_color_manual(values = group.colors) +
+  labs(title = "Metabolic Genes") + 
+  theme_bw() +
+  removeGrid(x=T, y=T) +
+    geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+  scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
+
+cross+counts
+
+```
+
 
 
 
