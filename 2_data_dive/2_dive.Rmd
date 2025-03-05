@@ -396,7 +396,7 @@ plot(g1)
 
 # all COQ genes
 goi <- anno[c(PHO1,coqs[,"gene_id"]),]
-goi
+goi %>% kable()
 
 n <- {0}
 for (i in goi$gene_id){
@@ -546,7 +546,7 @@ ggsave(p, filename = paste(pubdir,"Counts_plap6_CIA5+LHCSR+PSBS.tiff",sep="/"),w
 
 
 ### PQs
-```{r plotcounts2}
+```{r plotcounts2, fig.show='hold',out.width="33%"}
 library("ggpubr")
 
 ## multiple genes
@@ -580,7 +580,7 @@ ga2
 ```
 
 ## Plot Counts v2
-```{r}
+```{r countsv2, out.width="50%"}
 
 # "WT_TAP"     "Δplap6_TAP" "WT_HSM"     "Δplap6_HSM"
 group.colors <- c("grey50","black","orchid1","orchid4")
@@ -608,7 +608,7 @@ levels(all_counts$Gene)
 max_val <- 1.0*max(all_counts$count)
 
 # Plot
-all_counts$Gene
+# all_counts$Gene
 gcounts_coqs <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
   geom_boxplot(fatten = 1) +
   scale_fill_manual(values = "grey") +
@@ -618,6 +618,7 @@ gcounts_coqs <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
   labs(title = "COQ genes all") + 
   theme_bw() +
   removeGrid(x=T, y=T) +
+  theme(axis.text.x = element_text(angle = 90)) +
     geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
   scale_y_continuous(trans = "log2") & plot_annotation(title = colData(dds)$experiment[1])
 gcounts_coqs %>% print()
@@ -640,7 +641,7 @@ for (i in 1:l){
   all_counts <- bind_rows(all_counts,d)
   }
 
-all_counts$Gene
+# all_counts$Gene
 levels(all_counts$condition)
 all_counts$Gene <- factor(all_counts$Gene, levels = coqs6)
 levels(all_counts$Gene)
@@ -648,7 +649,7 @@ levels(all_counts$Gene)
 max_val <- 1.0*max(all_counts$count)
 
 # Plot
-all_counts$Gene
+# all_counts$Gene
 gcounts_coqs <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
   geom_boxplot(fatten = 1) +
   scale_fill_manual(values = "grey") +
@@ -673,7 +674,7 @@ ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aoi.tiff",sep="/
 
 ## Volcano Plot
 
-```{r volcano, eval=FALSE}
+```{r volcano, eval=FALSE, out.width="50%"}
 library(EnhancedVolcano)
 
 plot(res_ashr_list $log2FoldChange,res1$baseMean )
@@ -723,7 +724,7 @@ ggplot(as.data.frame(res1),aes(log2FoldChange,-log(padj))) +
 ```
 
 ## Volcano Plot v2
-```{r volcano2}
+```{r volcano2, out.width="50%"}
 
 res_ashr_list %>% names()
 
@@ -814,7 +815,7 @@ levels(all_counts$Gene)
 max_val <- 1.0*max(all_counts$count)
 
 # Plot
-all_counts$Gene
+# all_counts$Gene
 gcounts_top9 <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
   geom_boxplot(fatten = 1) +
   scale_fill_manual(values = "grey") +
@@ -914,7 +915,7 @@ xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
 ```
 
 ### HM PQs
-```{r heatmap_PQ}
+```{r heatmap_PQ, out.width="50%"}
 library("pheatmap")
 ntd <- normTransform(dds)
 
@@ -933,7 +934,7 @@ xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
 
 ## Selected Metabolic Genes
 ### Get gene set
-```{r}
+```{r metabolic_genes}
 
 # 1. Glyoxylate Cycle Suppression
 glyoxylate <- c("MAS1","ICL1", "ICL3")
@@ -989,15 +990,15 @@ metabolic_genes <- gene_table
 
 xls_table <- read_xlsx(paste(outdir,"Metabolic_Gene_List_v2.xlsx",sep="/"))
 
-anno[xls_table$gene_id,c(24,5,9,10,8)]
+anno[xls_table$gene_id,c(24,5,9,10,8)] %>% kable()
 
 metabolic_genes2 <- bind_cols(xls_table[,c(1:3,7)],anno[xls_table$gene_id,c(9,10,8)])
 
 # Cre16.g658400	FDX2 not in results
 metabolic_genes2 <- metabolic_genes2[-21,]
 
-anno[str_detect(anno[["geneSymbol"]],paste("FDX", collapse="|")),c(24,5,9,10,8)]
-anno[str_detect(anno[["Description"]],paste(c("Ferredoxin"), collapse="|")),c(24,5,8,9,10)]
+anno[str_detect(anno[["geneSymbol"]],paste("FDX", collapse="|")),c(24,5,9,10,8)] %>% kable()
+anno[str_detect(anno[["Description"]],paste(c("Ferredoxin"), collapse="|")),c(24,5,8,9,10)] %>% kable()
 
 
 # (metabolic_genes2$gene_id...1 == metabolic_genes2$gene_id...5) %>% summary()
@@ -1041,6 +1042,7 @@ gcounts_metabolic <- ggplot(all_counts, aes(x = Gene, y = count, col=condition))
   theme_bw() +
   removeGrid(x=T, y=T) +
     geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+  theme(axis.text.x = element_text(angle = 90)) +
   scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
 gcounts_metabolic %>% print()
 
@@ -1051,7 +1053,7 @@ ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_metabolic.tiff",sep="/"),wi
 ```
 
 #### Volcano
-```{r Volcano}
+```{r Volcano, out.width="50%"}
 
 res <- res_ashr_list$plap6_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes2$gene_id,]
 res_n <- res_l$plap6_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes2$gene_id,]
@@ -1209,7 +1211,7 @@ cross+counts
 
 
 # GO-terms
-```{r, eval=FALSE}
+```{r GO_terms, eval=FALSE}
 TOPGO
 
 ```

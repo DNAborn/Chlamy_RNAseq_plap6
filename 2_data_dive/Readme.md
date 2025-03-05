@@ -3082,216 +3082,508 @@ TAP
 
     # all COQ genes
     goi <- anno[c(PHO1,coqs[,"gene_id"]),]
-    goi
+    goi %>% kable()
 
-    ##                   locusName_4532 initial_v6_locus_ID action
-    ## Cre08.g359300 Cre08.g359300_4532         Cr_08_38152       
-    ## Cre01.g029000 Cre01.g029000_4532         Cr_01_03107       
-    ## Cre02.g084300 Cre02.g084300_4532         Cr_02_07298       
-    ## Cre02.g112850 Cre02.g112850_4532         Cr_02_10181       
-    ## Cre03.g154850 Cre03.g154850_4532         Cr_03_14287       
-    ## Cre05.g245450 Cre05.g245450_4532         Cr_05_23506       
-    ## Cre06.g269550 Cre06.g269550_4532         Cr_06_27298       
-    ## Cre06.g286300 Cre06.g286300_4532         Cr_06_30048       
-    ## Cre06.g291800 Cre06.g291800_4532         Cr_06_30659       
-    ## Cre07.g345700 Cre07.g345700_4532         Cr_07_36374       
-    ## Cre10.g423750 Cre10.g423750_4532         Cr_10_46047       
-    ## Cre10.g429800 Cre10.g429800_4532         Cr_10_46685       
-    ##               Replacement_v5.v6._model geneSymbol strainLocusId PMID
-    ## Cre08.g359300                                PHO1 4532_08_42146     
-    ## Cre01.g029000                               COQD2 4532_01_03431     
-    ## Cre02.g084300                                COQ5 4532_02_08056     
-    ## Cre02.g112850                                COQ6 4532_02_11235     
-    ## Cre03.g154850                                COQ4 4532_03_15776     
-    ## Cre05.g245450                               COQ5A 4532_05_25995     
-    ## Cre06.g269550                                COQ9 4532_06_30185     
-    ## Cre06.g286300                               COQ5B 4532_06_33210     
-    ## Cre06.g291800                                COQ2 4532_06_33881     
-    ## Cre07.g345700                               COQ10 4532_07_40190     
-    ## Cre10.g423750                                COQ3 4532_10_50891     
-    ## Cre10.g429800                                COQ8 4532_10_51596     
-    ##                     previousIdentifiers
-    ## Cre08.g359300             g8416.t1#PHO1
-    ## Cre01.g029000       UMM1#COQ5D#g661.t1#
-    ## Cre02.g084300 COQ5C#UMM2#MENG#g1555.t1#
-    ## Cre02.g112850             COQ6#g2324.t1
-    ## Cre03.g154850             g3157.t1#COQ4
-    ## Cre05.g245450      UMM4#COQ5A#g5224.t1#
-    ## Cre06.g269550             COQ9#g6048.t1
-    ## Cre06.g286300      UMM5#COQ5B#g6653.t1#
-    ## Cre06.g291800            #g6761.t1#COQ2
-    ## Cre07.g345700           #COQ10#g8044.t1
-    ## Cre10.g423750           COQ3#g10480.t1#
-    ## Cre10.g429800       ABC1#COQ8#g10617.t1
-    ##                                                         Description
-    ## Cre08.g359300                                  Alkaline phosphatase
-    ## Cre01.g029000 Ubiquinone/menaquinone biosynthesis methyltransferase
-    ## Cre02.g084300          Phylloquinone biosynthesis methyltransferase
-    ## Cre02.g112850                         Flavin-dependent monoxygenase
-    ## Cre03.g154850                       Ubiquinone biosynthesis protein
-    ## Cre05.g245450 Ubiquinone/menaquinone biosynthesis methyltransferase
-    ## Cre06.g269550                       Ubiquinone biosynthesis protein
-    ## Cre06.g286300 Ubiquinone/menaquinone biosynthesis methyltransferase
-    ## Cre06.g291800            Para-hydroxybenzoate-polyprenyltransferase
-    ## Cre07.g345700                            Coenzyme Q-binding protein
-    ## Cre10.g423750         Hexaprenyldihydroxybenzoate methyltransferase
-    ## Cre10.g429800                       Ubiquinone biosynthesis protein
-    ##                                                                                                                                                                                                                                      Comments
-    ## Cre08.g359300                                                                                   Similar to C-terminal half of 145 kDa, phosphate-deficiency inducible alkaline phosphatase, encoded by phoA, from Synechococcus sp. PCC 7942.
-    ## Cre01.g029000                                                                                                                                                         UbiE/COQ5 methyltransferase family# possibly functioning in chloroplast
-    ## Cre02.g084300                                            UbiE/COQ5 methyltransferase family# ortholog of AT1G23360,  a 2-phytyl-1,4-naphthoquinone methyltransferase that catalyzes the final step in phylloquinone (vitamin K1) biosynthesis
-    ## Cre02.g112850                                                                                                               putative mitochondrial flavin-dependent monoxygenase required for coenzyme Q biosynthesis [PMID: 12721307] (UbiH)
-    ## Cre03.g154850                                                                                                                                                                                    ubiquinone biosynthesis protein COQ4 homolog
-    ## Cre05.g245450                                                                                                                                                                                                                                
-    ## Cre06.g269550                                                                                           Putative ubiquinone biosynthesis protein, mitochondrial precursor# similar to yeast ubiquinone biosynthesis protein COQ9(gi 74644909)
-    ## Cre06.g286300                                                                                                                                                                                                                                
-    ## Cre06.g291800                                                                                                                                               para-hydroxybenzoate-polyprenyltransferase, mitochondrial precursor# UbiA homolog
-    ## Cre07.g345700                                                             Putative coenzyme Q-binding protein COQ10, mitochondrial precursor# similiar to COQ10_YEAST Coenzyme Q-binding protein COQ10, mitochondrial precursor (gi 74676458)
-    ## Cre10.g423750                                                                                                               Similar to yeast hexaprenyldihydroxybenzoate methyltransferase (GI:92090588), involved in Coenzyme Q biosynthesis
-    ## Cre10.g429800 70 kDa protein similar to yeast COQ8 protein involved in ubiquinone-10 biosynthesis (PMID: 11279158)# previously called ABC1 (for Activity of bc1 complex) (PMID: 14695938)# similar to At4g01660 gene product (PMID: 15710684)
-    ##               Polycistronic
-    ## Cre08.g359300              
-    ## Cre01.g029000              
-    ## Cre02.g084300              
-    ## Cre02.g112850              
-    ## Cre03.g154850              
-    ## Cre05.g245450              
-    ## Cre06.g269550              
-    ## Cre06.g286300              
-    ## Cre06.g291800              
-    ## Cre07.g345700              
-    ## Cre10.g423750              
-    ## Cre10.g429800              
-    ##                                                                        TMHMM_transmembrane
-    ## Cre08.g359300                                      TMHMM: 1 helices (SP) Topology: i13-35o
-    ## Cre01.g029000                                                             TMHMM: 0 helices
-    ## Cre02.g084300                                                             TMHMM: 0 helices
-    ## Cre02.g112850                                                             TMHMM: 0 helices
-    ## Cre03.g154850                                                             TMHMM: 0 helices
-    ## Cre05.g245450                                                             TMHMM: 0 helices
-    ## Cre06.g269550                                                             TMHMM: 0 helices
-    ## Cre06.g286300                                                             TMHMM: 0 helices
-    ## Cre06.g291800 TMHMM: 6 helices Topology: i194-213o218-240i273-290o314-336i343-365o391-413i
-    ## Cre07.g345700                                                             TMHMM: 0 helices
-    ## Cre10.g423750                                                             TMHMM: 0 helices
-    ## Cre10.g429800                                                             TMHMM: 0 helices
-    ##                                                                  TargetP
-    ## Cre08.g359300        Secretory_pathway (RC 5 score: 0.227 on #1 protein)
-    ## Cre01.g029000  Mitochondrion (RC 3 score: 0.670 TPlen: 12 on #1 protein)
-    ## Cre02.g084300  Mitochondrion (RC 2 score: 0.798 TPlen: 24 on #1 protein)
-    ## Cre02.g112850   Mitochondrion (RC 2 score: 0.865 TPlen: 6 on #1 protein)
-    ## Cre03.g154850 Mitochondrion (RC 1 score: 0.912 TPlen: 120 on #1 protein)
-    ## Cre05.g245450  Mitochondrion (RC 2 score: 0.817 TPlen: 52 on #1 protein)
-    ## Cre06.g269550  Mitochondrion (RC 2 score: 0.840 TPlen: 46 on #1 protein)
-    ## Cre06.g286300  Mitochondrion (RC 4 score: 0.396 TPlen: 25 on #1 protein)
-    ## Cre06.g291800  Mitochondrion (RC 3 score: 0.826 TPlen: 90 on #1 protein)
-    ## Cre07.g345700  Mitochondrion (RC 3 score: 0.598 TPlen: 71 on #1 protein)
-    ## Cre10.g423750  Mitochondrion (RC 5 score: 0.771 TPlen: 30 on #1 protein)
-    ## Cre10.g429800                                 Other (RC 5 on #1 protein)
-    ##                                                    Predalgo interactions
-    ## Cre08.g359300 Secretory_pathway (score 2.414 on #1 protein)             
-    ## Cre01.g029000       Chloroplast (score 2.179 on #1 protein)             
-    ## Cre02.g084300       Chloroplast (score 2.589 on #1 protein)             
-    ## Cre02.g112850     Mitochondrion (score 1.029 on #1 protein)             
-    ## Cre03.g154850                 Other (score - on #1 protein)             
-    ## Cre05.g245450     Mitochondrion (score 1.744 on #1 protein)             
-    ## Cre06.g269550       Chloroplast (score 1.005 on #1 protein)             
-    ## Cre06.g286300       Chloroplast (score 1.218 on #1 protein)             
-    ## Cre06.g291800       Chloroplast (score 0.663 on #1 protein)             
-    ## Cre07.g345700       Chloroplast (score 1.100 on #1 protein)             
-    ## Cre10.g423750       Chloroplast (score 1.139 on #1 protein)             
-    ## Cre10.g429800                 Other (score - on #1 protein)             
-    ##               experimental_localization
-    ## Cre08.g359300                          
-    ## Cre01.g029000                          
-    ## Cre02.g084300                          
-    ## Cre02.g112850                          
-    ## Cre03.g154850                          
-    ## Cre05.g245450                          
-    ## Cre06.g269550                          
-    ## Cre06.g286300                          
-    ## Cre06.g291800                          
-    ## Cre07.g345700                          
-    ## Cre10.g423750                          
-    ## Cre10.g429800                          
-    ##                                                                      CLiP_library
-    ## Cre08.g359300 https://www.chlamylibrary.org/showGene?geneIdentifier=Cre08.g359300
-    ## Cre01.g029000 https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g029000
-    ## Cre02.g084300 https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g084300
-    ## Cre02.g112850                                                                    
-    ## Cre03.g154850 https://www.chlamylibrary.org/showGene?geneIdentifier=Cre03.g154850
-    ## Cre05.g245450                                                                    
-    ## Cre06.g269550 https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g269550
-    ## Cre06.g286300 https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g286300
-    ## Cre06.g291800 https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g291800
-    ## Cre07.g345700 https://www.chlamylibrary.org/showGene?geneIdentifier=Cre07.g345700
-    ## Cre10.g423750 https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g423750
-    ## Cre10.g429800 https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g429800
-    ##                   mutant_phenotypes Plastid.ribosome_pulldown
-    ## Cre08.g359300 no phenotype detected                          
-    ## Cre01.g029000 no phenotype detected                          
-    ## Cre02.g084300 no phenotype detected                          
-    ## Cre02.g112850      no mutant mapped                          
-    ## Cre03.g154850 no phenotype detected                          
-    ## Cre05.g245450      no mutant mapped                          
-    ## Cre06.g269550 no phenotype detected                          
-    ## Cre06.g286300 no phenotype detected                          
-    ## Cre06.g291800 no phenotype detected                          
-    ## Cre07.g345700 no phenotype detected                          
-    ## Cre10.g423750 no phenotype detected                          
-    ## Cre10.g429800 no phenotype detected                          
-    ##               TF_database..PMID.27067009. Flagellar_Proteome
-    ## Cre08.g359300                                               
-    ## Cre01.g029000                                               
-    ## Cre02.g084300                                               
-    ## Cre02.g112850                                               
-    ## Cre03.g154850                                               
-    ## Cre05.g245450                                               
-    ## Cre06.g269550                                               
-    ## Cre06.g286300                                               
-    ## Cre06.g291800                                               
-    ## Cre07.g345700                                               
-    ## Cre10.g423750                                               
-    ## Cre10.g429800                                               
-    ##                 Co.expression.cluster..PMID.28710131.
-    ## Cre08.g359300                              cluster 28
-    ## Cre01.g029000                              cluster 46
-    ## Cre02.g084300 cluster 26 (Mating activation-specific)
-    ## Cre02.g112850                              cluster 23
-    ## Cre03.g154850                              cluster 11
-    ## Cre05.g245450                              cluster 40
-    ## Cre06.g269550                              cluster 14
-    ## Cre06.g286300                              cluster 19
-    ## Cre06.g291800     cluster 8 (Lysin-treatment induced)
-    ## Cre07.g345700                               cluster 1
-    ## Cre10.g423750                               cluster 7
-    ## Cre10.g429800                              cluster 31
-    ##                                                                                                                                                                                                          GEnome.scale.Metabolic.Model
-    ## Cre08.g359300                                                                                                                                                                                                                        
-    ## Cre01.g029000                                                                                                                                                                                                                        
-    ## Cre02.g084300                                                                                                                                                                                                                        
-    ## Cre02.g112850 Name= beta-carotene hydroxylase;beta-Cryptoxanthin hydroxylase;alpha-carotene hydroxylase (zeinoxanthin forming)# KEGG= R07558;R07559;R07530# E.C.= 1.14.13.- # [Stern 2009, Niyogi 1997];[Lohr 2005] # (PMID:30202653)
-    ## Cre03.g154850                                                                                                                                                                                                                        
-    ## Cre05.g245450                                                                                                                                                                                                                        
-    ## Cre06.g269550                                                                                                                                                                                                                        
-    ## Cre06.g286300                                                                                                                                                                                                                        
-    ## Cre06.g291800                                                                                                                                                                                                                        
-    ## Cre07.g345700                                                                                                                                                                                                                        
-    ## Cre10.g423750                                                                                                                                                                                                                        
-    ## Cre10.g429800                                                                                                                                                                                                                        
-    ##                     gene_id previousIdentifiers_list    prev.symbols id.symbol
-    ## Cre08.g359300 Cre08.g359300             g8416.t1....            PHO1      PHO1
-    ## Cre01.g029000 Cre01.g029000             UMM1, CO....      UMM1#COQ5D     COQD2
-    ## Cre02.g084300 Cre02.g084300             COQ5C, U.... COQ5C#UMM2#MENG      COQ5
-    ## Cre02.g112850 Cre02.g112850             COQ6, g2....            COQ6      COQ6
-    ## Cre03.g154850 Cre03.g154850             g3157.t1....            COQ4      COQ4
-    ## Cre05.g245450 Cre05.g245450             UMM4, CO....      UMM4#COQ5A     COQ5A
-    ## Cre06.g269550 Cre06.g269550             COQ9, g6....            COQ9      COQ9
-    ## Cre06.g286300 Cre06.g286300             UMM5, CO....      UMM5#COQ5B     COQ5B
-    ## Cre06.g291800 Cre06.g291800             , g6761.....            COQ2      COQ2
-    ## Cre07.g345700 Cre07.g345700             , COQ10,....           COQ10     COQ10
-    ## Cre10.g423750 Cre10.g423750             COQ3, g1....            COQ3      COQ3
-    ## Cre10.g429800 Cre10.g429800             ABC1, CO....       ABC1#COQ8      COQ8
+<table>
+<colgroup>
+<col style="width: 1%" />
+<col style="width: 1%" />
+<col style="width: 1%" />
+<col style="width: 0%" />
+<col style="width: 2%" />
+<col style="width: 0%" />
+<col style="width: 1%" />
+<col style="width: 0%" />
+<col style="width: 2%" />
+<col style="width: 4%" />
+<col style="width: 19%" />
+<col style="width: 1%" />
+<col style="width: 6%" />
+<col style="width: 5%" />
+<col style="width: 4%" />
+<col style="width: 1%" />
+<col style="width: 2%" />
+<col style="width: 5%" />
+<col style="width: 1%" />
+<col style="width: 2%" />
+<col style="width: 2%" />
+<col style="width: 1%" />
+<col style="width: 3%" />
+<col style="width: 18%" />
+<col style="width: 1%" />
+<col style="width: 2%" />
+<col style="width: 1%" />
+<col style="width: 0%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">locusName_4532</th>
+<th style="text-align: left;">initial_v6_locus_ID</th>
+<th style="text-align: left;">action</th>
+<th style="text-align: left;">Replacement_v5.v6._model</th>
+<th style="text-align: left;">geneSymbol</th>
+<th style="text-align: left;">strainLocusId</th>
+<th style="text-align: left;">PMID</th>
+<th style="text-align: left;">previousIdentifiers</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Comments</th>
+<th style="text-align: left;">Polycistronic</th>
+<th style="text-align: left;">TMHMM_transmembrane</th>
+<th style="text-align: left;">TargetP</th>
+<th style="text-align: left;">Predalgo</th>
+<th style="text-align: left;">interactions</th>
+<th style="text-align: left;">experimental_localization</th>
+<th style="text-align: left;">CLiP_library</th>
+<th style="text-align: left;">mutant_phenotypes</th>
+<th style="text-align: left;">Plastid.ribosome_pulldown</th>
+<th style="text-align: left;">TF_database..PMID.27067009.</th>
+<th style="text-align: left;">Flagellar_Proteome</th>
+<th style="text-align: left;">Co.expression.cluster..PMID.28710131.</th>
+<th style="text-align: left;">GEnome.scale.Metabolic.Model</th>
+<th style="text-align: left;">gene_id</th>
+<th style="text-align: left;">previousIdentifiers_list</th>
+<th style="text-align: left;">prev.symbols</th>
+<th style="text-align: left;">id.symbol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cre08.g359300</td>
+<td style="text-align: left;">Cre08.g359300_4532</td>
+<td style="text-align: left;">Cr_08_38152</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">PHO1</td>
+<td style="text-align: left;">4532_08_42146</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">g8416.t1#PHO1</td>
+<td style="text-align: left;">Alkaline phosphatase</td>
+<td style="text-align: left;">Similar to C-terminal half of 145 kDa,
+phosphate-deficiency inducible alkaline phosphatase, encoded by phoA,
+from Synechococcus sp. PCC 7942.</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TMHMM: 1 helices (SP) Topology:
+i13-35o</td>
+<td style="text-align: left;">Secretory_pathway (RC 5 score: 0.227 on #1
+protein)</td>
+<td style="text-align: left;">Secretory_pathway (score 2.414 on #1
+protein)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><a
+href="https://www.chlamylibrary.org/showGene?geneIdentifier=Cre08.g359300"
+class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre08.g359300</a></td>
+<td style="text-align: left;">no phenotype detected</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">cluster 28</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Cre08.g359300</td>
+<td style="text-align: left;">g8416.t1….</td>
+<td style="text-align: left;">PHO1</td>
+<td style="text-align: left;">PHO1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre01.g029000</td>
+<td style="text-align: left;">Cre01.g029000_4532</td>
+<td style="text-align: left;">Cr_01_03107</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQD2</td>
+<td style="text-align: left;">4532_01_03431</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">UMM1#COQ5D#g661.t1#</td>
+<td style="text-align: left;">Ubiquinone/menaquinone biosynthesis
+methyltransferase</td>
+<td style="text-align: left;">UbiE/COQ5 methyltransferase family#
+possibly functioning in chloroplast</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TMHMM: 0 helices</td>
+<td style="text-align: left;">Mitochondrion (RC 3 score: 0.670 TPlen: 12
+on #1 protein)</td>
+<td style="text-align: left;">Chloroplast (score 2.179 on #1
+protein)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><a
+href="https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g029000"
+class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre01.g029000</a></td>
+<td style="text-align: left;">no phenotype detected</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">cluster 46</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Cre01.g029000</td>
+<td style="text-align: left;">UMM1, CO….</td>
+<td style="text-align: left;">UMM1#COQ5D</td>
+<td style="text-align: left;">COQD2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre02.g084300</td>
+<td style="text-align: left;">Cre02.g084300_4532</td>
+<td style="text-align: left;">Cr_02_07298</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ5</td>
+<td style="text-align: left;">4532_02_08056</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ5C#UMM2#MENG#g1555.t1#</td>
+<td style="text-align: left;">Phylloquinone biosynthesis
+methyltransferase</td>
+<td style="text-align: left;">UbiE/COQ5 methyltransferase family#
+ortholog of AT1G23360, a 2-phytyl-1,4-naphthoquinone methyltransferase
+that catalyzes the final step in phylloquinone (vitamin K1)
+biosynthesis</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TMHMM: 0 helices</td>
+<td style="text-align: left;">Mitochondrion (RC 2 score: 0.798 TPlen: 24
+on #1 protein)</td>
+<td style="text-align: left;">Chloroplast (score 2.589 on #1
+protein)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><a
+href="https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g084300"
+class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre02.g084300</a></td>
+<td style="text-align: left;">no phenotype detected</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">cluster 26 (Mating
+activation-specific)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Cre02.g084300</td>
+<td style="text-align: left;">COQ5C, U….</td>
+<td style="text-align: left;">COQ5C#UMM2#MENG</td>
+<td style="text-align: left;">COQ5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre02.g112850</td>
+<td style="text-align: left;">Cre02.g112850_4532</td>
+<td style="text-align: left;">Cr_02_10181</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ6</td>
+<td style="text-align: left;">4532_02_11235</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ6#g2324.t1</td>
+<td style="text-align: left;">Flavin-dependent monoxygenase</td>
+<td style="text-align: left;">putative mitochondrial flavin-dependent
+monoxygenase required for coenzyme Q biosynthesis [PMID: 12721307]
+(UbiH)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TMHMM: 0 helices</td>
+<td style="text-align: left;">Mitochondrion (RC 2 score: 0.865 TPlen: 6
+on #1 protein)</td>
+<td style="text-align: left;">Mitochondrion (score 1.029 on #1
+protein)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">no mutant mapped</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">cluster 23</td>
+<td style="text-align: left;">Name= beta-carotene
+hydroxylase;beta-Cryptoxanthin hydroxylase;alpha-carotene hydroxylase
+(zeinoxanthin forming)# KEGG= R07558;R07559;R07530# E.C.= 1.14.13.- #
+[Stern 2009, Niyogi 1997];[Lohr 2005] # (<a href="PMID:30202653"
+class="uri">PMID:30202653</a>)</td>
+<td style="text-align: left;">Cre02.g112850</td>
+<td style="text-align: left;">COQ6, g2….</td>
+<td style="text-align: left;">COQ6</td>
+<td style="text-align: left;">COQ6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g154850</td>
+<td style="text-align: left;">Cre03.g154850_4532</td>
+<td style="text-align: left;">Cr_03_14287</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ4</td>
+<td style="text-align: left;">4532_03_15776</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">g3157.t1#COQ4</td>
+<td style="text-align: left;">Ubiquinone biosynthesis protein</td>
+<td style="text-align: left;">ubiquinone biosynthesis protein COQ4
+homolog</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TMHMM: 0 helices</td>
+<td style="text-align: left;">Mitochondrion (RC 1 score: 0.912 TPlen:
+120 on #1 protein)</td>
+<td style="text-align: left;">Other (score - on #1 protein)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><a
+href="https://www.chlamylibrary.org/showGene?geneIdentifier=Cre03.g154850"
+class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre03.g154850</a></td>
+<td style="text-align: left;">no phenotype detected</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">cluster 11</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Cre03.g154850</td>
+<td style="text-align: left;">g3157.t1….</td>
+<td style="text-align: left;">COQ4</td>
+<td style="text-align: left;">COQ4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre05.g245450</td>
+<td style="text-align: left;">Cre05.g245450_4532</td>
+<td style="text-align: left;">Cr_05_23506</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ5A</td>
+<td style="text-align: left;">4532_05_25995</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">UMM4#COQ5A#g5224.t1#</td>
+<td style="text-align: left;">Ubiquinone/menaquinone biosynthesis
+methyltransferase</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TMHMM: 0 helices</td>
+<td style="text-align: left;">Mitochondrion (RC 2 score: 0.817 TPlen: 52
+on #1 protein)</td>
+<td style="text-align: left;">Mitochondrion (score 1.744 on #1
+protein)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">no mutant mapped</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">cluster 40</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Cre05.g245450</td>
+<td style="text-align: left;">UMM4, CO….</td>
+<td style="text-align: left;">UMM4#COQ5A</td>
+<td style="text-align: left;">COQ5A</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre06.g269550</td>
+<td style="text-align: left;">Cre06.g269550_4532</td>
+<td style="text-align: left;">Cr_06_27298</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ9</td>
+<td style="text-align: left;">4532_06_30185</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ9#g6048.t1</td>
+<td style="text-align: left;">Ubiquinone biosynthesis protein</td>
+<td style="text-align: left;">Putative ubiquinone biosynthesis protein,
+mitochondrial precursor# similar to yeast ubiquinone biosynthesis
+protein COQ9(gi 74644909)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TMHMM: 0 helices</td>
+<td style="text-align: left;">Mitochondrion (RC 2 score: 0.840 TPlen: 46
+on #1 protein)</td>
+<td style="text-align: left;">Chloroplast (score 1.005 on #1
+protein)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><a
+href="https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g269550"
+class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g269550</a></td>
+<td style="text-align: left;">no phenotype detected</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">cluster 14</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Cre06.g269550</td>
+<td style="text-align: left;">COQ9, g6….</td>
+<td style="text-align: left;">COQ9</td>
+<td style="text-align: left;">COQ9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g286300</td>
+<td style="text-align: left;">Cre06.g286300_4532</td>
+<td style="text-align: left;">Cr_06_30048</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ5B</td>
+<td style="text-align: left;">4532_06_33210</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">UMM5#COQ5B#g6653.t1#</td>
+<td style="text-align: left;">Ubiquinone/menaquinone biosynthesis
+methyltransferase</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TMHMM: 0 helices</td>
+<td style="text-align: left;">Mitochondrion (RC 4 score: 0.396 TPlen: 25
+on #1 protein)</td>
+<td style="text-align: left;">Chloroplast (score 1.218 on #1
+protein)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><a
+href="https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g286300"
+class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g286300</a></td>
+<td style="text-align: left;">no phenotype detected</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">cluster 19</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Cre06.g286300</td>
+<td style="text-align: left;">UMM5, CO….</td>
+<td style="text-align: left;">UMM5#COQ5B</td>
+<td style="text-align: left;">COQ5B</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre06.g291800</td>
+<td style="text-align: left;">Cre06.g291800_4532</td>
+<td style="text-align: left;">Cr_06_30659</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ2</td>
+<td style="text-align: left;">4532_06_33881</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">#g6761.t1#COQ2</td>
+<td
+style="text-align: left;">Para-hydroxybenzoate-polyprenyltransferase</td>
+<td
+style="text-align: left;">para-hydroxybenzoate-polyprenyltransferase,
+mitochondrial precursor# UbiA homolog</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TMHMM: 6 helices Topology:
+i194-213o218-240i273-290o314-336i343-365o391-413i</td>
+<td style="text-align: left;">Mitochondrion (RC 3 score: 0.826 TPlen: 90
+on #1 protein)</td>
+<td style="text-align: left;">Chloroplast (score 0.663 on #1
+protein)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><a
+href="https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g291800"
+class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre06.g291800</a></td>
+<td style="text-align: left;">no phenotype detected</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">cluster 8 (Lysin-treatment induced)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Cre06.g291800</td>
+<td style="text-align: left;">, g6761…..</td>
+<td style="text-align: left;">COQ2</td>
+<td style="text-align: left;">COQ2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre07.g345700</td>
+<td style="text-align: left;">Cre07.g345700_4532</td>
+<td style="text-align: left;">Cr_07_36374</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ10</td>
+<td style="text-align: left;">4532_07_40190</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">#COQ10#g8044.t1</td>
+<td style="text-align: left;">Coenzyme Q-binding protein</td>
+<td style="text-align: left;">Putative coenzyme Q-binding protein COQ10,
+mitochondrial precursor# similiar to COQ10_YEAST Coenzyme Q-binding
+protein COQ10, mitochondrial precursor (gi 74676458)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TMHMM: 0 helices</td>
+<td style="text-align: left;">Mitochondrion (RC 3 score: 0.598 TPlen: 71
+on #1 protein)</td>
+<td style="text-align: left;">Chloroplast (score 1.100 on #1
+protein)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><a
+href="https://www.chlamylibrary.org/showGene?geneIdentifier=Cre07.g345700"
+class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre07.g345700</a></td>
+<td style="text-align: left;">no phenotype detected</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">cluster 1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Cre07.g345700</td>
+<td style="text-align: left;">, COQ10,….</td>
+<td style="text-align: left;">COQ10</td>
+<td style="text-align: left;">COQ10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre10.g423750</td>
+<td style="text-align: left;">Cre10.g423750_4532</td>
+<td style="text-align: left;">Cr_10_46047</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ3</td>
+<td style="text-align: left;">4532_10_50891</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ3#g10480.t1#</td>
+<td style="text-align: left;">Hexaprenyldihydroxybenzoate
+methyltransferase</td>
+<td style="text-align: left;">Similar to yeast
+hexaprenyldihydroxybenzoate methyltransferase (GI:92090588), involved in
+Coenzyme Q biosynthesis</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TMHMM: 0 helices</td>
+<td style="text-align: left;">Mitochondrion (RC 5 score: 0.771 TPlen: 30
+on #1 protein)</td>
+<td style="text-align: left;">Chloroplast (score 1.139 on #1
+protein)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><a
+href="https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g423750"
+class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g423750</a></td>
+<td style="text-align: left;">no phenotype detected</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">cluster 7</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Cre10.g423750</td>
+<td style="text-align: left;">COQ3, g1….</td>
+<td style="text-align: left;">COQ3</td>
+<td style="text-align: left;">COQ3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre10.g429800</td>
+<td style="text-align: left;">Cre10.g429800_4532</td>
+<td style="text-align: left;">Cr_10_46685</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">COQ8</td>
+<td style="text-align: left;">4532_10_51596</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ABC1#COQ8#g10617.t1</td>
+<td style="text-align: left;">Ubiquinone biosynthesis protein</td>
+<td style="text-align: left;">70 kDa protein similar to yeast COQ8
+protein involved in ubiquinone-10 biosynthesis (PMID: 11279158)#
+previously called ABC1 (for Activity of bc1 complex) (PMID: 14695938)#
+similar to At4g01660 gene product (PMID: 15710684)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">TMHMM: 0 helices</td>
+<td style="text-align: left;">Other (RC 5 on #1 protein)</td>
+<td style="text-align: left;">Other (score - on #1 protein)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><a
+href="https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g429800"
+class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g429800</a></td>
+<td style="text-align: left;">no phenotype detected</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">cluster 31</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Cre10.g429800</td>
+<td style="text-align: left;">ABC1, CO….</td>
+<td style="text-align: left;">ABC1#COQ8</td>
+<td style="text-align: left;">COQ8</td>
+</tr>
+</tbody>
+</table>
 
     n <- {0}
     for (i in goi$gene_id){
@@ -3601,73 +3893,49 @@ TAP
     ## [1] "Cre09.g414000"
     ## [1] "HPT1"
 
-![](Readme_files/figure-markdown_strict/plotcounts2-1.png)
-
     ## [1] 2
     ## [1] "Cre01.g013801"
     ## [1] "TCY1"
-
-![](Readme_files/figure-markdown_strict/plotcounts2-2.png)
 
     ## [1] 3
     ## [1] "Cre14.g624350"
     ## [1] "VTE6"
 
-![](Readme_files/figure-markdown_strict/plotcounts2-3.png)
-
     ## [1] 4
     ## [1] "Cre09.g393400"
     ## [1] "VTE4"
-
-![](Readme_files/figure-markdown_strict/plotcounts2-4.png)
 
     ## [1] 5
     ## [1] "Cre09.g398993"
     ## [1] "HPD1"
 
-![](Readme_files/figure-markdown_strict/plotcounts2-5.png)
-
     ## [1] 6
     ## [1] "Cre06.g283750"
     ## [1] "HST1"
-
-![](Readme_files/figure-markdown_strict/plotcounts2-6.png)
 
     ## [1] 7
     ## [1] "Cre14.g625450"
     ## [1] "VTE3"
 
-![](Readme_files/figure-markdown_strict/plotcounts2-7.png)
-
     ## [1] 8
     ## [1] "Cre12.g503550"
     ## [1] "MEC1"
-
-![](Readme_files/figure-markdown_strict/plotcounts2-8.png)
 
     ## [1] 9
     ## [1] "Cre10.g455950"
     ## [1] "FAP407"
 
-![](Readme_files/figure-markdown_strict/plotcounts2-9.png)
-
     ## [1] 10
     ## [1] "Cre16.g671000"
     ## [1] "NDA5"
-
-![](Readme_files/figure-markdown_strict/plotcounts2-10.png)
 
     ## [1] 11
     ## [1] "Cre04.g219787"
     ## [1] "Cre04.g219787"
 
-![](Readme_files/figure-markdown_strict/plotcounts2-11.png)
-
     ## [1] 12
     ## [1] "Cre09.g416500"
     ## [1] "CGL151"
-
-![](Readme_files/figure-markdown_strict/plotcounts2-12.png)
 
     length(goi)
 
@@ -3676,9 +3944,9 @@ TAP
     ga2 <- cowplot::plot_grid(g1,g2,g3,g4,g5,g6,g7,g8,g9,g10,g11,g12, byrow = FALSE, nrow = 4, ncol = 3)
     ga2
 
-![](Readme_files/figure-markdown_strict/plotcounts2-13.png)
-
     # ggexport(ga, filename = "graphs3/Counts_YYK.pdf",width = 12, height = 12)
+
+<img src="Readme_files/figure-markdown_strict/plotcounts2-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plotcounts2-2.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plotcounts2-3.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plotcounts2-4.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plotcounts2-5.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plotcounts2-6.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plotcounts2-7.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plotcounts2-8.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plotcounts2-9.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plotcounts2-10.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plotcounts2-11.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plotcounts2-12.png" width="33%" /><img src="Readme_files/figure-markdown_strict/plotcounts2-13.png" width="33%" />
 
 ## Plot Counts v2
 
@@ -3711,36 +3979,7 @@ TAP
     max_val <- 1.0*max(all_counts$count)
 
     # Plot
-    all_counts$Gene
-
-    ##   [1] PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1 
-    ##  [13] PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1  PHO1 
-    ##  [25] PHO1  PHO1  COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2
-    ##  [37] COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2
-    ##  [49] COQD2 COQD2 COQD2 COQD2 COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5 
-    ##  [61] COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ5 
-    ##  [73] COQ5  COQ5  COQ5  COQ5  COQ5  COQ5  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6 
-    ##  [85] COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6 
-    ##  [97] COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ6  COQ4  COQ4  COQ4  COQ4 
-    ## [109] COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4 
-    ## [121] COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ4  COQ5A COQ5A
-    ## [133] COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A
-    ## [145] COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A
-    ## [157] COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9 
-    ## [169] COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9  COQ9 
-    ## [181] COQ9  COQ9  COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B
-    ## [193] COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B
-    ## [205] COQ5B COQ5B COQ5B COQ5B COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2 
-    ## [217] COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2 
-    ## [229] COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ10 COQ10 COQ10 COQ10 COQ10 COQ10
-    ## [241] COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10
-    ## [253] COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ10 COQ3  COQ3  COQ3  COQ3 
-    ## [265] COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3 
-    ## [277] COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ8  COQ8 
-    ## [289] COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8 
-    ## [301] COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8 
-    ## Levels: COQ10 COQ2 COQ3 COQ4 COQ5 COQ5A COQ5B COQ6 COQ8 COQ9 COQD2 PHO1
-
+    # all_counts$Gene
     gcounts_coqs <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
       geom_boxplot(fatten = 1) +
       scale_fill_manual(values = "grey") +
@@ -3750,11 +3989,12 @@ TAP
       labs(title = "COQ genes all") + 
       theme_bw() +
       removeGrid(x=T, y=T) +
+      theme(axis.text.x = element_text(angle = 90)) +
         geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
       scale_y_continuous(trans = "log2") & plot_annotation(title = colData(dds)$experiment[1])
     gcounts_coqs %>% print()
 
-![](Readme_files/figure-markdown_strict/unnamed-chunk-1-1.png)
+<img src="Readme_files/figure-markdown_strict/countsv2-1.png" width="50%" />
 
     ggexport(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aio_all.pdf",sep="/"),width = 8.2, height = 4.7)
     ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aoi_all.tiff",sep="/"),width = 8.2, height = 4.7)
@@ -3774,27 +4014,7 @@ TAP
       all_counts <- bind_rows(all_counts,d)
       }
 
-    all_counts$Gene
-
-    ##   [1] "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2"
-    ##  [10] "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2"
-    ##  [19] "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQD2" "COQ5A"
-    ##  [28] "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A"
-    ##  [37] "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A"
-    ##  [46] "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5A" "COQ5B" "COQ5B"
-    ##  [55] "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B"
-    ##  [64] "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B"
-    ##  [73] "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ5B" "COQ2"  "COQ2"  "COQ2" 
-    ##  [82] "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2" 
-    ##  [91] "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2" 
-    ## [100] "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ2"  "COQ3"  "COQ3"  "COQ3"  "COQ3" 
-    ## [109] "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3" 
-    ## [118] "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ3" 
-    ## [127] "COQ3"  "COQ3"  "COQ3"  "COQ3"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8" 
-    ## [136] "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8" 
-    ## [145] "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8"  "COQ8" 
-    ## [154] "COQ8"  "COQ8"  "COQ8"
-
+    # all_counts$Gene
     levels(all_counts$condition)
 
     ## [1] "WT_HSM"     "WT_TAP"     "Δplap6_HSM" "Δplap6_TAP"
@@ -3807,23 +4027,7 @@ TAP
     max_val <- 1.0*max(all_counts$count)
 
     # Plot
-    all_counts$Gene
-
-    ##   [1] COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2
-    ##  [13] COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2 COQD2
-    ##  [25] COQD2 COQD2 COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A
-    ##  [37] COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A COQ5A
-    ##  [49] COQ5A COQ5A COQ5A COQ5A COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B
-    ##  [61] COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B
-    ##  [73] COQ5B COQ5B COQ5B COQ5B COQ5B COQ5B COQ2  COQ2  COQ2  COQ2  COQ2  COQ2 
-    ##  [85] COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2 
-    ##  [97] COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ2  COQ3  COQ3  COQ3  COQ3 
-    ## [109] COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3 
-    ## [121] COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ3  COQ8  COQ8 
-    ## [133] COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8 
-    ## [145] COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8  COQ8 
-    ## Levels: COQ2 COQD2 COQ3 COQ5A COQ5B COQ8
-
+    # all_counts$Gene
     gcounts_coqs <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
       geom_boxplot(fatten = 1) +
       scale_fill_manual(values = "grey") +
@@ -3837,7 +4041,7 @@ TAP
       scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
     gcounts_coqs %>% print()
 
-![](Readme_files/figure-markdown_strict/unnamed-chunk-1-2.png)
+<img src="Readme_files/figure-markdown_strict/countsv2-2.png" width="50%" />
 
     ggexport(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aio.pdf",sep="/"),width = 8.2, height = 4.7)
     ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aoi.tiff",sep="/"),width = 8.2, height = 4.7)
@@ -3982,7 +4186,7 @@ TAP
     )
     volcano_dd
 
-![](Readme_files/figure-markdown_strict/volcano2-1.png)
+<img src="Readme_files/figure-markdown_strict/volcano2-1.png" width="50%" />
 
     top <- top_list$plap6_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"] %>% .[!is.na(.)]
 
@@ -5499,30 +5703,7 @@ cytochrome b559 alpha subunit
     max_val <- 1.0*max(all_counts$count)
 
     # Plot
-    all_counts$Gene
-
-    ##   [1] PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33
-    ##  [13] PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33 PHC33
-    ##  [25] PHC33 PHC33 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34
-    ##  [37] PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34 PHC34
-    ##  [49] PHC34 PHC34 PHC34 PHC34 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32
-    ##  [61] PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PHC32
-    ##  [73] PHC32 PHC32 PHC32 PHC32 PHC32 PHC32 PCK1  PCK1  PCK1  PCK1  PCK1  PCK1 
-    ##  [85] PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1 
-    ##  [97] PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  PCK1  CFA1  CFA1  CFA1  CFA1 
-    ## [109] CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1 
-    ## [121] CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  CFA1  GAS28 GAS28
-    ## [133] GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28
-    ## [145] GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28 GAS28
-    ## [157] SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1 
-    ## [169] SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1  SLT1 
-    ## [181] SLT1  SLT1  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6 
-    ## [193] CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6  CYC6 
-    ## [205] CYC6  CYC6  CYC6  CYC6  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5 
-    ## [217] GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5  GFY5 
-    ## [229] GFY5  GFY5  GFY5  GFY5  GFY5  GFY5 
-    ## Levels: CFA1 CYC6 GAS28 GFY5 PCK1 PHC32 PHC33 PHC34 SLT1
-
+    # all_counts$Gene
     gcounts_top9 <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
       geom_boxplot(fatten = 1) +
       scale_fill_manual(values = "grey") +
@@ -5536,7 +5717,7 @@ cytochrome b559 alpha subunit
       scale_y_continuous(trans = "log2") & plot_annotation(title = colData(dds)$experiment[1])
     gcounts_top9 %>% print()
 
-![](Readme_files/figure-markdown_strict/volcano2-2.png)
+<img src="Readme_files/figure-markdown_strict/volcano2-2.png" width="50%" />
 
     ggexport(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aio_all.pdf",sep="/"),width = 8.2, height = 4.7)
     ggsave(gcounts_coqs, filename = paste(pubdir,"Counts_plap6_COQs_aoi_all.tiff",sep="/"),width = 8.2, height = 4.7)
@@ -5637,7 +5818,7 @@ cytochrome b559 alpha subunit
     xx <- pheatmap(df, cluster_rows=TRUE, show_rownames=TRUE,
                    cluster_cols=TRUE, annotation_col=anno_col)
 
-![](Readme_files/figure-markdown_strict/heatmap_PQ-1.png)
+<img src="Readme_files/figure-markdown_strict/heatmap_PQ-1.png" width="50%" />
 
     # ggsave("graphs3/Heatmap_YYK.pdf",plot=xx,
     #        width = 10,
@@ -5990,216 +6171,567 @@ associated with central pair projection C1b (PMID: 16030251).</td>
 
     xls_table <- read_xlsx(paste(outdir,"Metabolic_Gene_List_v2.xlsx",sep="/"))
 
-    anno[xls_table$gene_id,c(24,5,9,10,8)]
+    anno[xls_table$gene_id,c(24,5,9,10,8)] %>% kable()
 
-    ##                     gene_id geneSymbol
-    ## Cre03.g144807 Cre03.g144807       MAS1
-    ## Cre06.g282800 Cre06.g282800       ICL1
-    ## Cre03.g149250 Cre03.g149250           
-    ## Cre10.g423250 Cre10.g423250       MDH2
-    ## Cre09.g410700 Cre09.g410700       MDH5
-    ## Cre01.g055408 Cre01.g055408       ACS2
-    ## Cre01.g042750 Cre01.g042750       ACH1
-    ## Cre12.g514750 Cre12.g514750       CIS1
-    ## Cre03.g149100 Cre03.g149100       CIS2
-    ## Cre02.g141400 Cre02.g141400       PCK1
-    ## Cre12.g513200 Cre12.g513200       ENO1
-    ## Cre06.g252650 Cre06.g252650      LEU1S
-    ## Cre06.g258733 Cre06.g258733       LEU2
-    ## Cre03.g206600 Cre03.g206600       AAD1
-    ## Cre13.g588150 Cre13.g588150       VTC2
-    ## Cre02.g095137 Cre02.g095137       PFR1
-    ## Cre03.g199800 Cre03.g199800      HYDA1
-    ## Cre09.g396600 Cre09.g396600      HYDA2
-    ## Cre06.g296700 Cre06.g296700      HYDG1
-    ## Cre06.g296750 Cre06.g296750     HYDEF1
-    ## Cre16.g658400 Cre16.g658400       FDX2
-    ## Cre06.g278245 Cre06.g278245       PAO5
-    ## Cre08.g367400 Cre08.g367400    LHCSR3B
-    ## Cre08.g365900 Cre08.g365900     LHCSR1
-    ## Cre01.g016600 Cre01.g016600      PSBS1
-    ## Cre01.g016750 Cre01.g016750      PSBS2
-    ##                                                        Description
-    ## Cre03.g144807                                      Malate synthase
-    ## Cre06.g282800                                     Isocitrate lyase
-    ## Cre03.g149250                                     Isocitrate lyase
-    ## Cre10.g423250                               Malate dehydrogenase 2
-    ## Cre09.g410700                          NADP-Malate Dehydrogenase 5
-    ## Cre01.g055408                                  Acetyl-CoA synthase
-    ## Cre01.g042750                                  Aconitate hydratase
-    ## Cre12.g514750                      Citrate synthase, mitochondrial
-    ## Cre03.g149100         Citrate synthase, glyoxysomal/microbody form
-    ## Cre02.g141400                    Phosphoenolpyruvate carboxykinase
-    ## Cre12.g513200                                              Enolase
-    ## Cre06.g252650           Isopropylmalate dehydratase, small subunit
-    ## Cre06.g258733                             Isopropylmalate synthase
-    ## Cre03.g206600                         Acetohydroxyacid dehydratase
-    ## Cre13.g588150                        GDP-L-galactose phosphorylase
-    ## Cre02.g095137                   Pyruvate ferredoxin oxidoreductase
-    ## Cre03.g199800                                     Iron hydrogenase
-    ## Cre09.g396600                                     Iron hydrogenase
-    ## Cre06.g296700          Hydrogenase assembly factor/biotin synthase
-    ## Cre06.g296750                    Iron hydrogenase assembly protein
-    ## Cre16.g658400                                        Apoferredoxin
-    ## Cre06.g278245             Pheophorbide a oxygenase-related protein
-    ## Cre08.g367400     Stress-related chlorophyll a/b binding protein 3
-    ## Cre08.g365900     Stress-related chlorophyll a/b binding protein 1
-    ## Cre01.g016600 chloroplast Photosystem II-associated 22 kDa protein
-    ## Cre01.g016750 chloroplast Photosystem II-associated 22 kDa protein
-    ##                                                                                                                                                                                                                                                                                                                                                                                                                                              Comments
-    ## Cre03.g144807                                                                                                                                                                                                                                                                                                                                                     Malate synthase (EC 2.3.3.9)# identical to cDNA sequence (AAP75564)# PMID: 19214701
-    ## Cre06.g282800                                                                                                                                                                                                                                                                                                                                             isocitrate lyase (EC 4.1.3.1)# isocitrase# 98% identical to cDNA (AAB61446) [PMID: 9049260]
-    ## Cre03.g149250                                                                                                                                                                                                                                                                                                                                                                                                       Isocitrate lyase/phosphorylmutase
-    ## Cre10.g423250                                                                                                                                                                                                                                                                                                      Malate dehydrogenase ( MDH) (= malic dehydrogenase) [EC:1.1.1.37]# NAD-dependent# putative glyoxysomal localization# PMID: 1921471
-    ## Cre09.g410700                                                                                                                                                                                                                                                                                                                                 Malate dehydrogenase [NADP], possibly plastidic (NADP-MDH)# GI:1969739# Found in the flagellar proteome
-    ## Cre01.g055408                                                                                                                                                                                                                                                                                                                                         identical to XP_001700230# located in peroxisomal microbodies (Lauersen et al, Algal Res. 2016)
-    ## Cre01.g042750                                                                                                                                                                                                                                                                                                                                                         Aconitate hydratase (EC 4.2.1.3), mitochondrial# citrate hydro-lyase# aconitase
-    ## Cre12.g514750                                                                                                                                                                                                                                                                                                        Citrate synthase (EC 2.3.3.1), mitochondrial form# similarity to carrot citrate synthase mitochondrial precursor (GenBank O8433)
-    ## Cre03.g149100                                                                                                                                                                                                                                                                             Citrate synthase (EC 2.3.3.1), glyoxysomal/microbody form# similarity to Arabidopsis citrate synthase glyoxysomal precursor (GenBank Q9LXS6)# PMID: 1921471
-    ## Cre02.g141400                                                                                                                                                phosphoenolpyruvate carboxykinase# PEP carboxykinase (EC 4.1.1.49)# based on high similarity to PEPCK from Panicum maximum (GenBank AAQ10076) and many other plants# Target-P predicts no organelle targeting, so probably cytosolic form# may represent a minor splice variant of PCK1a
-    ## Cre12.g513200 Phosphoenolpyruvate hydratase# 2-phosphoglycerate dehydratase# EC 4.2.1.11 [GI:18143, Dumont et al. (1993) Plant Sci. 89, 55-67]# product localization unsure: an N-terminal extension also found in Dunaliella and At1g74030 potentially targets it to an organelle, especially if cDNA is extended >6 nt upstream# found in the flagellar proteome [PMID: 15998802] and associated with central pair projection C1b (PMID: 16030251).
-    ## Cre06.g252650                                                                                                                                                                                                                                                                                                                                     isopropylmalate dehydratase (EC 4.2.1.33)# small subunit# second committed step in Leu biosynthesis
-    ## Cre06.g258733                                                                                                                                                                                                                                                                                                                                            Involved in branched chain amino acid biosynthesis# first committed step in Leu biosynthesis
-    ## Cre03.g206600                                                                                                                                                                                                                                                                                      acetohydroxyacid dehydratase (EC 4.2.1.9)# ILVD# dihydroxy-acid dehydrase# probable plastid location, based on homology and on Target-P prediction
-    ## Cre13.g588150                                                                                                                                                                                                                                               first committed step in vitamin C biosynthesis# mutant shows reduced vitamin C content, and increased 5mC/decreased 5gmC in its DNA, due to impairement of TET-mediated 5mC modifications
-    ## Cre02.g095137                                                                                                                                                                                                                                                                                                                                                  Reversible pyruvate decarboxylation to acetyl-CoA and CO2, two ferredoxins are reduced
-    ## Cre03.g199800                                                                                                                                                                                                                                                                                                         Chloroplast Fe-hydrogenase (= HYDA1)# corresponds to GI:18026272# reversible reduction of 2H+ to H2, oxidizing two ferredoxins#
-    ## Cre09.g396600                                                                                                                                                                                                                                                                                       Chloroplast Fe-hydrogenase (= HYDA2)# corresponds to GI:18026272 [PMID: 12823545]# reversible reduction of 2H+ to H2, oxidizing two ferredoxins# 
-    ## Cre06.g296700                                                                                                                                                                                                                                Related to Thiazole biosynthesis protein thiH/O. Pfam motif found in thiamin and biotin biosynthesis genes. Radical SAM protein required for the assembly of an active [Fe]-hydrogenase [PMID: 15082711]
-    ## Cre06.g296750                                                                                                                                                                                          Iron hydrogenase assembly protein, contains domains homologous to prokaryotic HydE and HydF# radical SAM domain present in N-terminal region. [PMID: 15082711]# maturation factor required for biosynthesis of [FeFe]-hydrogenase active site#
-    ## Cre16.g658400                                                                                                                                                                                                                                                                                                                                                                      Fe2S2 containing redox protein, predicted chloroplast localization
-    ## Cre06.g278245                                                                                                                                                                                             Contains Rieske iron-sulfur cluster and PAO domains and transmembrane domain for attachment to thylakoid membrane# closely related to linked Cre06.g305650# belongs to the classical family of short chain dehydrogenases [PMID: 15180984]#
-    ## Cre08.g367400                                                                                                                                                                                                                                                                                                                                                                                                                                LHCSR3.2
-    ## Cre08.g365900                                                                                                                                                                                                                                                                 LI818r-1# involved in protection against UV-B and induced by UVR8# Low-CO2 and high-light inducible chlorophyll a/b binding protein# regulated by CCM1 [PMID: 15235119]
-    ## Cre01.g016600                                                                                                                                   one of the two neighbor genes homologous to higher plant PsbS (Npq4) that is involved in Non-Photochemical Quenching# corresponds to the gene mentioned in PMID: 16143839# shows a single AA difference compared to downstream convergent PSBS2# involved in acclimatation to UV-B# regulated by UVR8
-    ## Cre01.g016750                                                                                                                                                          one of the two neighbor genes homologous to higher plant PsbS (Npq4) that is involved in Non-Photochemical Quenching (PMID: 10667783# PMID:15222740)# shows a single AA difference compared to upstream convergent PSBS1# involved in acclimatation to UV-B# regulated by UVR8
-    ##                                               previousIdentifiers
-    ## Cre03.g144807 g2904.t1#Cre01.g057800.t1.1#MAS1#Cre01.g057800.t1.2
-    ## Cre06.g282800                                           g6576.t1#
-    ## Cre03.g149250                                       ICL2#g3035.t1
-    ## Cre10.g423250                                 MDN2#MDH2#g10469.t1
-    ## Cre09.g410700                                 MDN5#MDH5#g10173.t1
-    ## Cre01.g055408                                            g1224.t1
-    ## Cre01.g042750                                            #g957.t1
-    ## Cre12.g514750                                          #g12702.t1
-    ## Cre03.g149100                                           g3032.t1#
-    ## Cre02.g141400                                      g2662.t1#PCK1#
-    ## Cre12.g513200                                 PGH1#ENO#g12671.t1#
-    ## Cre06.g252650                          IPMI1#LEUS1#g5657.t1#LEU1S
-    ## Cre06.g258733                    g5818.t1#LEU2#Cre06.g258750.t2.1
-    ## Cre03.g206600                                      #AAD1#g4179.t1
-    ## Cre13.g588150                                          #g14427.t1
-    ## Cre02.g095137      Cre11.g473950.t1.2#Cre11.g473950.t1.1#g1910.t2
-    ## Cre03.g199800                                       HYD1#g4331.t1
-    ## Cre09.g396600                                       HYD2#g9355.t1
-    ## Cre06.g296700                                      HYDG#g6861.t1#
-    ## Cre06.g296750                                      HYDEF#g6862.t1
-    ## Cre16.g658400                                          g15907.t1#
-    ## Cre06.g278245 PAO9#Cre13.g600650.t1.2#g6387.t1#Cre13.g600650.t1.1
-    ## Cre08.g367400                     LHCSR3.2#LHCSR3#LI818r#g8608.t1
-    ## Cre08.g365900                                      LI818#g8574.t1
-    ## Cre01.g016600                                            #g397.t1
-    ## Cre01.g016750                                            #g400.t1
+<table>
+<colgroup>
+<col style="width: 2%" />
+<col style="width: 2%" />
+<col style="width: 1%" />
+<col style="width: 9%" />
+<col style="width: 74%" />
+<col style="width: 9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">gene_id</th>
+<th style="text-align: left;">geneSymbol</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Comments</th>
+<th style="text-align: left;">previousIdentifiers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g144807</td>
+<td style="text-align: left;">Cre03.g144807</td>
+<td style="text-align: left;">MAS1</td>
+<td style="text-align: left;">Malate synthase</td>
+<td style="text-align: left;">Malate synthase (EC 2.3.3.9)# identical to
+cDNA sequence (AAP75564)# PMID: 19214701</td>
+<td
+style="text-align: left;">g2904.t1#Cre01.g057800.t1.1#MAS1#Cre01.g057800.t1.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g282800</td>
+<td style="text-align: left;">Cre06.g282800</td>
+<td style="text-align: left;">ICL1</td>
+<td style="text-align: left;">Isocitrate lyase</td>
+<td style="text-align: left;">isocitrate lyase (EC 4.1.3.1)# isocitrase#
+98% identical to cDNA (AAB61446) [PMID: 9049260]</td>
+<td style="text-align: left;">g6576.t1#</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g149250</td>
+<td style="text-align: left;">Cre03.g149250</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Isocitrate lyase</td>
+<td style="text-align: left;">Isocitrate lyase/phosphorylmutase</td>
+<td style="text-align: left;">ICL2#g3035.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre10.g423250</td>
+<td style="text-align: left;">Cre10.g423250</td>
+<td style="text-align: left;">MDH2</td>
+<td style="text-align: left;">Malate dehydrogenase 2</td>
+<td style="text-align: left;">Malate dehydrogenase ( MDH) (= malic
+dehydrogenase) [EC:1.1.1.37]# NAD-dependent# putative glyoxysomal
+localization# PMID: 1921471</td>
+<td style="text-align: left;">MDN2#MDH2#g10469.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre09.g410700</td>
+<td style="text-align: left;">Cre09.g410700</td>
+<td style="text-align: left;">MDH5</td>
+<td style="text-align: left;">NADP-Malate Dehydrogenase 5</td>
+<td style="text-align: left;">Malate dehydrogenase [NADP], possibly
+plastidic (NADP-MDH)# GI:1969739# Found in the flagellar proteome</td>
+<td style="text-align: left;">MDN5#MDH5#g10173.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre01.g055408</td>
+<td style="text-align: left;">Cre01.g055408</td>
+<td style="text-align: left;">ACS2</td>
+<td style="text-align: left;">Acetyl-CoA synthase</td>
+<td style="text-align: left;">identical to XP_001700230# located in
+peroxisomal microbodies (Lauersen et al, Algal Res. 2016)</td>
+<td style="text-align: left;">g1224.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre01.g042750</td>
+<td style="text-align: left;">Cre01.g042750</td>
+<td style="text-align: left;">ACH1</td>
+<td style="text-align: left;">Aconitate hydratase</td>
+<td style="text-align: left;">Aconitate hydratase (EC 4.2.1.3),
+mitochondrial# citrate hydro-lyase# aconitase</td>
+<td style="text-align: left;">#g957.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre12.g514750</td>
+<td style="text-align: left;">Cre12.g514750</td>
+<td style="text-align: left;">CIS1</td>
+<td style="text-align: left;">Citrate synthase, mitochondrial</td>
+<td style="text-align: left;">Citrate synthase (EC 2.3.3.1),
+mitochondrial form# similarity to carrot citrate synthase mitochondrial
+precursor (GenBank O8433)</td>
+<td style="text-align: left;">#g12702.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g149100</td>
+<td style="text-align: left;">Cre03.g149100</td>
+<td style="text-align: left;">CIS2</td>
+<td style="text-align: left;">Citrate synthase, glyoxysomal/microbody
+form</td>
+<td style="text-align: left;">Citrate synthase (EC 2.3.3.1),
+glyoxysomal/microbody form# similarity to Arabidopsis citrate synthase
+glyoxysomal precursor (GenBank Q9LXS6)# PMID: 1921471</td>
+<td style="text-align: left;">g3032.t1#</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre02.g141400</td>
+<td style="text-align: left;">Cre02.g141400</td>
+<td style="text-align: left;">PCK1</td>
+<td style="text-align: left;">Phosphoenolpyruvate carboxykinase</td>
+<td style="text-align: left;">phosphoenolpyruvate carboxykinase# PEP
+carboxykinase (EC 4.1.1.49)# based on high similarity to PEPCK from
+Panicum maximum (GenBank AAQ10076) and many other plants# Target-P
+predicts no organelle targeting, so probably cytosolic form# may
+represent a minor splice variant of PCK1a</td>
+<td style="text-align: left;">g2662.t1#PCK1#</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre12.g513200</td>
+<td style="text-align: left;">Cre12.g513200</td>
+<td style="text-align: left;">ENO1</td>
+<td style="text-align: left;">Enolase</td>
+<td style="text-align: left;">Phosphoenolpyruvate hydratase#
+2-phosphoglycerate dehydratase# EC 4.2.1.11 [GI:18143, Dumont et
+al. (1993) Plant Sci. 89, 55-67]# product localization unsure: an
+N-terminal extension also found in Dunaliella and At1g74030 potentially
+targets it to an organelle, especially if cDNA is extended &gt;6 nt
+upstream# found in the flagellar proteome [PMID: 15998802] and
+associated with central pair projection C1b (PMID: 16030251).</td>
+<td style="text-align: left;">PGH1#ENO#g12671.t1#</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g252650</td>
+<td style="text-align: left;">Cre06.g252650</td>
+<td style="text-align: left;">LEU1S</td>
+<td style="text-align: left;">Isopropylmalate dehydratase, small
+subunit</td>
+<td style="text-align: left;">isopropylmalate dehydratase (EC 4.2.1.33)#
+small subunit# second committed step in Leu biosynthesis</td>
+<td style="text-align: left;">IPMI1#LEUS1#g5657.t1#LEU1S</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre06.g258733</td>
+<td style="text-align: left;">Cre06.g258733</td>
+<td style="text-align: left;">LEU2</td>
+<td style="text-align: left;">Isopropylmalate synthase</td>
+<td style="text-align: left;">Involved in branched chain amino acid
+biosynthesis# first committed step in Leu biosynthesis</td>
+<td style="text-align: left;">g5818.t1#LEU2#Cre06.g258750.t2.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre03.g206600</td>
+<td style="text-align: left;">Cre03.g206600</td>
+<td style="text-align: left;">AAD1</td>
+<td style="text-align: left;">Acetohydroxyacid dehydratase</td>
+<td style="text-align: left;">acetohydroxyacid dehydratase (EC 4.2.1.9)#
+ILVD# dihydroxy-acid dehydrase# probable plastid location, based on
+homology and on Target-P prediction</td>
+<td style="text-align: left;">#AAD1#g4179.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre13.g588150</td>
+<td style="text-align: left;">Cre13.g588150</td>
+<td style="text-align: left;">VTC2</td>
+<td style="text-align: left;">GDP-L-galactose phosphorylase</td>
+<td style="text-align: left;">first committed step in vitamin C
+biosynthesis# mutant shows reduced vitamin C content, and increased
+5mC/decreased 5gmC in its DNA, due to impairement of TET-mediated 5mC
+modifications</td>
+<td style="text-align: left;">#g14427.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre02.g095137</td>
+<td style="text-align: left;">Cre02.g095137</td>
+<td style="text-align: left;">PFR1</td>
+<td style="text-align: left;">Pyruvate ferredoxin oxidoreductase</td>
+<td style="text-align: left;">Reversible pyruvate decarboxylation to
+acetyl-CoA and CO2, two ferredoxins are reduced</td>
+<td
+style="text-align: left;">Cre11.g473950.t1.2#Cre11.g473950.t1.1#g1910.t2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g199800</td>
+<td style="text-align: left;">Cre03.g199800</td>
+<td style="text-align: left;">HYDA1</td>
+<td style="text-align: left;">Iron hydrogenase</td>
+<td style="text-align: left;">Chloroplast Fe-hydrogenase (= HYDA1)#
+corresponds to GI:18026272# reversible reduction of 2H+ to H2, oxidizing
+two ferredoxins#</td>
+<td style="text-align: left;">HYD1#g4331.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre09.g396600</td>
+<td style="text-align: left;">Cre09.g396600</td>
+<td style="text-align: left;">HYDA2</td>
+<td style="text-align: left;">Iron hydrogenase</td>
+<td style="text-align: left;">Chloroplast Fe-hydrogenase (= HYDA2)#
+corresponds to GI:18026272 [PMID: 12823545]# reversible reduction of 2H+
+to H2, oxidizing two ferredoxins#</td>
+<td style="text-align: left;">HYD2#g9355.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre06.g296700</td>
+<td style="text-align: left;">Cre06.g296700</td>
+<td style="text-align: left;">HYDG1</td>
+<td style="text-align: left;">Hydrogenase assembly factor/biotin
+synthase</td>
+<td style="text-align: left;">Related to Thiazole biosynthesis protein
+thiH/O. Pfam motif found in thiamin and biotin biosynthesis genes.
+Radical SAM protein required for the assembly of an active
+[Fe]-hydrogenase [PMID: 15082711]</td>
+<td style="text-align: left;">HYDG#g6861.t1#</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g296750</td>
+<td style="text-align: left;">Cre06.g296750</td>
+<td style="text-align: left;">HYDEF1</td>
+<td style="text-align: left;">Iron hydrogenase assembly protein</td>
+<td style="text-align: left;">Iron hydrogenase assembly protein,
+contains domains homologous to prokaryotic HydE and HydF# radical SAM
+domain present in N-terminal region. [PMID: 15082711]# maturation factor
+required for biosynthesis of [FeFe]-hydrogenase active site#</td>
+<td style="text-align: left;">HYDEF#g6862.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre16.g658400</td>
+<td style="text-align: left;">Cre16.g658400</td>
+<td style="text-align: left;">FDX2</td>
+<td style="text-align: left;">Apoferredoxin</td>
+<td style="text-align: left;">Fe2S2 containing redox protein, predicted
+chloroplast localization</td>
+<td style="text-align: left;">g15907.t1#</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g278245</td>
+<td style="text-align: left;">Cre06.g278245</td>
+<td style="text-align: left;">PAO5</td>
+<td style="text-align: left;">Pheophorbide a oxygenase-related
+protein</td>
+<td style="text-align: left;">Contains Rieske iron-sulfur cluster and
+PAO domains and transmembrane domain for attachment to thylakoid
+membrane# closely related to linked Cre06.g305650# belongs to the
+classical family of short chain dehydrogenases [PMID: 15180984]#</td>
+<td
+style="text-align: left;">PAO9#Cre13.g600650.t1.2#g6387.t1#Cre13.g600650.t1.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre08.g367400</td>
+<td style="text-align: left;">Cre08.g367400</td>
+<td style="text-align: left;">LHCSR3B</td>
+<td style="text-align: left;">Stress-related chlorophyll a/b binding
+protein 3</td>
+<td style="text-align: left;">LHCSR3.2</td>
+<td style="text-align: left;">LHCSR3.2#LHCSR3#LI818r#g8608.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre08.g365900</td>
+<td style="text-align: left;">Cre08.g365900</td>
+<td style="text-align: left;">LHCSR1</td>
+<td style="text-align: left;">Stress-related chlorophyll a/b binding
+protein 1</td>
+<td style="text-align: left;">LI818r-1# involved in protection against
+UV-B and induced by UVR8# Low-CO2 and high-light inducible chlorophyll
+a/b binding protein# regulated by CCM1 [PMID: 15235119]</td>
+<td style="text-align: left;">LI818#g8574.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre01.g016600</td>
+<td style="text-align: left;">Cre01.g016600</td>
+<td style="text-align: left;">PSBS1</td>
+<td style="text-align: left;">chloroplast Photosystem II-associated 22
+kDa protein</td>
+<td style="text-align: left;">one of the two neighbor genes homologous
+to higher plant PsbS (Npq4) that is involved in Non-Photochemical
+Quenching# corresponds to the gene mentioned in PMID: 16143839# shows a
+single AA difference compared to downstream convergent PSBS2# involved
+in acclimatation to UV-B# regulated by UVR8</td>
+<td style="text-align: left;">#g397.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre01.g016750</td>
+<td style="text-align: left;">Cre01.g016750</td>
+<td style="text-align: left;">PSBS2</td>
+<td style="text-align: left;">chloroplast Photosystem II-associated 22
+kDa protein</td>
+<td style="text-align: left;">one of the two neighbor genes homologous
+to higher plant PsbS (Npq4) that is involved in Non-Photochemical
+Quenching (PMID: 10667783# <a href="PMID:15222740)#"
+class="uri">PMID:15222740)#</a> shows a single AA difference compared to
+upstream convergent PSBS1# involved in acclimatation to UV-B# regulated
+by UVR8</td>
+<td style="text-align: left;">#g400.t1</td>
+</tr>
+</tbody>
+</table>
 
     metabolic_genes2 <- bind_cols(xls_table[,c(1:3,7)],anno[xls_table$gene_id,c(9,10,8)])
 
     # Cre16.g658400 FDX2 not in results
     metabolic_genes2 <- metabolic_genes2[-21,]
 
-    anno[str_detect(anno[["geneSymbol"]],paste("FDX", collapse="|")),c(24,5,9,10,8)]
+    anno[str_detect(anno[["geneSymbol"]],paste("FDX", collapse="|")),c(24,5,9,10,8)] %>% kable()
 
-    ##                     gene_id geneSymbol
-    ## Cre01.g005600 Cre01.g005600       FDX8
-    ## Cre01.g006100 Cre01.g006100       FDX7
-    ## Cre03.g183850 Cre03.g183850       FDX6
-    ## Cre04.g225450 Cre04.g225450      FDX10
-    ## Cre06.g291650 Cre06.g291650      FDX11
-    ## Cre06.g306350 Cre06.g306350       FDX3
-    ## Cre07.g334800 Cre07.g334800       FDX4
-    ## Cre08.g374550 Cre08.g374550      FDX12
-    ## Cre12.g487900 Cre12.g487900       FDX9
-    ## Cre12.g559950 Cre12.g559950      MFDX1
-    ## Cre14.g626700 Cre14.g626700       FDX1
-    ## Cre16.g658400 Cre16.g658400       FDX2
-    ## Cre17.g700950 Cre17.g700950       FDX5
-    ##                                              Description
-    ## Cre01.g005600                                 Ferredoxin
-    ## Cre01.g006100                                 Ferredoxin
-    ## Cre03.g183850       Apoferredoxin, chloroplast precursor
-    ## Cre04.g225450                        Putative ferredoxin
-    ## Cre06.g291650                          2Fe-2S ferredoxin
-    ## Cre06.g306350                              Apoferredoxin
-    ## Cre07.g334800       Apoferredoxin, chloroplast precursor
-    ## Cre08.g374550                        Putative ferredoxin
-    ## Cre12.g487900                                 Ferredoxin
-    ## Cre12.g559950 Adrenodoxin-like ferredoxin, mitochondrial
-    ## Cre14.g626700                     Chloroplast ferredoxin
-    ## Cre16.g658400                              Apoferredoxin
-    ## Cre17.g700950                               Ferredoxin 5
-    ##                                                                                                                                                   Comments
-    ## Cre01.g005600                                                                                    Ferredoxin with 2Fe-2S iron-sulfur cluster binding domain
-    ## Cre01.g006100                                                                                    Ferredoxin with 2Fe-2S iron-sulfur cluster binding domain
-    ## Cre03.g183850                                                           Fe2S2 containing redox protein, predicted chloroplast localization# Target of CRR1
-    ## Cre04.g225450                                                                                                                                             
-    ## Cre06.g291650                                                Possible 2Fe-2S ferredoxin# COG0633# cd00207, fer2, 2Fe-2S iron-sulfur cluster binding domain
-    ## Cre06.g306350 Fe2S2 containing redox protein, predicted chloroplast localization# PMID 28620699: Ferredoxin with 2Fe-2S iron-sulfur cluster binding domain
-    ## Cre07.g334800 Fe2S2 containing redox protein, predicted chloroplast localization# PMID 28620699: Ferredoxin with 2Fe-2S iron-sulfur cluster binding domain
-    ## Cre08.g374550                                                                                                                                             
-    ## Cre12.g487900                                                                                                                                             
-    ## Cre12.g559950                                                                       Possibly mitochondrial#Orthologous to AtMFDX1 in Arabidopsis thaliana#
-    ## Cre14.g626700          Apoferredoxin# [2Fe-2S] iron-sulfur protein involved in photosynthetic electron transfer, chloroplast localization [PMID: 16656453]
-    ## Cre16.g658400                                                                           Fe2S2 containing redox protein, predicted chloroplast localization
-    ## Cre17.g700950                                                                                       Fe2S2 containing redox protein# Chloroplast localized#
-    ##                           previousIdentifiers
-    ## Cre01.g005600 FDX8#g136.t1#Cre01.g005650.t1.2
-    ## Cre01.g006100                    FDX7#g147.t1
-    ## Cre03.g183850                       #g3810.t1
-    ## Cre04.g225450                               0
-    ## Cre06.g291650                       #g6758.t1
-    ## Cre06.g306350                       g7097.t1#
-    ## Cre07.g334800               19586916#g7796.t2
-    ## Cre08.g374550                 #FDX12#g8824.t1
-    ## Cre12.g487900                  FDX9#g12229.t1
-    ## Cre12.g559950            MFDX# ADX1#g13320.t1
-    ## Cre14.g626700             PETF#FDX1#g15094.t1
-    ## Cre16.g658400                      g15907.t1#
-    ## Cre17.g700950                      #g16996.t1
+<table>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 4%" />
+<col style="width: 16%" />
+<col style="width: 55%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">gene_id</th>
+<th style="text-align: left;">geneSymbol</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Comments</th>
+<th style="text-align: left;">previousIdentifiers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cre01.g005600</td>
+<td style="text-align: left;">Cre01.g005600</td>
+<td style="text-align: left;">FDX8</td>
+<td style="text-align: left;">Ferredoxin</td>
+<td style="text-align: left;">Ferredoxin with 2Fe-2S iron-sulfur cluster
+binding domain</td>
+<td style="text-align: left;">FDX8#g136.t1#Cre01.g005650.t1.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre01.g006100</td>
+<td style="text-align: left;">Cre01.g006100</td>
+<td style="text-align: left;">FDX7</td>
+<td style="text-align: left;">Ferredoxin</td>
+<td style="text-align: left;">Ferredoxin with 2Fe-2S iron-sulfur cluster
+binding domain</td>
+<td style="text-align: left;">FDX7#g147.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g183850</td>
+<td style="text-align: left;">Cre03.g183850</td>
+<td style="text-align: left;">FDX6</td>
+<td style="text-align: left;">Apoferredoxin, chloroplast precursor</td>
+<td style="text-align: left;">Fe2S2 containing redox protein, predicted
+chloroplast localization# Target of CRR1</td>
+<td style="text-align: left;">#g3810.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre04.g225450</td>
+<td style="text-align: left;">Cre04.g225450</td>
+<td style="text-align: left;">FDX10</td>
+<td style="text-align: left;">Putative ferredoxin</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre06.g291650</td>
+<td style="text-align: left;">Cre06.g291650</td>
+<td style="text-align: left;">FDX11</td>
+<td style="text-align: left;">2Fe-2S ferredoxin</td>
+<td style="text-align: left;">Possible 2Fe-2S ferredoxin# COG0633#
+cd00207, fer2, 2Fe-2S iron-sulfur cluster binding domain</td>
+<td style="text-align: left;">#g6758.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g306350</td>
+<td style="text-align: left;">Cre06.g306350</td>
+<td style="text-align: left;">FDX3</td>
+<td style="text-align: left;">Apoferredoxin</td>
+<td style="text-align: left;">Fe2S2 containing redox protein, predicted
+chloroplast localization# PMID 28620699: Ferredoxin with 2Fe-2S
+iron-sulfur cluster binding domain</td>
+<td style="text-align: left;">g7097.t1#</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre07.g334800</td>
+<td style="text-align: left;">Cre07.g334800</td>
+<td style="text-align: left;">FDX4</td>
+<td style="text-align: left;">Apoferredoxin, chloroplast precursor</td>
+<td style="text-align: left;">Fe2S2 containing redox protein, predicted
+chloroplast localization# PMID 28620699: Ferredoxin with 2Fe-2S
+iron-sulfur cluster binding domain</td>
+<td style="text-align: left;">19586916#g7796.t2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre08.g374550</td>
+<td style="text-align: left;">Cre08.g374550</td>
+<td style="text-align: left;">FDX12</td>
+<td style="text-align: left;">Putative ferredoxin</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">#FDX12#g8824.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre12.g487900</td>
+<td style="text-align: left;">Cre12.g487900</td>
+<td style="text-align: left;">FDX9</td>
+<td style="text-align: left;">Ferredoxin</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">FDX9#g12229.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre12.g559950</td>
+<td style="text-align: left;">Cre12.g559950</td>
+<td style="text-align: left;">MFDX1</td>
+<td style="text-align: left;">Adrenodoxin-like ferredoxin,
+mitochondrial</td>
+<td style="text-align: left;">Possibly mitochondrial#Orthologous to
+AtMFDX1 in Arabidopsis thaliana#</td>
+<td style="text-align: left;">MFDX# ADX1#g13320.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre14.g626700</td>
+<td style="text-align: left;">Cre14.g626700</td>
+<td style="text-align: left;">FDX1</td>
+<td style="text-align: left;">Chloroplast ferredoxin</td>
+<td style="text-align: left;">Apoferredoxin# [2Fe-2S] iron-sulfur
+protein involved in photosynthetic electron transfer, chloroplast
+localization [PMID: 16656453]</td>
+<td style="text-align: left;">PETF#FDX1#g15094.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre16.g658400</td>
+<td style="text-align: left;">Cre16.g658400</td>
+<td style="text-align: left;">FDX2</td>
+<td style="text-align: left;">Apoferredoxin</td>
+<td style="text-align: left;">Fe2S2 containing redox protein, predicted
+chloroplast localization</td>
+<td style="text-align: left;">g15907.t1#</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre17.g700950</td>
+<td style="text-align: left;">Cre17.g700950</td>
+<td style="text-align: left;">FDX5</td>
+<td style="text-align: left;">Ferredoxin 5</td>
+<td style="text-align: left;">Fe2S2 containing redox protein#
+Chloroplast localized#</td>
+<td style="text-align: left;">#g16996.t1</td>
+</tr>
+</tbody>
+</table>
 
-    anno[str_detect(anno[["Description"]],paste(c("Ferredoxin"), collapse="|")),c(24,5,8,9,10)]
+    anno[str_detect(anno[["Description"]],paste(c("Ferredoxin"), collapse="|")),c(24,5,8,9,10)] %>% kable()
 
-    ##                     gene_id geneSymbol             previousIdentifiers
-    ## Cre01.g005600 Cre01.g005600       FDX8 FDX8#g136.t1#Cre01.g005650.t1.2
-    ## Cre01.g006100 Cre01.g006100       FDX7                    FDX7#g147.t1
-    ## Cre03.g193950 Cre03.g193950      FTRC3             FTRC#FTR3#g4014.t1#
-    ## Cre08.g365692 Cre08.g365692       SIR2                   SIR4#g8568.t1
-    ## Cre11.g476750 Cre11.g476750       FNR1                      #g11841.t1
-    ## Cre12.g487900 Cre12.g487900       FDX9                  FDX9#g12229.t1
-    ## Cre12.g514050 Cre12.g514050       GSF1                 #g12689.t1#GSF1
-    ## Cre16.g693202 Cre16.g693202       SIR1                       g15615.t1
-    ## Cre16.g687294 Cre16.g687294      FTRV1                  FTRV#g16838.t1
-    ## Cre17.g700950 Cre17.g700950       FDX5                      #g16996.t1
-    ##                                                                      Description
-    ## Cre01.g005600                                                         Ferredoxin
-    ## Cre01.g006100                                                         Ferredoxin
-    ## Cre03.g193950 Ferredoxin Thioredoxin Reductase, catalytic subunit, chloroplastic
-    ## Cre08.g365692                                       Ferredoxin-sulfite reductase
-    ## Cre11.g476750                             Ferredoxin-NADP reductase, chloroplast
-    ## Cre12.g487900                                                         Ferredoxin
-    ## Cre12.g514050                            Ferredoxin-dependent glutamate synthase
-    ## Cre16.g693202                                       Ferredoxin-sulfite reductase
-    ## Cre16.g687294  Ferredoxin Thioredoxin reductase, variable subunit, chloroplastic
-    ## Cre17.g700950                                                       Ferredoxin 5
-    ##                                                                                                                                                Comments
-    ## Cre01.g005600                                                                                 Ferredoxin with 2Fe-2S iron-sulfur cluster binding domain
-    ## Cre01.g006100                                                                                 Ferredoxin with 2Fe-2S iron-sulfur cluster binding domain
-    ## Cre03.g193950                                                                                                                                          
-    ## Cre08.g365692                                                                                                                                          
-    ## Cre11.g476750 Ferredoxin-NADP reductase, chloroplast precursor# involved in photosynthetic linear, and possibly in cyclic, electron flow# major isoform
-    ## Cre12.g487900                                                                                                                                          
-    ## Cre12.g514050                      Glutamate synthase, ferredoxin-dependent# also known as CRFG3 (genbank id # AF135592), could be chloroplast targeted
-    ## Cre16.g693202                                                                                                                                          
-    ## Cre16.g687294                                                                                                                                          
-    ## Cre17.g700950                                                                                    Fe2S2 containing redox protein# Chloroplast localized#
+<table>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 3%" />
+<col style="width: 11%" />
+<col style="width: 24%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">gene_id</th>
+<th style="text-align: left;">geneSymbol</th>
+<th style="text-align: left;">previousIdentifiers</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cre01.g005600</td>
+<td style="text-align: left;">Cre01.g005600</td>
+<td style="text-align: left;">FDX8</td>
+<td style="text-align: left;">FDX8#g136.t1#Cre01.g005650.t1.2</td>
+<td style="text-align: left;">Ferredoxin</td>
+<td style="text-align: left;">Ferredoxin with 2Fe-2S iron-sulfur cluster
+binding domain</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre01.g006100</td>
+<td style="text-align: left;">Cre01.g006100</td>
+<td style="text-align: left;">FDX7</td>
+<td style="text-align: left;">FDX7#g147.t1</td>
+<td style="text-align: left;">Ferredoxin</td>
+<td style="text-align: left;">Ferredoxin with 2Fe-2S iron-sulfur cluster
+binding domain</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g193950</td>
+<td style="text-align: left;">Cre03.g193950</td>
+<td style="text-align: left;">FTRC3</td>
+<td style="text-align: left;">FTRC#FTR3#g4014.t1#</td>
+<td style="text-align: left;">Ferredoxin Thioredoxin Reductase,
+catalytic subunit, chloroplastic</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre08.g365692</td>
+<td style="text-align: left;">Cre08.g365692</td>
+<td style="text-align: left;">SIR2</td>
+<td style="text-align: left;">SIR4#g8568.t1</td>
+<td style="text-align: left;">Ferredoxin-sulfite reductase</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre11.g476750</td>
+<td style="text-align: left;">Cre11.g476750</td>
+<td style="text-align: left;">FNR1</td>
+<td style="text-align: left;">#g11841.t1</td>
+<td style="text-align: left;">Ferredoxin-NADP reductase,
+chloroplast</td>
+<td style="text-align: left;">Ferredoxin-NADP reductase, chloroplast
+precursor# involved in photosynthetic linear, and possibly in cyclic,
+electron flow# major isoform</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre12.g487900</td>
+<td style="text-align: left;">Cre12.g487900</td>
+<td style="text-align: left;">FDX9</td>
+<td style="text-align: left;">FDX9#g12229.t1</td>
+<td style="text-align: left;">Ferredoxin</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre12.g514050</td>
+<td style="text-align: left;">Cre12.g514050</td>
+<td style="text-align: left;">GSF1</td>
+<td style="text-align: left;">#g12689.t1#GSF1</td>
+<td style="text-align: left;">Ferredoxin-dependent glutamate
+synthase</td>
+<td style="text-align: left;">Glutamate synthase, ferredoxin-dependent#
+also known as CRFG3 (genbank id # AF135592), could be chloroplast
+targeted</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre16.g693202</td>
+<td style="text-align: left;">Cre16.g693202</td>
+<td style="text-align: left;">SIR1</td>
+<td style="text-align: left;">g15615.t1</td>
+<td style="text-align: left;">Ferredoxin-sulfite reductase</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre16.g687294</td>
+<td style="text-align: left;">Cre16.g687294</td>
+<td style="text-align: left;">FTRV1</td>
+<td style="text-align: left;">FTRV#g16838.t1</td>
+<td style="text-align: left;">Ferredoxin Thioredoxin reductase, variable
+subunit, chloroplastic</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre17.g700950</td>
+<td style="text-align: left;">Cre17.g700950</td>
+<td style="text-align: left;">FDX5</td>
+<td style="text-align: left;">#g16996.t1</td>
+<td style="text-align: left;">Ferredoxin 5</td>
+<td style="text-align: left;">Fe2S2 containing redox protein#
+Chloroplast localized#</td>
+</tr>
+</tbody>
+</table>
 
     # (metabolic_genes2$gene_id...1 == metabolic_genes2$gene_id...5) %>% summary()
 
@@ -6242,6 +6774,7 @@ associated with central pair projection C1b (PMID: 16030251).</td>
       theme_bw() +
       removeGrid(x=T, y=T) +
         geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+      theme(axis.text.x = element_text(angle = 90)) +
       scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
     gcounts_metabolic %>% print()
 
@@ -6329,7 +6862,7 @@ associated with central pair projection C1b (PMID: 16030251).</td>
     )
     volcano_dd
 
-![](Readme_files/figure-markdown_strict/Volcano-1.png)
+<img src="Readme_files/figure-markdown_strict/Volcano-1.png" width="50%" />
 
 #### Heatmap
 
