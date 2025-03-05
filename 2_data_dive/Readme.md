@@ -17,6 +17,7 @@
     library(EnhancedVolcano)
     library(pheatmap)
     library(writexl)
+    library(readxl)
     library(biomaRt)
     library(ape)
     library(kableExtra)
@@ -5986,16 +5987,239 @@ associated with central pair projection C1b (PMID: 16030251).</td>
 
     metabolic_genes <- gene_table
 
+
+    xls_table <- read_xlsx(paste(outdir,"Metabolic_Gene_List_v2.xlsx",sep="/"))
+
+    anno[xls_table$gene_id,c(24,5,9,10,8)]
+
+    ##                     gene_id geneSymbol
+    ## Cre03.g144807 Cre03.g144807       MAS1
+    ## Cre06.g282800 Cre06.g282800       ICL1
+    ## Cre03.g149250 Cre03.g149250           
+    ## Cre10.g423250 Cre10.g423250       MDH2
+    ## Cre09.g410700 Cre09.g410700       MDH5
+    ## Cre01.g055408 Cre01.g055408       ACS2
+    ## Cre01.g042750 Cre01.g042750       ACH1
+    ## Cre12.g514750 Cre12.g514750       CIS1
+    ## Cre03.g149100 Cre03.g149100       CIS2
+    ## Cre02.g141400 Cre02.g141400       PCK1
+    ## Cre12.g513200 Cre12.g513200       ENO1
+    ## Cre06.g252650 Cre06.g252650      LEU1S
+    ## Cre06.g258733 Cre06.g258733       LEU2
+    ## Cre03.g206600 Cre03.g206600       AAD1
+    ## Cre13.g588150 Cre13.g588150       VTC2
+    ## Cre02.g095137 Cre02.g095137       PFR1
+    ## Cre03.g199800 Cre03.g199800      HYDA1
+    ## Cre09.g396600 Cre09.g396600      HYDA2
+    ## Cre06.g296700 Cre06.g296700      HYDG1
+    ## Cre06.g296750 Cre06.g296750     HYDEF1
+    ## Cre16.g658400 Cre16.g658400       FDX2
+    ## Cre06.g278245 Cre06.g278245       PAO5
+    ## Cre08.g367400 Cre08.g367400    LHCSR3B
+    ## Cre08.g365900 Cre08.g365900     LHCSR1
+    ## Cre01.g016600 Cre01.g016600      PSBS1
+    ## Cre01.g016750 Cre01.g016750      PSBS2
+    ##                                                        Description
+    ## Cre03.g144807                                      Malate synthase
+    ## Cre06.g282800                                     Isocitrate lyase
+    ## Cre03.g149250                                     Isocitrate lyase
+    ## Cre10.g423250                               Malate dehydrogenase 2
+    ## Cre09.g410700                          NADP-Malate Dehydrogenase 5
+    ## Cre01.g055408                                  Acetyl-CoA synthase
+    ## Cre01.g042750                                  Aconitate hydratase
+    ## Cre12.g514750                      Citrate synthase, mitochondrial
+    ## Cre03.g149100         Citrate synthase, glyoxysomal/microbody form
+    ## Cre02.g141400                    Phosphoenolpyruvate carboxykinase
+    ## Cre12.g513200                                              Enolase
+    ## Cre06.g252650           Isopropylmalate dehydratase, small subunit
+    ## Cre06.g258733                             Isopropylmalate synthase
+    ## Cre03.g206600                         Acetohydroxyacid dehydratase
+    ## Cre13.g588150                        GDP-L-galactose phosphorylase
+    ## Cre02.g095137                   Pyruvate ferredoxin oxidoreductase
+    ## Cre03.g199800                                     Iron hydrogenase
+    ## Cre09.g396600                                     Iron hydrogenase
+    ## Cre06.g296700          Hydrogenase assembly factor/biotin synthase
+    ## Cre06.g296750                    Iron hydrogenase assembly protein
+    ## Cre16.g658400                                        Apoferredoxin
+    ## Cre06.g278245             Pheophorbide a oxygenase-related protein
+    ## Cre08.g367400     Stress-related chlorophyll a/b binding protein 3
+    ## Cre08.g365900     Stress-related chlorophyll a/b binding protein 1
+    ## Cre01.g016600 chloroplast Photosystem II-associated 22 kDa protein
+    ## Cre01.g016750 chloroplast Photosystem II-associated 22 kDa protein
+    ##                                                                                                                                                                                                                                                                                                                                                                                                                                              Comments
+    ## Cre03.g144807                                                                                                                                                                                                                                                                                                                                                     Malate synthase (EC 2.3.3.9)# identical to cDNA sequence (AAP75564)# PMID: 19214701
+    ## Cre06.g282800                                                                                                                                                                                                                                                                                                                                             isocitrate lyase (EC 4.1.3.1)# isocitrase# 98% identical to cDNA (AAB61446) [PMID: 9049260]
+    ## Cre03.g149250                                                                                                                                                                                                                                                                                                                                                                                                       Isocitrate lyase/phosphorylmutase
+    ## Cre10.g423250                                                                                                                                                                                                                                                                                                      Malate dehydrogenase ( MDH) (= malic dehydrogenase) [EC:1.1.1.37]# NAD-dependent# putative glyoxysomal localization# PMID: 1921471
+    ## Cre09.g410700                                                                                                                                                                                                                                                                                                                                 Malate dehydrogenase [NADP], possibly plastidic (NADP-MDH)# GI:1969739# Found in the flagellar proteome
+    ## Cre01.g055408                                                                                                                                                                                                                                                                                                                                         identical to XP_001700230# located in peroxisomal microbodies (Lauersen et al, Algal Res. 2016)
+    ## Cre01.g042750                                                                                                                                                                                                                                                                                                                                                         Aconitate hydratase (EC 4.2.1.3), mitochondrial# citrate hydro-lyase# aconitase
+    ## Cre12.g514750                                                                                                                                                                                                                                                                                                        Citrate synthase (EC 2.3.3.1), mitochondrial form# similarity to carrot citrate synthase mitochondrial precursor (GenBank O8433)
+    ## Cre03.g149100                                                                                                                                                                                                                                                                             Citrate synthase (EC 2.3.3.1), glyoxysomal/microbody form# similarity to Arabidopsis citrate synthase glyoxysomal precursor (GenBank Q9LXS6)# PMID: 1921471
+    ## Cre02.g141400                                                                                                                                                phosphoenolpyruvate carboxykinase# PEP carboxykinase (EC 4.1.1.49)# based on high similarity to PEPCK from Panicum maximum (GenBank AAQ10076) and many other plants# Target-P predicts no organelle targeting, so probably cytosolic form# may represent a minor splice variant of PCK1a
+    ## Cre12.g513200 Phosphoenolpyruvate hydratase# 2-phosphoglycerate dehydratase# EC 4.2.1.11 [GI:18143, Dumont et al. (1993) Plant Sci. 89, 55-67]# product localization unsure: an N-terminal extension also found in Dunaliella and At1g74030 potentially targets it to an organelle, especially if cDNA is extended >6 nt upstream# found in the flagellar proteome [PMID: 15998802] and associated with central pair projection C1b (PMID: 16030251).
+    ## Cre06.g252650                                                                                                                                                                                                                                                                                                                                     isopropylmalate dehydratase (EC 4.2.1.33)# small subunit# second committed step in Leu biosynthesis
+    ## Cre06.g258733                                                                                                                                                                                                                                                                                                                                            Involved in branched chain amino acid biosynthesis# first committed step in Leu biosynthesis
+    ## Cre03.g206600                                                                                                                                                                                                                                                                                      acetohydroxyacid dehydratase (EC 4.2.1.9)# ILVD# dihydroxy-acid dehydrase# probable plastid location, based on homology and on Target-P prediction
+    ## Cre13.g588150                                                                                                                                                                                                                                               first committed step in vitamin C biosynthesis# mutant shows reduced vitamin C content, and increased 5mC/decreased 5gmC in its DNA, due to impairement of TET-mediated 5mC modifications
+    ## Cre02.g095137                                                                                                                                                                                                                                                                                                                                                  Reversible pyruvate decarboxylation to acetyl-CoA and CO2, two ferredoxins are reduced
+    ## Cre03.g199800                                                                                                                                                                                                                                                                                                         Chloroplast Fe-hydrogenase (= HYDA1)# corresponds to GI:18026272# reversible reduction of 2H+ to H2, oxidizing two ferredoxins#
+    ## Cre09.g396600                                                                                                                                                                                                                                                                                       Chloroplast Fe-hydrogenase (= HYDA2)# corresponds to GI:18026272 [PMID: 12823545]# reversible reduction of 2H+ to H2, oxidizing two ferredoxins# 
+    ## Cre06.g296700                                                                                                                                                                                                                                Related to Thiazole biosynthesis protein thiH/O. Pfam motif found in thiamin and biotin biosynthesis genes. Radical SAM protein required for the assembly of an active [Fe]-hydrogenase [PMID: 15082711]
+    ## Cre06.g296750                                                                                                                                                                                          Iron hydrogenase assembly protein, contains domains homologous to prokaryotic HydE and HydF# radical SAM domain present in N-terminal region. [PMID: 15082711]# maturation factor required for biosynthesis of [FeFe]-hydrogenase active site#
+    ## Cre16.g658400                                                                                                                                                                                                                                                                                                                                                                      Fe2S2 containing redox protein, predicted chloroplast localization
+    ## Cre06.g278245                                                                                                                                                                                             Contains Rieske iron-sulfur cluster and PAO domains and transmembrane domain for attachment to thylakoid membrane# closely related to linked Cre06.g305650# belongs to the classical family of short chain dehydrogenases [PMID: 15180984]#
+    ## Cre08.g367400                                                                                                                                                                                                                                                                                                                                                                                                                                LHCSR3.2
+    ## Cre08.g365900                                                                                                                                                                                                                                                                 LI818r-1# involved in protection against UV-B and induced by UVR8# Low-CO2 and high-light inducible chlorophyll a/b binding protein# regulated by CCM1 [PMID: 15235119]
+    ## Cre01.g016600                                                                                                                                   one of the two neighbor genes homologous to higher plant PsbS (Npq4) that is involved in Non-Photochemical Quenching# corresponds to the gene mentioned in PMID: 16143839# shows a single AA difference compared to downstream convergent PSBS2# involved in acclimatation to UV-B# regulated by UVR8
+    ## Cre01.g016750                                                                                                                                                          one of the two neighbor genes homologous to higher plant PsbS (Npq4) that is involved in Non-Photochemical Quenching (PMID: 10667783# PMID:15222740)# shows a single AA difference compared to upstream convergent PSBS1# involved in acclimatation to UV-B# regulated by UVR8
+    ##                                               previousIdentifiers
+    ## Cre03.g144807 g2904.t1#Cre01.g057800.t1.1#MAS1#Cre01.g057800.t1.2
+    ## Cre06.g282800                                           g6576.t1#
+    ## Cre03.g149250                                       ICL2#g3035.t1
+    ## Cre10.g423250                                 MDN2#MDH2#g10469.t1
+    ## Cre09.g410700                                 MDN5#MDH5#g10173.t1
+    ## Cre01.g055408                                            g1224.t1
+    ## Cre01.g042750                                            #g957.t1
+    ## Cre12.g514750                                          #g12702.t1
+    ## Cre03.g149100                                           g3032.t1#
+    ## Cre02.g141400                                      g2662.t1#PCK1#
+    ## Cre12.g513200                                 PGH1#ENO#g12671.t1#
+    ## Cre06.g252650                          IPMI1#LEUS1#g5657.t1#LEU1S
+    ## Cre06.g258733                    g5818.t1#LEU2#Cre06.g258750.t2.1
+    ## Cre03.g206600                                      #AAD1#g4179.t1
+    ## Cre13.g588150                                          #g14427.t1
+    ## Cre02.g095137      Cre11.g473950.t1.2#Cre11.g473950.t1.1#g1910.t2
+    ## Cre03.g199800                                       HYD1#g4331.t1
+    ## Cre09.g396600                                       HYD2#g9355.t1
+    ## Cre06.g296700                                      HYDG#g6861.t1#
+    ## Cre06.g296750                                      HYDEF#g6862.t1
+    ## Cre16.g658400                                          g15907.t1#
+    ## Cre06.g278245 PAO9#Cre13.g600650.t1.2#g6387.t1#Cre13.g600650.t1.1
+    ## Cre08.g367400                     LHCSR3.2#LHCSR3#LI818r#g8608.t1
+    ## Cre08.g365900                                      LI818#g8574.t1
+    ## Cre01.g016600                                            #g397.t1
+    ## Cre01.g016750                                            #g400.t1
+
+    metabolic_genes2 <- bind_cols(xls_table[,c(1:3,7)],anno[xls_table$gene_id,c(9,10,8)])
+
+    # Cre16.g658400 FDX2 not in results
+    metabolic_genes2 <- metabolic_genes2[-21,]
+
+    anno[str_detect(anno[["geneSymbol"]],paste("FDX", collapse="|")),c(24,5,9,10,8)]
+
+    ##                     gene_id geneSymbol
+    ## Cre01.g005600 Cre01.g005600       FDX8
+    ## Cre01.g006100 Cre01.g006100       FDX7
+    ## Cre03.g183850 Cre03.g183850       FDX6
+    ## Cre04.g225450 Cre04.g225450      FDX10
+    ## Cre06.g291650 Cre06.g291650      FDX11
+    ## Cre06.g306350 Cre06.g306350       FDX3
+    ## Cre07.g334800 Cre07.g334800       FDX4
+    ## Cre08.g374550 Cre08.g374550      FDX12
+    ## Cre12.g487900 Cre12.g487900       FDX9
+    ## Cre12.g559950 Cre12.g559950      MFDX1
+    ## Cre14.g626700 Cre14.g626700       FDX1
+    ## Cre16.g658400 Cre16.g658400       FDX2
+    ## Cre17.g700950 Cre17.g700950       FDX5
+    ##                                              Description
+    ## Cre01.g005600                                 Ferredoxin
+    ## Cre01.g006100                                 Ferredoxin
+    ## Cre03.g183850       Apoferredoxin, chloroplast precursor
+    ## Cre04.g225450                        Putative ferredoxin
+    ## Cre06.g291650                          2Fe-2S ferredoxin
+    ## Cre06.g306350                              Apoferredoxin
+    ## Cre07.g334800       Apoferredoxin, chloroplast precursor
+    ## Cre08.g374550                        Putative ferredoxin
+    ## Cre12.g487900                                 Ferredoxin
+    ## Cre12.g559950 Adrenodoxin-like ferredoxin, mitochondrial
+    ## Cre14.g626700                     Chloroplast ferredoxin
+    ## Cre16.g658400                              Apoferredoxin
+    ## Cre17.g700950                               Ferredoxin 5
+    ##                                                                                                                                                   Comments
+    ## Cre01.g005600                                                                                    Ferredoxin with 2Fe-2S iron-sulfur cluster binding domain
+    ## Cre01.g006100                                                                                    Ferredoxin with 2Fe-2S iron-sulfur cluster binding domain
+    ## Cre03.g183850                                                           Fe2S2 containing redox protein, predicted chloroplast localization# Target of CRR1
+    ## Cre04.g225450                                                                                                                                             
+    ## Cre06.g291650                                                Possible 2Fe-2S ferredoxin# COG0633# cd00207, fer2, 2Fe-2S iron-sulfur cluster binding domain
+    ## Cre06.g306350 Fe2S2 containing redox protein, predicted chloroplast localization# PMID 28620699: Ferredoxin with 2Fe-2S iron-sulfur cluster binding domain
+    ## Cre07.g334800 Fe2S2 containing redox protein, predicted chloroplast localization# PMID 28620699: Ferredoxin with 2Fe-2S iron-sulfur cluster binding domain
+    ## Cre08.g374550                                                                                                                                             
+    ## Cre12.g487900                                                                                                                                             
+    ## Cre12.g559950                                                                       Possibly mitochondrial#Orthologous to AtMFDX1 in Arabidopsis thaliana#
+    ## Cre14.g626700          Apoferredoxin# [2Fe-2S] iron-sulfur protein involved in photosynthetic electron transfer, chloroplast localization [PMID: 16656453]
+    ## Cre16.g658400                                                                           Fe2S2 containing redox protein, predicted chloroplast localization
+    ## Cre17.g700950                                                                                       Fe2S2 containing redox protein# Chloroplast localized#
+    ##                           previousIdentifiers
+    ## Cre01.g005600 FDX8#g136.t1#Cre01.g005650.t1.2
+    ## Cre01.g006100                    FDX7#g147.t1
+    ## Cre03.g183850                       #g3810.t1
+    ## Cre04.g225450                               0
+    ## Cre06.g291650                       #g6758.t1
+    ## Cre06.g306350                       g7097.t1#
+    ## Cre07.g334800               19586916#g7796.t2
+    ## Cre08.g374550                 #FDX12#g8824.t1
+    ## Cre12.g487900                  FDX9#g12229.t1
+    ## Cre12.g559950            MFDX# ADX1#g13320.t1
+    ## Cre14.g626700             PETF#FDX1#g15094.t1
+    ## Cre16.g658400                      g15907.t1#
+    ## Cre17.g700950                      #g16996.t1
+
+    anno[str_detect(anno[["Description"]],paste(c("Ferredoxin"), collapse="|")),c(24,5,8,9,10)]
+
+    ##                     gene_id geneSymbol             previousIdentifiers
+    ## Cre01.g005600 Cre01.g005600       FDX8 FDX8#g136.t1#Cre01.g005650.t1.2
+    ## Cre01.g006100 Cre01.g006100       FDX7                    FDX7#g147.t1
+    ## Cre03.g193950 Cre03.g193950      FTRC3             FTRC#FTR3#g4014.t1#
+    ## Cre08.g365692 Cre08.g365692       SIR2                   SIR4#g8568.t1
+    ## Cre11.g476750 Cre11.g476750       FNR1                      #g11841.t1
+    ## Cre12.g487900 Cre12.g487900       FDX9                  FDX9#g12229.t1
+    ## Cre12.g514050 Cre12.g514050       GSF1                 #g12689.t1#GSF1
+    ## Cre16.g693202 Cre16.g693202       SIR1                       g15615.t1
+    ## Cre16.g687294 Cre16.g687294      FTRV1                  FTRV#g16838.t1
+    ## Cre17.g700950 Cre17.g700950       FDX5                      #g16996.t1
+    ##                                                                      Description
+    ## Cre01.g005600                                                         Ferredoxin
+    ## Cre01.g006100                                                         Ferredoxin
+    ## Cre03.g193950 Ferredoxin Thioredoxin Reductase, catalytic subunit, chloroplastic
+    ## Cre08.g365692                                       Ferredoxin-sulfite reductase
+    ## Cre11.g476750                             Ferredoxin-NADP reductase, chloroplast
+    ## Cre12.g487900                                                         Ferredoxin
+    ## Cre12.g514050                            Ferredoxin-dependent glutamate synthase
+    ## Cre16.g693202                                       Ferredoxin-sulfite reductase
+    ## Cre16.g687294  Ferredoxin Thioredoxin reductase, variable subunit, chloroplastic
+    ## Cre17.g700950                                                       Ferredoxin 5
+    ##                                                                                                                                                Comments
+    ## Cre01.g005600                                                                                 Ferredoxin with 2Fe-2S iron-sulfur cluster binding domain
+    ## Cre01.g006100                                                                                 Ferredoxin with 2Fe-2S iron-sulfur cluster binding domain
+    ## Cre03.g193950                                                                                                                                          
+    ## Cre08.g365692                                                                                                                                          
+    ## Cre11.g476750 Ferredoxin-NADP reductase, chloroplast precursor# involved in photosynthetic linear, and possibly in cyclic, electron flow# major isoform
+    ## Cre12.g487900                                                                                                                                          
+    ## Cre12.g514050                      Glutamate synthase, ferredoxin-dependent# also known as CRFG3 (genbank id # AF135592), could be chloroplast targeted
+    ## Cre16.g693202                                                                                                                                          
+    ## Cre16.g687294                                                                                                                                          
+    ## Cre17.g700950                                                                                    Fe2S2 containing redox protein# Chloroplast localized#
+
+    # (metabolic_genes2$gene_id...1 == metabolic_genes2$gene_id...5) %>% summary()
+
 ### Visualization Metabolic pathway
 
 #### Plot counts
 
-    goi <- metabolic_genes
+    goi <- metabolic_genes2
 
-    l <- nrow(goi)
+    (goi$gene_id %in% rownames(res)) %>% summary()
+
+    ##    Mode    TRUE 
+    ## logical      25
+
+    # goi[21,]
+
+    l <- nrow(goi[,])
     all_counts <- {}
     for (i in 1:l){
-      d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=res$symbol[i],returnData=TRUE)
+      d <-  plotCounts(dds, gene=goi$gene_id[i], intgroup=c("condition","strain","media"), col=col,main=res$symbol[goi[i,"gene_id"]],returnData=TRUE)
       d$Gene <- rep(goi[i,"geneSymbol"],length(rownames(d)))
       d$sample <- rownames(d)
       rownames(d) <- {}
@@ -6004,7 +6228,7 @@ associated with central pair projection C1b (PMID: 16030251).</td>
 
     max_val <- 1.0*max(all_counts$count)
 
-    all_counts$Gene <- factor(all_counts$Gene, levels = metabolic_genes$geneSymbol)
+    all_counts$Gene <- factor(all_counts$Gene, levels = metabolic_genes2$geneSymbol)
 
 
     # Plot
@@ -6028,8 +6252,8 @@ associated with central pair projection C1b (PMID: 16030251).</td>
 
 #### Volcano
 
-    res <- res_ashr_list$plap6_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
-    res_n <- res_l$plap6_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes$gene_id,]
+    res <- res_ashr_list$plap6_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes2$gene_id,]
+    res_n <- res_l$plap6_TAPvHSM.vs.WT_TAPvHSM[metabolic_genes2$gene_id,]
 
     # of shrinked results
     total <- subset(res, padj< 0.05 & (log2FoldChange > 1 | log2FoldChange < -1 )) %>% nrow()
@@ -6071,11 +6295,11 @@ associated with central pair projection C1b (PMID: 16030251).</td>
 
     res %>% nrow()
 
-    ## [1] 11
+    ## [1] 25
 
     volcano_dd <- EnhancedVolcano(res,
-         lab = metabolic_genes$geneSymbol,
-         selectLab = top_list$plap6_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
+         lab = metabolic_genes2$geneSymbol,
+         selectLab =metabolic_genes2$geneSymbol,
         x = 'log2FoldChange',
         y = 'padj',
         col=c("grey","grey","grey","orchid2"),
@@ -6109,19 +6333,19 @@ associated with central pair projection C1b (PMID: 16030251).</td>
 
 #### Heatmap
 
-    select <- metabolic_genes$gene_id
+    select <- metabolic_genes2$gene_id
 
     length(select)
 
-    ## [1] 11
+    ## [1] 25
 
     df <- assay(ntd)[select,]
     df <- df[,order(colData(dds)[,"condition"])]
     rownames(df) <- mcols(dds)[select,"id.symbol"]
 
     anno_col <- as.data.frame(colData(dds)[,c("media","strain","condition")])
-    anno_row <- metabolic_genes["pathway"]
-    rownames(anno_row) <- metabolic_genes$geneSymbol
+    anno_row <- as.data.frame(metabolic_genes2["pathway"])
+    rownames(anno_row) <- metabolic_genes2$geneSymbol
 
     anno_colors <- list(media = c("white","black"),
                         strain = c("grey50","orchid1"),
@@ -6132,8 +6356,9 @@ associated with central pair projection C1b (PMID: 16030251).</td>
     names(anno_colors$condition) <- levels(anno_col$condition)
 
     xx <- pheatmap(df, cluster_rows=FALSE, show_rownames=TRUE,
-                   cluster_cols=TRUE, annotation_col=anno_col,
-                   annotation_row=anno_row, annotation_colors = anno_colors)
+                   cluster_cols=FALSE, annotation_col=anno_col,
+                   annotation_row=anno_row,
+                   annotation_colors = anno_colors)
 
 ![](Readme_files/figure-markdown_strict/Heatmap-1.png) \#### Cross Plot
 
@@ -6143,18 +6368,21 @@ associated with central pair projection C1b (PMID: 16030251).</td>
     ## [3] "HSM_plap6.vs.WT"             "TAP_plap6.vs.WT"            
     ## [5] "plap6_TAPvHSM.vs.WT_TAPvHSM"
 
-    WT <- res_l$WT_TAP.vs.HSM %>% as.data.frame() %>% .[metabolic_genes$gene_id,c("log2FoldChange","symbol")]
-    plap6 <- res_l$plap6_TAP.vs.HSM %>% as.data.frame() %>% .[metabolic_genes$gene_id,c("log2FoldChange","symbol")]
+    WT <- res_l$WT_TAP.vs.HSM %>% as.data.frame() %>% .[metabolic_genes2$gene_id,c("log2FoldChange","symbol")]
+    plap6 <- res_l$plap6_TAP.vs.HSM %>% as.data.frame() %>% .[metabolic_genes2$gene_id,c("log2FoldChange","symbol")]
 
-    df <- bind_cols(metabolic_genes, WT, plap6)
-    colnames(df)[7] <- "WT (log2FC)"
-    colnames(df)[9] <- "plap6 (log2FC)"
+    df <- bind_cols(metabolic_genes2, WT, plap6)
+    colnames(df)[8] <- "WT (log2FC)"
+    colnames(df)[10] <- "plap6 (log2FC)"
+
+    max <- max(df$`WT (log2FC)`,df$`plap6 (log2FC)`)
+    min <- min(df$`WT (log2FC)`,df$`plap6 (log2FC)`)
 
     cross <- ggplot(df, aes(x = `WT (log2FC)`, y = `plap6 (log2FC)`, col=pathway)) +
       geom_point() +
       geom_text_repel(aes(label = df$geneSymbol), size=4) +
       theme_bw() +
-      coord_fixed(ratio = 1, xlim = c(-4,4),ylim=c(-4,4)) +
+      coord_fixed(ratio = 1, xlim = c(min,max),ylim=c(min,max)) +
       geom_abline(col="grey") +
       ggtitle("Acetate effect (TAP vs. HSM)") +
       theme(plot.title = element_text(hjust = 0.5))
@@ -6240,5 +6468,7 @@ associated with central pair projection C1b (PMID: 16030251).</td>
 
     write_xlsx(data.frame(colData(dds)),
                paste(outdir,"2023_08 P3043 samples.xlsx",sep="/"))
+
+    read_xlsx
 
 # End
