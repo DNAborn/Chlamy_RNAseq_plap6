@@ -87,28 +87,28 @@
 ### R functions
 
     getresults_SK <- function(contrast,nres){
-    r1 <- results(dds, contrast = contrast)
-    r1$symbol <- mcols(dds)$symbol
-    assign(paste("res",nres,sep="."),r1)
-    r1 <- list(r1)
-    names(r1) <- nres
-    r1
+      r1 <- results(dds, contrast = contrast)
+      r1$symbol <- mcols(dds)$symbol
+      assign(paste("res",nres,sep="."),r1)
+      r1 <- list(r1)
+      names(r1) <- nres
+      r1
     }
 
 
     topgenes_f <- function(res,p=0.05,bM=10,l2FC=1){
-    a <- subset(res, padj < p & baseMean > bM & abs(log2FoldChange) > l2FC)
-    if(nrow(a)>0) {
-    a <- a[order(a$baseMean, decreasing = T),]
-      a$rank.bm <- seq(1:length(rownames(a)))
-    a <- a[order(a$padj, decreasing = F),]
-      a$rank.padj <- seq(1:length(rownames(a)))
-    a <- a[order(abs(a$log2FoldChange), decreasing = T),]
-      a$rank.l2FC <- seq(1:length(rownames(a)))
-    a$rank.sum <- a$rank.l2FC+a$rank.bm+a$rank.padj
-      a <- a[order(a$rank.sum),]
+      a <- subset(res, padj < p & baseMean > bM & abs(log2FoldChange) > l2FC)
+      if(nrow(a)>0) {
+        a <- a[order(a$baseMean, decreasing = T),]
+        a$rank.bm <- seq(1:length(rownames(a)))
+        a <- a[order(a$padj, decreasing = F),]
+        a$rank.padj <- seq(1:length(rownames(a)))
+        a <- a[order(abs(a$log2FoldChange), decreasing = T),]
+        a$rank.l2FC <- seq(1:length(rownames(a)))
+        a$rank.sum <- a$rank.l2FC+a$rank.bm+a$rank.padj
+        a <- a[order(a$rank.sum),]
       }
-    a
+      a
     }
 
 ## Load dds
@@ -258,7 +258,7 @@
 
     l <- length(res_l)
     for (j in 1:l){
-    res_ashr_list[[names(res_l)[j]]] <- lfcShrink(res=res_l[[j]], dds=dds, type="ashr")
+      res_ashr_list[[names(res_l)[j]]] <- lfcShrink(res=res_l[[j]], dds=dds, type="ashr")
     }
 
 
@@ -3768,7 +3768,7 @@ class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g429800<
         scale_color_manual(values=c("grey30","orchid1")) +
         scale_fill_manual(values=c("grey30","orchid1")) +
         theme_bw() +
-    #    ggtitle(paste0(s," (",goi[i,"gene_id"],")")) +
+        #    ggtitle(paste0(s," (",goi[i,"gene_id"],")")) +
         ggtitle(s) +
         theme(plot.title = element_text(hjust = 0.5)) + 
         ylab("Normalized RNA counts [log2])")
@@ -3836,15 +3836,15 @@ class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g429800<
     d <-  plotCounts(dds, gene=i, intgroup=c("condition","media","genotype"),main=s,returnData=TRUE)
 
     gt <- ggplot(d[d$media == "TAP",], aes(x = media, y = count, color = genotype)) + 
-        geom_boxplot(aes(fill=genotype), alpha=0.5) +
-        geom_point(position=position_dodge(width=0.75)) +
-        scale_y_continuous(trans = "log2") +
-        # coord_cartesian(ylim = c(0,2500)) +
-        scale_color_manual(values=c("grey30","orchid1")) +
-        scale_fill_manual(values=c("grey30","orchid1")) +
-        theme_bw() +
-        ggtitle(s) +
-        theme(plot.title = element_text(hjust = 0.5))
+      geom_boxplot(aes(fill=genotype), alpha=0.5) +
+      geom_point(position=position_dodge(width=0.75)) +
+      scale_y_continuous(trans = "log2") +
+      # coord_cartesian(ylim = c(0,2500)) +
+      scale_color_manual(values=c("grey30","orchid1")) +
+      scale_fill_manual(values=c("grey30","orchid1")) +
+      theme_bw() +
+      ggtitle(s) +
+      theme(plot.title = element_text(hjust = 0.5))
     plot(gt)
 
 <img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-1.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-2.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-3.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-4.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-5.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-6.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-7.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-8.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-9.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-10.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-11.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-12.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-13.png" width="33%" /><img src="Readme_files/figure-markdown_strict/counts_cia5_rbcl-14.png" width="33%" />
@@ -3966,7 +3966,7 @@ class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g429800<
       d$sample <- rownames(d)
       rownames(d) <- {}
       all_counts <- bind_rows(all_counts,d)
-      }
+    }
 
     all_counts$condition <- factor(all_counts$condition, levels = c("WT_TAP","WT_HSM","Δplap6_TAP","Δplap6_HSM"))
 
@@ -3990,7 +3990,7 @@ class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g429800<
       theme_bw() +
       removeGrid(x=T, y=T) +
       theme(axis.text.x = element_text(angle = 90)) +
-        geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+      geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
       scale_y_continuous(trans = "log2") & plot_annotation(title = colData(dds)$experiment[1])
     gcounts_coqs %>% print()
 
@@ -4012,7 +4012,7 @@ class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g429800<
       d$sample <- rownames(d)
       rownames(d) <- {}
       all_counts <- bind_rows(all_counts,d)
-      }
+    }
 
     # all_counts$Gene
     levels(all_counts$condition)
@@ -4037,7 +4037,7 @@ class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g429800<
       labs(title = "COQ genes (core)") + 
       theme_bw() +
       removeGrid(x=T, y=T) +
-        geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+      geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
       scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
     gcounts_coqs %>% print()
 
@@ -4155,34 +4155,34 @@ class="uri">https://www.chlamylibrary.org/showGene?geneIdentifier=Cre10.g429800<
     ## [1] 14617
 
     volcano_dd <- EnhancedVolcano(res,
-         lab = mcols(dds)[,"geneSymbol"],
-         selectLab = top_list$plap6_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
-        x = 'log2FoldChange',
-        y = 'padj',
-        col=c("grey","grey","grey","orchid2"),
-        title = "Differences in media effect between plap6 and WT",
-        titleLabSize = 12,
-        subtitle = paste0("upregulated: ",up,", downregulated: ",down,"\n(total: ",total,")"),
-    #    subtitle = {},
-        subtitleLabSize = 10,
-        caption = NULL,
-        # xlim = c(-7,7),
-        ylim = c(0,50),
-        pCutoff = 0.05,
-        FCcutoff = 1,
-        maxoverlapsConnectors = 20,
-        drawConnectors = TRUE,
-        widthConnectors = 0.5,
-        colConnectors = "grey70",
-        legendLabels=c('ns','ns','ns',
-          'padj < 0.05 & Log2FC > 1'),
-        labSize = 4,
-        axisLabSize = 12,
-        legendLabSize = 12,
-        legendIconSize = 3,
-        gridlines.major = FALSE,
-        gridlines.minor = FALSE,
-        pointSize = 3
+                                  lab = mcols(dds)[,"geneSymbol"],
+                                  selectLab = top_list$plap6_TAPvHSM.vs.WT_TAPvHSM[1:101,"symbol"],
+                                  x = 'log2FoldChange',
+                                  y = 'padj',
+                                  col=c("grey","grey","grey","orchid2"),
+                                  title = "Differences in media effect between plap6 and WT",
+                                  titleLabSize = 12,
+                                  subtitle = paste0("upregulated: ",up,", downregulated: ",down,"\n(total: ",total,")"),
+                                  #    subtitle = {},
+                                  subtitleLabSize = 10,
+                                  caption = NULL,
+                                  # xlim = c(-7,7),
+                                  ylim = c(0,50),
+                                  pCutoff = 0.05,
+                                  FCcutoff = 1,
+                                  maxoverlapsConnectors = 20,
+                                  drawConnectors = TRUE,
+                                  widthConnectors = 0.5,
+                                  colConnectors = "grey70",
+                                  legendLabels=c('ns','ns','ns',
+                                                 'padj < 0.05 & Log2FC > 1'),
+                                  labSize = 4,
+                                  axisLabSize = 12,
+                                  legendLabSize = 12,
+                                  legendIconSize = 3,
+                                  gridlines.major = FALSE,
+                                  gridlines.minor = FALSE,
+                                  pointSize = 3
     )
     volcano_dd
 
@@ -5693,7 +5693,7 @@ cytochrome b559 alpha subunit
       d$sample <- rownames(d)
       rownames(d) <- {}
       all_counts <- bind_rows(all_counts,d)
-      }
+    }
 
     all_counts$Gene <- factor(all_counts$Gene)
     levels(all_counts$Gene)
@@ -5713,7 +5713,7 @@ cytochrome b559 alpha subunit
       labs(title = "TOP genes with different media effect (plap6 vs. WT)") + 
       theme_bw() +
       removeGrid(x=T, y=T) +
-        geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+      geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
       scale_y_continuous(trans = "log2") & plot_annotation(title = colData(dds)$experiment[1])
     gcounts_top9 %>% print()
 
@@ -5864,7 +5864,7 @@ cytochrome b559 alpha subunit
     gene_table <- anno[str_detect(anno[["geneSymbol"]],paste(goi, collapse="|")),c(24,5,9,10,8)]
 
     gene_table <- bind_rows(gene_table,anno[str_detect(anno[["prev.symbols"]],paste("ICL2", collapse="|")),c(24,5,9,10,8)]
-                            )
+    )
     gene_table["Cre03.g149250","geneSymbol"] <- "ICL2"
     gene_table$pathway <- "Glyoxylate_Supr."
 
@@ -6013,6 +6013,7 @@ cytochrome b559 alpha subunit
 
     gene_table <- bind_rows(gene_table,genes_Gluconeogenesis)
 
+    gene_table$pathway <- gene_table$pathway %>% factor()
 
     gene_table %>% kable()
 
@@ -6169,6 +6170,8 @@ associated with central pair projection C1b (PMID: 16030251).</td>
     metabolic_genes <- gene_table
 
 
+
+    # Import from XLS
     xls_table <- read_xlsx(paste(outdir,"Metabolic_Gene_List_v2.xlsx",sep="/"))
 
     anno[xls_table$gene_id,c(24,5,9,10,8)] %>% kable()
@@ -6470,6 +6473,7 @@ by UVR8</td>
 </table>
 
     metabolic_genes2 <- bind_cols(xls_table[,c(1:3,7)],anno[xls_table$gene_id,c(9,10,8)])
+    metabolic_genes2$pathway <- metabolic_genes2$pathway %>% factor()
 
     # Cre16.g658400 FDX2 not in results
     metabolic_genes2 <- metabolic_genes2[-21,]
@@ -6756,7 +6760,7 @@ Chloroplast localized#</td>
       d$sample <- rownames(d)
       rownames(d) <- {}
       all_counts <- bind_rows(all_counts,d)
-      }
+    }
 
     max_val <- 1.0*max(all_counts$count)
 
@@ -6773,7 +6777,7 @@ Chloroplast localized#</td>
       labs(title = "Metabolic Genes") + 
       theme_bw() +
       removeGrid(x=T, y=T) +
-        geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+      geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
       theme(axis.text.x = element_text(angle = 90)) +
       scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
     gcounts_metabolic %>% print()
@@ -6831,34 +6835,34 @@ Chloroplast localized#</td>
     ## [1] 25
 
     volcano_dd <- EnhancedVolcano(res,
-         lab = metabolic_genes2$geneSymbol,
-         selectLab =metabolic_genes2$geneSymbol,
-        x = 'log2FoldChange',
-        y = 'padj',
-        col=c("grey","grey","grey","orchid2"),
-        title = "Differences in media effect between plap6 and WT",
-        titleLabSize = 12,
-        subtitle = paste0("upregulated: ",up,", downregulated: ",down,"\n(total: ",total,")"),
-    #    subtitle = {},
-        subtitleLabSize = 10,
-        caption = NULL,
-        # xlim = c(-7,7),
-        ylim = c(0,50),
-        pCutoff = 0.05,
-        FCcutoff = 1,
-        maxoverlapsConnectors = 20,
-        drawConnectors = TRUE,
-        widthConnectors = 0.5,
-        colConnectors = "grey70",
-        legendLabels=c('ns','ns','ns',
-          'padj < 0.05 & Log2FC > 1'),
-        labSize = 4,
-        axisLabSize = 12,
-        legendLabSize = 12,
-        legendIconSize = 3,
-        gridlines.major = FALSE,
-        gridlines.minor = FALSE,
-        pointSize = 3
+                                  lab = metabolic_genes2$geneSymbol,
+                                  selectLab =metabolic_genes2$geneSymbol,
+                                  x = 'log2FoldChange',
+                                  y = 'padj',
+                                  col=c("grey","grey","grey","orchid2"),
+                                  title = "Differences in media effect between plap6 and WT",
+                                  titleLabSize = 12,
+                                  subtitle = paste0("upregulated: ",up,", downregulated: ",down,"\n(total: ",total,")"),
+                                  #    subtitle = {},
+                                  subtitleLabSize = 10,
+                                  caption = NULL,
+                                  # xlim = c(-7,7),
+                                  ylim = c(0,50),
+                                  pCutoff = 0.05,
+                                  FCcutoff = 1,
+                                  maxoverlapsConnectors = 20,
+                                  drawConnectors = TRUE,
+                                  widthConnectors = 0.5,
+                                  colConnectors = "grey70",
+                                  legendLabels=c('ns','ns','ns',
+                                                 'padj < 0.05 & Log2FC > 1'),
+                                  labSize = 4,
+                                  axisLabSize = 12,
+                                  legendLabSize = 12,
+                                  legendIconSize = 3,
+                                  gridlines.major = FALSE,
+                                  gridlines.minor = FALSE,
+                                  pointSize = 3
     )
     volcano_dd
 
@@ -6880,13 +6884,18 @@ Chloroplast localized#</td>
     anno_row <- as.data.frame(metabolic_genes2["pathway"])
     rownames(anno_row) <- metabolic_genes2$geneSymbol
 
+    pl <- metabolic_genes2$pathway %>% levels() %>% length()
+
     anno_colors <- list(media = c("white","black"),
                         strain = c("grey50","orchid1"),
-                        condition = group.colors)
+                        condition = group.colors,
+                        pathway = viridis(pl))
 
     names(anno_colors$media) <- levels(anno_col$media)
     names(anno_colors$strain) <- levels(anno_col$strain)
     names(anno_colors$condition) <- levels(anno_col$condition)
+    names(anno_colors$pathway) <- levels(anno_row$pathway)
+
 
     xx <- pheatmap(df, cluster_rows=FALSE, show_rownames=TRUE,
                    cluster_cols=FALSE, annotation_col=anno_col,
@@ -6915,6 +6924,7 @@ Chloroplast localized#</td>
       geom_point() +
       geom_text_repel(aes(label = df$geneSymbol), size=4) +
       theme_bw() +
+      scale_colour_viridis_d() +
       coord_fixed(ratio = 1, xlim = c(min,max),ylim=c(min,max)) +
       geom_abline(col="grey") +
       ggtitle("Acetate effect (TAP vs. HSM)") +
@@ -6930,7 +6940,7 @@ Chloroplast localized#</td>
       d$sample <- rownames(d)
       rownames(d) <- {}
       all_counts <- bind_rows(all_counts,d)
-      }
+    }
 
     max_val <- 1.0*max(all_counts$count)
 
@@ -6947,12 +6957,14 @@ Chloroplast localized#</td>
       labs(title = "Metabolic Genes") + 
       theme_bw() +
       removeGrid(x=T, y=T) +
-        geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
+      geom_vline(xintercept=seq(1,length(levels(all_counts$Gene))-1,1)+.5,color="grey") +
       scale_y_continuous(trans = "log2", limits = c(2,NA)) & plot_annotation(title = colData(dds)$experiment[1])
 
     cross+counts
 
 ![](Readme_files/figure-markdown_strict/Cross-1.png)
+
+#### Simple log2FC
 
 # GO-terms
 

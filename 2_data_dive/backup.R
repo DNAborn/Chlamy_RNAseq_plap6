@@ -1,5 +1,5 @@
 ---
-title: "Chlamy_plap6_dive"
+  title: "Chlamy_plap6_dive"
 author: "Kelterborn"
 date: "2024-03-15"
 output:
@@ -11,7 +11,6 @@ editor_options:
   chunk_output_type: inline
 knit: (function(input_file, encoding) {
   rmarkdown::render(input_file,output_file= 'Readme.md')
-   })
 ---
     
   
@@ -981,7 +980,6 @@ genes_Gluconeogenesis$pathway <- "Gluconeogenesis"
 
 gene_table <- bind_rows(gene_table,genes_Gluconeogenesis)
 
-gene_table$pathway <- gene_table$pathway %>% factor()
 
 gene_table %>% kable()
 write_xlsx(data.frame(gene_table),
@@ -990,14 +988,11 @@ write_xlsx(data.frame(gene_table),
 metabolic_genes <- gene_table
 
 
-
-# Import from XLS
 xls_table <- read_xlsx(paste(outdir,"Metabolic_Gene_List_v2.xlsx",sep="/"))
 
 anno[xls_table$gene_id,c(24,5,9,10,8)] %>% kable()
 
 metabolic_genes2 <- bind_cols(xls_table[,c(1:3,7)],anno[xls_table$gene_id,c(9,10,8)])
-metabolic_genes2$pathway <- metabolic_genes2$pathway %>% factor()
 
 # Cre16.g658400	FDX2 not in results
 metabolic_genes2 <- metabolic_genes2[-21,]
@@ -1138,18 +1133,16 @@ anno_col <- as.data.frame(colData(dds)[,c("media","strain","condition")])
 anno_row <- as.data.frame(metabolic_genes2["pathway"])
 rownames(anno_row) <- metabolic_genes2$geneSymbol
 
-pl <- metabolic_genes2$pathway %>% levels() %>% length()
-
 anno_colors <- list(media = c("white","black"),
                     strain = c("grey50","orchid1"),
-                    condition = group.colors,
-                    pathway = viridis(pl))
+                    condition = group.colors
+                    pathway = viridis)
+
+
 
 names(anno_colors$media) <- levels(anno_col$media)
 names(anno_colors$strain) <- levels(anno_col$strain)
 names(anno_colors$condition) <- levels(anno_col$condition)
-names(anno_colors$pathway) <- levels(anno_row$pathway)
-
 
 xx <- pheatmap(df, cluster_rows=FALSE, show_rownames=TRUE,
                cluster_cols=FALSE, annotation_col=anno_col,
@@ -1219,14 +1212,6 @@ cross+counts
 ```
 
 
-#### Simple log2FC
-```{r}
-
-
-
-
-
-```
 
 
 # GO-terms
