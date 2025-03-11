@@ -6469,6 +6469,24 @@ upstream convergent PSBS1# involved in acclimatation to UV-B# regulated
 by UVR8</td>
 <td style="text-align: left;">#g400.t1</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre02.g095137.1</td>
+<td style="text-align: left;">Cre02.g095137</td>
+<td style="text-align: left;">PFR1</td>
+<td style="text-align: left;">Pyruvate ferredoxin oxidoreductase</td>
+<td style="text-align: left;">Reversible pyruvate decarboxylation to
+acetyl-CoA and CO2, two ferredoxins are reduced</td>
+<td
+style="text-align: left;">Cre11.g473950.t1.2#Cre11.g473950.t1.1#g1910.t2</td>
+</tr>
 </tbody>
 </table>
 
@@ -6476,7 +6494,352 @@ by UVR8</td>
     metabolic_genes2$pathway <- metabolic_genes2$pathway %>% factor()
 
     # Cre16.g658400 FDX2 not in results
-    metabolic_genes2 <- metabolic_genes2[-21,]
+    metabolic_genes2 <- metabolic_genes2[c(-21,-27,-28),]
+    metabolic_genes2 %>% print(n=30) %>% kable()
+
+    ## # A tibble: 25 × 7
+    ##    gene_id       geneSymbol commonSymbol pathway          Description   Comments
+    ##    <chr>         <chr>      <chr>        <fct>            <chr>         <chr>   
+    ##  1 Cre03.g144807 MAS1       MAS1         Glyoxylate_Supr. Malate synth… "Malate…
+    ##  2 Cre06.g282800 ICL1       ICL1         Glyoxylate_Supr. Isocitrate l… "isocit…
+    ##  3 Cre03.g149250 ICL2       <NA>         Glyoxylate_Supr. Isocitrate l… "Isocit…
+    ##  4 Cre10.g423250 MDH2       MDH2         TCA              Malate dehyd… "Malate…
+    ##  5 Cre09.g410700 MDH5       MDH5         TCA              NADP-Malate … "Malate…
+    ##  6 Cre01.g055408 ACS2       ACS          TCA              Acetyl-CoA s… "identi…
+    ##  7 Cre01.g042750 ACH1       ACONTm       TCA              Aconitate hy… "Aconit…
+    ##  8 Cre12.g514750 CIS1       CSm          TCA              Citrate synt… "Citrat…
+    ##  9 Cre03.g149100 CIS2       CSm          TCA              Citrate synt… "Citrat…
+    ## 10 Cre02.g141400 PCK1       PCK1         Gluconeogenesis  Phosphoenolp… "phosph…
+    ## 11 Cre12.g513200 ENO1       ENOm         Gluconeogenesis  Enolase       "Phosph…
+    ## 12 Cre06.g252650 LEU1S      LEU1S        Aminoacid_BS     Isopropylmal… "isopro…
+    ## 13 Cre06.g258733 LEU2       LEU2         Aminoacid_BS     Isopropylmal… "Involv…
+    ## 14 Cre03.g206600 AAD1       AAD1         Aminoacid_BS     Acetohydroxy… "acetoh…
+    ## 15 Cre13.g588150 VTC2       VTC2         Ascorbate_BS     GDP-L-galact… "first …
+    ## 16 Cre02.g095137 PFR1       PFR          Fermentative_Met Pyruvate fer… "Revers…
+    ## 17 Cre03.g199800 HYDA1      HYDA1        Hydrogen_Prod    Iron hydroge… "Chloro…
+    ## 18 Cre09.g396600 HYDA2      HYDA2        Hydrogen_Prod    Iron hydroge… "Chloro…
+    ## 19 Cre06.g296700 HYDG1      HYDG         Hydrogen_Prod    Hydrogenase … "Relate…
+    ## 20 Cre06.g296750 HYDEF1     HYDEF        Hydrogen_Prod    Iron hydroge… "Iron h…
+    ## 21 Cre06.g278245 PAO5       PAO5         Chlorophyll_deg  Pheophorbide… "Contai…
+    ## 22 Cre08.g367400 LHCSR3B    LHCSR3       Photosynthesis   Stress-relat… "LHCSR3…
+    ## 23 Cre08.g365900 LHCSR1     LHCSR1       Photosynthesis   Stress-relat… "LI818r…
+    ## 24 Cre01.g016600 PSBS1      PSBS         Photosynthesis   chloroplast … "one of…
+    ## 25 Cre01.g016750 PSBS2      PSBS         Photosynthesis   chloroplast … "one of…
+    ## # ℹ 1 more variable: previousIdentifiers <chr>
+
+<table>
+<colgroup>
+<col style="width: 2%" />
+<col style="width: 1%" />
+<col style="width: 2%" />
+<col style="width: 2%" />
+<col style="width: 9%" />
+<col style="width: 72%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">gene_id</th>
+<th style="text-align: left;">geneSymbol</th>
+<th style="text-align: left;">commonSymbol</th>
+<th style="text-align: left;">pathway</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Comments</th>
+<th style="text-align: left;">previousIdentifiers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g144807</td>
+<td style="text-align: left;">MAS1</td>
+<td style="text-align: left;">MAS1</td>
+<td style="text-align: left;">Glyoxylate_Supr.</td>
+<td style="text-align: left;">Malate synthase</td>
+<td style="text-align: left;">Malate synthase (EC 2.3.3.9)# identical to
+cDNA sequence (AAP75564)# PMID: 19214701</td>
+<td
+style="text-align: left;">g2904.t1#Cre01.g057800.t1.1#MAS1#Cre01.g057800.t1.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g282800</td>
+<td style="text-align: left;">ICL1</td>
+<td style="text-align: left;">ICL1</td>
+<td style="text-align: left;">Glyoxylate_Supr.</td>
+<td style="text-align: left;">Isocitrate lyase</td>
+<td style="text-align: left;">isocitrate lyase (EC 4.1.3.1)# isocitrase#
+98% identical to cDNA (AAB61446) [PMID: 9049260]</td>
+<td style="text-align: left;">g6576.t1#</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g149250</td>
+<td style="text-align: left;">ICL2</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Glyoxylate_Supr.</td>
+<td style="text-align: left;">Isocitrate lyase</td>
+<td style="text-align: left;">Isocitrate lyase/phosphorylmutase</td>
+<td style="text-align: left;">ICL2#g3035.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre10.g423250</td>
+<td style="text-align: left;">MDH2</td>
+<td style="text-align: left;">MDH2</td>
+<td style="text-align: left;">TCA</td>
+<td style="text-align: left;">Malate dehydrogenase 2</td>
+<td style="text-align: left;">Malate dehydrogenase ( MDH) (= malic
+dehydrogenase) [EC:1.1.1.37]# NAD-dependent# putative glyoxysomal
+localization# PMID: 1921471</td>
+<td style="text-align: left;">MDN2#MDH2#g10469.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre09.g410700</td>
+<td style="text-align: left;">MDH5</td>
+<td style="text-align: left;">MDH5</td>
+<td style="text-align: left;">TCA</td>
+<td style="text-align: left;">NADP-Malate Dehydrogenase 5</td>
+<td style="text-align: left;">Malate dehydrogenase [NADP], possibly
+plastidic (NADP-MDH)# GI:1969739# Found in the flagellar proteome</td>
+<td style="text-align: left;">MDN5#MDH5#g10173.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre01.g055408</td>
+<td style="text-align: left;">ACS2</td>
+<td style="text-align: left;">ACS</td>
+<td style="text-align: left;">TCA</td>
+<td style="text-align: left;">Acetyl-CoA synthase</td>
+<td style="text-align: left;">identical to XP_001700230# located in
+peroxisomal microbodies (Lauersen et al, Algal Res. 2016)</td>
+<td style="text-align: left;">g1224.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre01.g042750</td>
+<td style="text-align: left;">ACH1</td>
+<td style="text-align: left;">ACONTm</td>
+<td style="text-align: left;">TCA</td>
+<td style="text-align: left;">Aconitate hydratase</td>
+<td style="text-align: left;">Aconitate hydratase (EC 4.2.1.3),
+mitochondrial# citrate hydro-lyase# aconitase</td>
+<td style="text-align: left;">#g957.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre12.g514750</td>
+<td style="text-align: left;">CIS1</td>
+<td style="text-align: left;">CSm</td>
+<td style="text-align: left;">TCA</td>
+<td style="text-align: left;">Citrate synthase, mitochondrial</td>
+<td style="text-align: left;">Citrate synthase (EC 2.3.3.1),
+mitochondrial form# similarity to carrot citrate synthase mitochondrial
+precursor (GenBank O8433)</td>
+<td style="text-align: left;">#g12702.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g149100</td>
+<td style="text-align: left;">CIS2</td>
+<td style="text-align: left;">CSm</td>
+<td style="text-align: left;">TCA</td>
+<td style="text-align: left;">Citrate synthase, glyoxysomal/microbody
+form</td>
+<td style="text-align: left;">Citrate synthase (EC 2.3.3.1),
+glyoxysomal/microbody form# similarity to Arabidopsis citrate synthase
+glyoxysomal precursor (GenBank Q9LXS6)# PMID: 1921471</td>
+<td style="text-align: left;">g3032.t1#</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre02.g141400</td>
+<td style="text-align: left;">PCK1</td>
+<td style="text-align: left;">PCK1</td>
+<td style="text-align: left;">Gluconeogenesis</td>
+<td style="text-align: left;">Phosphoenolpyruvate carboxykinase</td>
+<td style="text-align: left;">phosphoenolpyruvate carboxykinase# PEP
+carboxykinase (EC 4.1.1.49)# based on high similarity to PEPCK from
+Panicum maximum (GenBank AAQ10076) and many other plants# Target-P
+predicts no organelle targeting, so probably cytosolic form# may
+represent a minor splice variant of PCK1a</td>
+<td style="text-align: left;">g2662.t1#PCK1#</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre12.g513200</td>
+<td style="text-align: left;">ENO1</td>
+<td style="text-align: left;">ENOm</td>
+<td style="text-align: left;">Gluconeogenesis</td>
+<td style="text-align: left;">Enolase</td>
+<td style="text-align: left;">Phosphoenolpyruvate hydratase#
+2-phosphoglycerate dehydratase# EC 4.2.1.11 [GI:18143, Dumont et
+al. (1993) Plant Sci. 89, 55-67]# product localization unsure: an
+N-terminal extension also found in Dunaliella and At1g74030 potentially
+targets it to an organelle, especially if cDNA is extended &gt;6 nt
+upstream# found in the flagellar proteome [PMID: 15998802] and
+associated with central pair projection C1b (PMID: 16030251).</td>
+<td style="text-align: left;">PGH1#ENO#g12671.t1#</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g252650</td>
+<td style="text-align: left;">LEU1S</td>
+<td style="text-align: left;">LEU1S</td>
+<td style="text-align: left;">Aminoacid_BS</td>
+<td style="text-align: left;">Isopropylmalate dehydratase, small
+subunit</td>
+<td style="text-align: left;">isopropylmalate dehydratase (EC 4.2.1.33)#
+small subunit# second committed step in Leu biosynthesis</td>
+<td style="text-align: left;">IPMI1#LEUS1#g5657.t1#LEU1S</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre06.g258733</td>
+<td style="text-align: left;">LEU2</td>
+<td style="text-align: left;">LEU2</td>
+<td style="text-align: left;">Aminoacid_BS</td>
+<td style="text-align: left;">Isopropylmalate synthase</td>
+<td style="text-align: left;">Involved in branched chain amino acid
+biosynthesis# first committed step in Leu biosynthesis</td>
+<td style="text-align: left;">g5818.t1#LEU2#Cre06.g258750.t2.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre03.g206600</td>
+<td style="text-align: left;">AAD1</td>
+<td style="text-align: left;">AAD1</td>
+<td style="text-align: left;">Aminoacid_BS</td>
+<td style="text-align: left;">Acetohydroxyacid dehydratase</td>
+<td style="text-align: left;">acetohydroxyacid dehydratase (EC 4.2.1.9)#
+ILVD# dihydroxy-acid dehydrase# probable plastid location, based on
+homology and on Target-P prediction</td>
+<td style="text-align: left;">#AAD1#g4179.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre13.g588150</td>
+<td style="text-align: left;">VTC2</td>
+<td style="text-align: left;">VTC2</td>
+<td style="text-align: left;">Ascorbate_BS</td>
+<td style="text-align: left;">GDP-L-galactose phosphorylase</td>
+<td style="text-align: left;">first committed step in vitamin C
+biosynthesis# mutant shows reduced vitamin C content, and increased
+5mC/decreased 5gmC in its DNA, due to impairement of TET-mediated 5mC
+modifications</td>
+<td style="text-align: left;">#g14427.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre02.g095137</td>
+<td style="text-align: left;">PFR1</td>
+<td style="text-align: left;">PFR</td>
+<td style="text-align: left;">Fermentative_Met</td>
+<td style="text-align: left;">Pyruvate ferredoxin oxidoreductase</td>
+<td style="text-align: left;">Reversible pyruvate decarboxylation to
+acetyl-CoA and CO2, two ferredoxins are reduced</td>
+<td
+style="text-align: left;">Cre11.g473950.t1.2#Cre11.g473950.t1.1#g1910.t2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g199800</td>
+<td style="text-align: left;">HYDA1</td>
+<td style="text-align: left;">HYDA1</td>
+<td style="text-align: left;">Hydrogen_Prod</td>
+<td style="text-align: left;">Iron hydrogenase</td>
+<td style="text-align: left;">Chloroplast Fe-hydrogenase (= HYDA1)#
+corresponds to GI:18026272# reversible reduction of 2H+ to H2, oxidizing
+two ferredoxins#</td>
+<td style="text-align: left;">HYD1#g4331.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre09.g396600</td>
+<td style="text-align: left;">HYDA2</td>
+<td style="text-align: left;">HYDA2</td>
+<td style="text-align: left;">Hydrogen_Prod</td>
+<td style="text-align: left;">Iron hydrogenase</td>
+<td style="text-align: left;">Chloroplast Fe-hydrogenase (= HYDA2)#
+corresponds to GI:18026272 [PMID: 12823545]# reversible reduction of 2H+
+to H2, oxidizing two ferredoxins#</td>
+<td style="text-align: left;">HYD2#g9355.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre06.g296700</td>
+<td style="text-align: left;">HYDG1</td>
+<td style="text-align: left;">HYDG</td>
+<td style="text-align: left;">Hydrogen_Prod</td>
+<td style="text-align: left;">Hydrogenase assembly factor/biotin
+synthase</td>
+<td style="text-align: left;">Related to Thiazole biosynthesis protein
+thiH/O. Pfam motif found in thiamin and biotin biosynthesis genes.
+Radical SAM protein required for the assembly of an active
+[Fe]-hydrogenase [PMID: 15082711]</td>
+<td style="text-align: left;">HYDG#g6861.t1#</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g296750</td>
+<td style="text-align: left;">HYDEF1</td>
+<td style="text-align: left;">HYDEF</td>
+<td style="text-align: left;">Hydrogen_Prod</td>
+<td style="text-align: left;">Iron hydrogenase assembly protein</td>
+<td style="text-align: left;">Iron hydrogenase assembly protein,
+contains domains homologous to prokaryotic HydE and HydF# radical SAM
+domain present in N-terminal region. [PMID: 15082711]# maturation factor
+required for biosynthesis of [FeFe]-hydrogenase active site#</td>
+<td style="text-align: left;">HYDEF#g6862.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre06.g278245</td>
+<td style="text-align: left;">PAO5</td>
+<td style="text-align: left;">PAO5</td>
+<td style="text-align: left;">Chlorophyll_deg</td>
+<td style="text-align: left;">Pheophorbide a oxygenase-related
+protein</td>
+<td style="text-align: left;">Contains Rieske iron-sulfur cluster and
+PAO domains and transmembrane domain for attachment to thylakoid
+membrane# closely related to linked Cre06.g305650# belongs to the
+classical family of short chain dehydrogenases [PMID: 15180984]#</td>
+<td
+style="text-align: left;">PAO9#Cre13.g600650.t1.2#g6387.t1#Cre13.g600650.t1.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre08.g367400</td>
+<td style="text-align: left;">LHCSR3B</td>
+<td style="text-align: left;">LHCSR3</td>
+<td style="text-align: left;">Photosynthesis</td>
+<td style="text-align: left;">Stress-related chlorophyll a/b binding
+protein 3</td>
+<td style="text-align: left;">LHCSR3.2</td>
+<td style="text-align: left;">LHCSR3.2#LHCSR3#LI818r#g8608.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre08.g365900</td>
+<td style="text-align: left;">LHCSR1</td>
+<td style="text-align: left;">LHCSR1</td>
+<td style="text-align: left;">Photosynthesis</td>
+<td style="text-align: left;">Stress-related chlorophyll a/b binding
+protein 1</td>
+<td style="text-align: left;">LI818r-1# involved in protection against
+UV-B and induced by UVR8# Low-CO2 and high-light inducible chlorophyll
+a/b binding protein# regulated by CCM1 [PMID: 15235119]</td>
+<td style="text-align: left;">LI818#g8574.t1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre01.g016600</td>
+<td style="text-align: left;">PSBS1</td>
+<td style="text-align: left;">PSBS</td>
+<td style="text-align: left;">Photosynthesis</td>
+<td style="text-align: left;">chloroplast Photosystem II-associated 22
+kDa protein</td>
+<td style="text-align: left;">one of the two neighbor genes homologous
+to higher plant PsbS (Npq4) that is involved in Non-Photochemical
+Quenching# corresponds to the gene mentioned in PMID: 16143839# shows a
+single AA difference compared to downstream convergent PSBS2# involved
+in acclimatation to UV-B# regulated by UVR8</td>
+<td style="text-align: left;">#g397.t1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre01.g016750</td>
+<td style="text-align: left;">PSBS2</td>
+<td style="text-align: left;">PSBS</td>
+<td style="text-align: left;">Photosynthesis</td>
+<td style="text-align: left;">chloroplast Photosystem II-associated 22
+kDa protein</td>
+<td style="text-align: left;">one of the two neighbor genes homologous
+to higher plant PsbS (Npq4) that is involved in Non-Photochemical
+Quenching (PMID: 10667783# <a href="PMID:15222740)#"
+class="uri">PMID:15222740)#</a> shows a single AA difference compared to
+upstream convergent PSBS1# involved in acclimatation to UV-B# regulated
+by UVR8</td>
+<td style="text-align: left;">#g400.t1</td>
+</tr>
+</tbody>
+</table>
 
     anno[str_detect(anno[["geneSymbol"]],paste("FDX", collapse="|")),c(24,5,9,10,8)] %>% kable()
 
@@ -6737,6 +7100,333 @@ Chloroplast localized#</td>
 </tbody>
 </table>
 
+    anno[str_detect(anno[["Comments"]],paste(c("pyruvate"), collapse="|")),c(24,5,8,9,10)] %>% kable()
+
+<table>
+<colgroup>
+<col style="width: 1%" />
+<col style="width: 1%" />
+<col style="width: 1%" />
+<col style="width: 5%" />
+<col style="width: 7%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">gene_id</th>
+<th style="text-align: left;">geneSymbol</th>
+<th style="text-align: left;">previousIdentifiers</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cre01.g016514</td>
+<td style="text-align: left;">Cre01.g016514</td>
+<td style="text-align: left;">DLD2</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Dihydrolipoamide dehydrogenase 2</td>
+<td style="text-align: left;">Putative dihydrolipoamide dehydrogenase
+(EC 1.8.1.4), E3 component of pyruvate dehydrogenase complex, plastid
+precursor.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre01.g019100</td>
+<td style="text-align: left;">Cre01.g019100</td>
+<td style="text-align: left;">HPR2</td>
+<td style="text-align: left;">g448.t1#</td>
+<td style="text-align: left;">Hydroxypyruvate reductase 2</td>
+<td style="text-align: left;">Takes part in the cytosolic bypass of
+photorespiration as the compensatory pathway of HPR1 for the reduction
+of hydroxypyruvate#</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre02.g099850</td>
+<td style="text-align: left;">Cre02.g099850</td>
+<td style="text-align: left;">PDC2</td>
+<td style="text-align: left;">PDC2#g2032.t1</td>
+<td style="text-align: left;">Pyruvate dehydrogenase, E1 component,
+alpha subunit</td>
+<td style="text-align: left;">pyruvate dehydrogenase (EC 1.2.4.1), E1
+component alpha subunit (ODPA, PDC2_E1a). The pyruvate dehydrogenase
+complex catalyzes the overall conversion of pyruvate to acetyl-CoA and
+CO(2). It contains multiple copies of three enzymatic components:
+pyruvate dehydrogenase (E1), dihydrolipoamide acetyltransferase (E2) and
+lipoamide dehydrogenase (E3) (By similarity). [CATALYTIC ACTIVITY]
+Pyruvate + [dihydrolipoyllysine-residue acetyltransferase] lipoyllysine
+= [dihydrolipoyllysine-residue acetyltransferase]
+S-acetyldihydrolipoyllysine + CO(2). [COFACTOR] Thiamine pyrophosphate.
+[SUBUNIT] Heterodimer of an alpha and a beta chain (By similarity).
+[SUBCELLULAR LOCATION] Plastid# chloroplast# This is the second PDC,
+localized in the plastid stroma, where it provides acetyl-CoA for fatty
+acid biosynthesis# different from the mitochondrial PDC</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre02.g141400</td>
+<td style="text-align: left;">Cre02.g141400</td>
+<td style="text-align: left;">PCK1</td>
+<td style="text-align: left;">g2662.t1#PCK1#</td>
+<td style="text-align: left;">Phosphoenolpyruvate carboxykinase</td>
+<td style="text-align: left;">phosphoenolpyruvate carboxykinase# PEP
+carboxykinase (EC 4.1.1.49)# based on high similarity to PEPCK from
+Panicum maximum (GenBank AAQ10076) and many other plants# Target-P
+predicts no organelle targeting, so probably cytosolic form# may
+represent a minor splice variant of PCK1a</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g144847</td>
+<td style="text-align: left;">Cre03.g144847</td>
+<td style="text-align: left;">PYK4</td>
+<td
+style="text-align: left;">Cre01.g057900.t1.2#g2906.t1#PYK4#Cre01.g057900.t1.1</td>
+<td style="text-align: left;">Pyruvate kinase 4</td>
+<td style="text-align: left;">Pyruvate kinase (PK) [EC 2.7.1.40]#
+catalyses the final step in glycolysis, which is the conversion of
+phosphoenolpyruvate to pyruvate with concomitant phosphorylation of ADP
+to ATP#</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre03.g158900</td>
+<td style="text-align: left;">Cre03.g158900</td>
+<td style="text-align: left;">DLA2</td>
+<td style="text-align: left;">RBP63#g3253.t1</td>
+<td style="text-align: left;">Dihydrolipoamide acetyltransferase</td>
+<td style="text-align: left;">Dihydrolipoamide acetyltransferase (EC
+2.3.1.12), E2 component of the plastidic,pyruvate dehydrogenase complex#
+similarity to Arabidopsis plastidic LTA2 (GenBank NP_189215)# identified
+as RPB63, binding psbA mRNA, and possibly involved in regulation of psbA
+translation#</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre03.g165700</td>
+<td style="text-align: left;">Cre03.g165700</td>
+<td style="text-align: left;">PDC3</td>
+<td style="text-align: left;">g3400.t1#PDC3</td>
+<td style="text-align: left;">Pyruvate decarboxylase</td>
+<td style="text-align: left;">pyruvate decarboxylase [EC 4.1.1.1]#
+requires thiamine pyrophosphate (TPP) (vitamin B1) as a cofactor# alpha
+subunit of the E1 component of the mitochondrial pyruvate dehydrogenase
+complex (mtPDC) catalyzes the oxidative decarboxylation of pyruvate,
+yielding acetyl-CoA and NADH to support the Krebs cycle and oxidative
+phosphorylation# a plastid pyruvate decarboxylase also exists</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre03.g194200</td>
+<td style="text-align: left;">Cre03.g194200</td>
+<td style="text-align: left;">PDH2</td>
+<td style="text-align: left;">#PDH2#g4019.t1</td>
+<td style="text-align: left;">Pyruvate dehydrogenase E1 beta
+subunit</td>
+<td style="text-align: left;">Putative Pyruvate dehydrogenase
+(lipoamide)# pyruvate dehydrogenase E1 beta subunit, probably plastid
+precursor# similar to Arabidopsis PDH E1 beta (GenBank NP_174304) and
+predicted organelle targeting sequence by Target-P</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre05.g241750</td>
+<td style="text-align: left;">Cre05.g241750</td>
+<td style="text-align: left;">PDK3</td>
+<td style="text-align: left;">g5320.t1#</td>
+<td style="text-align: left;">Pyruvate dehydrogenase kinase</td>
+<td style="text-align: left;">Closest homolog of human enzyme# inhibits
+pyruvate dehydrogenase by phosphorylation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre05.g234700</td>
+<td style="text-align: left;">Cre05.g234700</td>
+<td style="text-align: left;">PYK3</td>
+<td style="text-align: left;">g5389.t1</td>
+<td style="text-align: left;">Pyruvate kinase 3</td>
+<td style="text-align: left;">Multi-domain pyruvate kinase (EC
+2.7.1.40), with four domains in a single large protein# possible single
+domain variants are indicated as PYK3b &amp; PYK3c# catalyses the final
+step in glycolysis, which is the conversion of phosphoenolpyruvate to
+pyruvate with concomitant phosphorylation of ADP to ATP#</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre06.g252550</td>
+<td style="text-align: left;">Cre06.g252550</td>
+<td style="text-align: left;">DLA3</td>
+<td style="text-align: left;">g5653.t1</td>
+<td style="text-align: left;">Dihydrolipoamide acetyltransferase</td>
+<td style="text-align: left;">Dihydrolipoamide acetyltransferase# E2
+component of pyruvate dehydrogenase complex. Independent sequence at
+AY596299.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g258700</td>
+<td style="text-align: left;">Cre06.g258700</td>
+<td style="text-align: left;">PYC1</td>
+<td style="text-align: left;">g5817.t1#PYC1</td>
+<td style="text-align: left;">Pyruvate carboxylase 1</td>
+<td style="text-align: left;">Pyruvate carboxylase [EC:6.4.1.1]# a
+biotin-dependent enzyme# catalyses the ATP-dependent carboxylation of
+pyruvate to oxaloacetate# enzyme is essential in gluconeogenesis#</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre06.g278101</td>
+<td style="text-align: left;">Cre06.g278101</td>
+<td style="text-align: left;"></td>
+<td
+style="text-align: left;">STD1#g6244.t1#Cre13.g593600.t1.2#Cre13.g593600.t1.1</td>
+<td style="text-align: left;">Serine/threonine dehydratase</td>
+<td style="text-align: left;">Putative serine/threonine dehydratase (EC
+4.3.1.19) - serine racemase (EC 5.1.1.10) # based on similarity to
+bifunctional Arabidopsis serine racemase (GenBank AB206823) (PMID:
+16483618)# converts L-serine to D-serine (serine racemase) or to
+pyruvate (seri</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g278451</td>
+<td style="text-align: left;">Cre06.g278451</td>
+<td style="text-align: left;">PDK2</td>
+<td style="text-align: left;">Cre06.g278450.t1.2#g6475.t1</td>
+<td style="text-align: left;">Pyruvate dehydrogenase kinase</td>
+<td style="text-align: left;">Inhibits pyruvate dehydrogenase by
+phosphorylation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre06.g280950</td>
+<td style="text-align: left;">Cre06.g280950</td>
+<td style="text-align: left;">PYK2</td>
+<td style="text-align: left;">#g6534.t1</td>
+<td style="text-align: left;">Pyruvate kinase 2</td>
+<td style="text-align: left;">Putative Pyruvate Kinase# EC 2.7.1.40#
+catalyses the final step in glycolysis, which is the conversion of
+phosphoenolpyruvate to pyruvate with concomitant phosphorylation of ADP
+to ATP# probably cytosolic#</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre06.g295450</td>
+<td style="text-align: left;">Cre06.g295450</td>
+<td style="text-align: left;">HPR1</td>
+<td style="text-align: left;">HPR1#g6839.t1#</td>
+<td style="text-align: left;">Hydroxyl pyruvate reductase</td>
+<td style="text-align: left;">Hydroxypyruvate reductase, catalyzing the
+NADH-dependent conversion of hydroxypyruvate to glycerate# contains
+sequence nearly identical to Chlamydomonas HPR (GenBank AAW29979)#
+predicted by Target-P to be organelle targeted</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre07.g324550</td>
+<td style="text-align: left;">Cre07.g324550</td>
+<td style="text-align: left;">LDH1</td>
+<td style="text-align: left;">LDH#HPR4#g7497.t1#LDH1</td>
+<td style="text-align: left;">D-lactate dehydrogenase</td>
+<td style="text-align: left;">Reversible NADH reduction of pyruvate to
+lactate# Also identified as hydroxypyruvate reductase 4 which was
+proposed to use NADH as a cofactor and to participate in
+photorespiration by acting as the chloroplastidial glyoxylate reductase
+in glycolate-quinone oxidoreductase system#</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre07.g337650</td>
+<td style="text-align: left;">Cre07.g337650</td>
+<td style="text-align: left;">PDC1</td>
+<td style="text-align: left;">PDC1#g7854.t1</td>
+<td style="text-align: left;">Mitochondrial pyruvate dehydrogenase
+complex, E1 component, alpha subunit</td>
+<td style="text-align: left;">Alpha subunit of the E1 component of the
+mitochondrial pyruvate dehydrogenase complex (mtPDC), that catalyzes the
+oxidative decarboxylation of pyruvate, yielding acetyl-CoA and NADH to
+support the Krebs cycle and oxidative phosphorylation. A plastid PDC
+also exists.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre09.g386735</td>
+<td style="text-align: left;">Cre09.g386735</td>
+<td style="text-align: left;">DLA1</td>
+<td
+style="text-align: left;">DLA1#Cre29.g778200.t1.2#Cre29.g778200.t1.1#g9117.t1</td>
+<td style="text-align: left;">Dihydrolipoamide acetyltransferase</td>
+<td style="text-align: left;">Dihydrolipoamide acetyltransferase,
+probably mitochondrial# EC 2.3.1.12)# E2 component of pyruvate
+dehydrogenase complex# null-allele mutant was isolated (PMID
+29743196)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre09.g398993</td>
+<td style="text-align: left;">Cre09.g398993</td>
+<td style="text-align: left;"></td>
+<td
+style="text-align: left;">HPD1#Cre02.g136050.t1.1#Cre02.g136050.t1.2#g9907.t1</td>
+<td style="text-align: left;">4-hydroxyphenylpyruvate dioxygenase</td>
+<td style="text-align: left;">4-hydroxyphenylpyruvate dioxygenase (EC
+1.13.11.27)# (4HPPD) (HPD) (HPPDase)# Target of CRR1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre09.g399030</td>
+<td style="text-align: left;">Cre09.g399030</td>
+<td style="text-align: left;"></td>
+<td
+style="text-align: left;">HPD2#Cre02.g136100.t1.2#Cre02.g136100.t1.1#g9908.t1</td>
+<td style="text-align: left;">4-hydroxyphenylpyruvate dioxygenase</td>
+<td style="text-align: left;">4-hydroxyphenylpyruvate dioxygenase (EC
+1.13.11.27) (4HPPD) (HPD) (HPPDase)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre10.g449000</td>
+<td style="text-align: left;">Cre10.g449000</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">VPT1#LZY1#g11038.t1</td>
+<td style="text-align: left;">LZY1B homolog</td>
+<td style="text-align: left;">Putative aminotransferase, class I and II#
+possible valine-pyruvate transaminase (EC 2.6.1.66)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre02.g095137</td>
+<td style="text-align: left;">Cre02.g095137</td>
+<td style="text-align: left;">PFR1</td>
+<td
+style="text-align: left;">Cre11.g473950.t1.2#Cre11.g473950.t1.1#g1910.t2</td>
+<td style="text-align: left;">Pyruvate ferredoxin oxidoreductase</td>
+<td style="text-align: left;">Reversible pyruvate decarboxylation to
+acetyl-CoA and CO2, two ferredoxins are reduced</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre12.g513200</td>
+<td style="text-align: left;">Cre12.g513200</td>
+<td style="text-align: left;">ENO1</td>
+<td style="text-align: left;">PGH1#ENO#g12671.t1#</td>
+<td style="text-align: left;">Enolase</td>
+<td style="text-align: left;">Phosphoenolpyruvate hydratase#
+2-phosphoglycerate dehydratase# EC 4.2.1.11 [GI:18143, Dumont et
+al. (1993) Plant Sci. 89, 55-67]# product localization unsure: an
+N-terminal extension also found in Dunaliella and At1g74030 potentially
+targets it to an organelle, especially if cDNA is extended &gt;6 nt
+upstream# found in the flagellar proteome [PMID: 15998802] and
+associated with central pair projection C1b (PMID: 16030251).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cre12.g533550</td>
+<td style="text-align: left;">Cre12.g533550</td>
+<td style="text-align: left;">PYK1</td>
+<td style="text-align: left;">g13125.t1</td>
+<td style="text-align: left;">Pyruvate kinase 1</td>
+<td style="text-align: left;">EC 2.7.1.40# catalyses the final step in
+glycolysis, which is the conversion of phosphoenolpyruvate to pyruvate
+with concomitant phosphorylation of ADP to ATP# Target-P predicts weak
+organelle targeting, but probably cytosolic based on similarity to plant
+cytosolic pyruvate kinases#</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cre16.g677026</td>
+<td style="text-align: left;">Cre16.g677026</td>
+<td style="text-align: left;">PDH1</td>
+<td
+style="text-align: left;">Cre01.g063700.t1.1#g16134.t1#Cre01.g063700.t1.2#PDH1</td>
+<td style="text-align: left;">Pyruvate dehydrogenase E1 beta
+subunit</td>
+<td style="text-align: left;">Pyruvate dehydrogenase (lipoamide)#
+pyruvate dehydrogenase E1 beta subunit (EC 1.2.4.1), probable
+mitochondrial precursor by homology to 0850# dominant of 2 potential
+splicing variants (minor variant PDH1b)</td>
+</tr>
+</tbody>
+</table>
+
     # (metabolic_genes2$gene_id...1 == metabolic_genes2$gene_id...5) %>% summary()
 
 ### Visualization Metabolic pathway
@@ -6922,7 +7612,7 @@ Chloroplast localized#</td>
 
     cross <- ggplot(df, aes(x = `WT (log2FC)`, y = `plap6 (log2FC)`, col=pathway)) +
       geom_point() +
-      geom_text_repel(aes(label = df$geneSymbol), size=4) +
+      geom_text_repel(aes(label = geneSymbol), size=2) +
       theme_bw() +
       scale_colour_viridis_d() +
       coord_fixed(ratio = 1, xlim = c(min,max),ylim=c(min,max)) +
@@ -6930,12 +7620,12 @@ Chloroplast localized#</td>
       ggtitle("Acetate effect (TAP vs. HSM)") +
       theme(plot.title = element_text(hjust = 0.5))
 
-    goi <- metabolic_genes[c(5,10,11),]
+    goi <- metabolic_genes2[c(5,10,11,16),] %>% as.data.frame()
 
     l <- nrow(goi)
     all_counts <- {}
     for (i in 1:l){
-      d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=res$symbol[i],returnData=TRUE)
+      d <-  plotCounts(dds, gene=goi[i,"gene_id"], intgroup=c("condition","strain","media"), col=col,main=goi[i,"geneSymbol"],returnData=TRUE)
       d$Gene <- rep(goi[i,"geneSymbol"],length(rownames(d)))
       d$sample <- rownames(d)
       rownames(d) <- {}
@@ -6944,8 +7634,7 @@ Chloroplast localized#</td>
 
     max_val <- 1.0*max(all_counts$count)
 
-    all_counts$Gene <- factor(all_counts$Gene, levels = metabolic_genes$geneSymbol)
-
+    all_counts$Gene <- factor(all_counts$Gene, levels = metabolic_genes2$geneSymbol)
 
     # Plot
     counts <- gcounts_metabolic <- ggplot(all_counts, aes(x = Gene, y = count, col=condition)) +
@@ -7017,3 +7706,5 @@ Chloroplast localized#</td>
     read_xlsx
 
 # End
+
+    # test
